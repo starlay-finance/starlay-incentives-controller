@@ -7,3 +7,41 @@
 ## Introduction
 
 This repo contains the code and implementation of the contracts used to activate the liquidity mining program on the main market of the Starley protocol.
+
+## About Development
+
+### Setup
+
+create `.env` file like
+
+```bash
+# Mnemonic, only first address will be used
+MNEMONIC=""
+
+# Add Alchemy or Infura provider keys, alchemy takes preference at the config level
+ALCHEMY_KEY=""
+INFURA_KEY=""
+BWARE_LABS_KEY=""
+
+# Optional Etherscan key, for automatize the verification of the contracts at Etherscan
+ETHERSCAN_KEY=""
+
+# Optional, if you plan to use Tenderly scripts
+TENDERLY_PROJECT=""
+TENDERLY_USERNAME=""
+
+# defender Relay
+DEFENDER_API_KEY=""
+DEFENDER_SECRET_KEY=""
+```
+
+### Deploy
+
+```bash
+npm install
+npm run compile
+docker-compose up
+# --- other terminal ---
+docker-compose exec contracts-env bash
+npm run deploy:incentives-controller-impl:shibuya
+```
