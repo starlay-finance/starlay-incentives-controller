@@ -19,7 +19,7 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
   using SafeMath for uint256;
   using PercentageMath for uint256;
 
-  address constant AAVE_TOKEN = 0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9;
+  address constant STARLAY_TOKEN = 0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9;
   address constant POOL_CONFIGURATOR = 0x311Bb771e4F8952E6Da169b425E7e92d6Ac45756;
   address constant ADDRESSES_PROVIDER = 0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5;
   address constant LENDING_POOL = 0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9;
@@ -111,7 +111,7 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
     }
     // Transfer AAVE funds to the Incentives Controller
     ecosystemReserveController.transfer(
-      AAVE_TOKEN,
+      STARLAY_TOKEN,
       INCENTIVES_CONTROLLER_PROXY_ADDRESS,
       DISTRIBUTION_AMOUNT
     );

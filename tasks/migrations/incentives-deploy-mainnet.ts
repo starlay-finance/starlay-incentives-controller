@@ -12,7 +12,6 @@ const {
   RESERVES = 'DAI,GUSD,USDC,USDT,WBTC,WETH',
   POOL_PROVIDER = '0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5',
   POOL_DATA_PROVIDER = '0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d',
-  AAVE_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
   TREASURY = '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
 } = process.env;
 
@@ -51,7 +50,6 @@ task(
     if (
       !RESERVES ||
       !POOL_DATA_PROVIDER ||
-      !AAVE_TOKEN ||
       !TREASURY
     ) {
       throw new Error('You have not set correctly the .env file, make sure to read the README.md');

@@ -8,7 +8,7 @@ import isIPFS from 'is-ipfs';
 import { Signer } from '@ethersproject/abstract-signer';
 
 const {
-  AAVE_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
+  STARLAY_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
   GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
   STARLAY_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
 } = process.env;
@@ -29,7 +29,7 @@ task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to Aa
         proposer = signer;
       }
 
-      if (!AAVE_TOKEN || !GOVERNANCE_V2 || !STARLAY_SHORT_EXECUTOR) {
+      if (!STARLAY_TOKEN || !GOVERNANCE_V2 || !STARLAY_SHORT_EXECUTOR) {
         throw new Error(
           'You have not set correctly the .env file, make sure to read the README.md'
         );
@@ -52,12 +52,12 @@ task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to Aa
         proposer
       )) as IAaveGovernanceV2;
 
-      const aave = IERC20__factory.connect(AAVE_TOKEN, proposer);
+      const aave = IERC20__factory.connect(STARLAY_TOKEN, proposer);
 
       // Balance and proposal power check
       const balance = await aave.balanceOf(proposerAddress);
       const priorBlock = ((await latestBlock()) - 1).toString();
-      const aaveGovToken = IGovernancePowerDelegationToken__factory.connect(AAVE_TOKEN, proposer);
+      const aaveGovToken = IGovernancePowerDelegationToken__factory.connect(STARLAY_TOKEN, proposer);
       const propositionPower = await aaveGovToken.getPowerAtBlock(proposerAddress, priorBlock, '1');
 
       console.log('- AAVE Balance proposer', formatEther(balance));

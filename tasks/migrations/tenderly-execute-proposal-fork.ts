@@ -11,7 +11,6 @@ import { getDefenderRelaySigner } from '../../helpers/defender-utils';
 import { Signer } from 'ethers';
 
 const {
-  AAVE_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
   GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c',
 } = process.env;
 
