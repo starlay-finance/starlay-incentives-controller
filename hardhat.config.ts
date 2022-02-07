@@ -4,11 +4,8 @@ import { HardhatUserConfig } from 'hardhat/types';
 // @ts-ignore
 import { accounts } from './test-wallets';
 import {
-  eAvalancheNetwork,
   eEthereumNetwork,
   eNetwork,
-  ePolygonNetwork,
-  eXDaiNetwork,
   eAstarNetwork
 } from './helpers/types';
 import { BUIDLEREVM_CHAINID, COVERAGE_CHAINID } from './helpers/constants';
@@ -117,15 +114,9 @@ const buidlerConfig: HardhatUserConfig = {
       chainId: COVERAGE_CHAINID,
     },
     kovan: getCommonNetworkConfig(eEthereumNetwork.kovan, 42),
-    ropsten: getCommonNetworkConfig(eEthereumNetwork.ropsten, 3),
     main: getCommonNetworkConfig(eEthereumNetwork.main, 1),
     tenderlyMain: getCommonNetworkConfig(eEthereumNetwork.tenderlyMain, 3030),
     tenderly: getCommonNetworkConfig(eEthereumNetwork.tenderlyMain, 3030),
-    matic: getCommonNetworkConfig(ePolygonNetwork.matic, 137),
-    mumbai: getCommonNetworkConfig(ePolygonNetwork.mumbai, 80001),
-    xdai: getCommonNetworkConfig(eXDaiNetwork.xdai, 100),
-    fuji: getCommonNetworkConfig(eAvalancheNetwork.fuji, 43113),
-    avalanche: getCommonNetworkConfig(eAvalancheNetwork.avalanche, 43114),
     shibuya: getCommonNetworkConfig(eAstarNetwork.shibuya, 81),
     hardhat: {
       hardfork: 'istanbul',
