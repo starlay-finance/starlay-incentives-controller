@@ -34,7 +34,7 @@
     "type": "git",
     "url": "git+https://github.com/starlay-finance/starlay-incentives-controller.git"
   },
-  "author": "David Racero",
+  "author": "Starlay",
   "license": "AGPLv3",
   "bugs": {
     "url": "https://github.com/starlay-finance/starlay-incentives-controller/issues"
