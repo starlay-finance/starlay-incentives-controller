@@ -117,6 +117,8 @@ const buidlerConfig: HardhatUserConfig = {
     main: getCommonNetworkConfig(eEthereumNetwork.main, 1),
     tenderlyMain: getCommonNetworkConfig(eEthereumNetwork.tenderlyMain, 3030),
     tenderly: getCommonNetworkConfig(eEthereumNetwork.tenderlyMain, 3030),
+    astar: getCommonNetworkConfig(eAstarNetwork.astar, 592),
+    shiden: getCommonNetworkConfig(eAstarNetwork.shiden, 336),
     shibuya: getCommonNetworkConfig(eAstarNetwork.shibuya, 81),
     hardhat: {
       hardfork: 'istanbul',

@@ -29,6 +29,8 @@ export enum eEthereumNetwork {
 
 
 export enum eAstarNetwork {
+  astar = 'astar',
+  shiden = 'shiden',
   shibuya = 'shibuya',
 }
 
@@ -51,6 +53,8 @@ export interface iEthereumParamsPerNetwork<T> {
 }
 
 export interface iAstarParamsPerNetwork<T> {
+  [eAstarNetwork.astar]: T;
+  [eAstarNetwork.shiden]: T;
   [eAstarNetwork.shibuya]: T;
 }
 
