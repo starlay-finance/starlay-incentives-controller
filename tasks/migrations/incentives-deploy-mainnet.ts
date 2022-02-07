@@ -14,7 +14,6 @@ const {
   POOL_DATA_PROVIDER = '0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d',
   AAVE_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
   TREASURY = '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
-  AAVE_GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
   AAVE_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
 } = process.env;
 
@@ -55,7 +54,6 @@ task(
       !RESERVES ||
       !POOL_DATA_PROVIDER ||
       !AAVE_TOKEN ||
-      !AAVE_GOVERNANCE_V2 ||
       !AAVE_SHORT_EXECUTOR ||
       !TREASURY
     ) {

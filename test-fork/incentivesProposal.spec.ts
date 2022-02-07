@@ -44,7 +44,7 @@ const {
   TREASURY = '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
   IPFS_HASH = 'QmT9qk3CRYbFDWpDFYeAv8T8H1gnongwKhh5J68NLkLir6',
   INCENTIVES_PROXY = '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5',
-  AAVE_GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
+  GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
   STARLAY_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
 } = process.env;
 
@@ -55,7 +55,7 @@ if (
   !ECO_RESERVE ||
   !AAVE_TOKEN ||
   !IPFS_HASH ||
-  !AAVE_GOVERNANCE_V2 ||
+  !GOVERNANCE_V2 ||
   !STARLAY_SHORT_EXECUTOR ||
   !TREASURY
 ) {
@@ -145,7 +145,7 @@ describe('Enable incentives in target assets', () => {
     // Initialize contracts and tokens
     gov = (await ethers.getContractAt(
       'IAaveGovernanceV2',
-      AAVE_GOVERNANCE_V2,
+      GOVERNANCE_V2,
       proposer
     )) as IAaveGovernanceV2;
     pool = (await ethers.getContractAt(
@@ -223,8 +223,8 @@ describe('Enable incentives in target assets', () => {
       proposalExecutionPayload,
       aTokens: aTokensImpl.join(','),
       variableDebtTokens: variableDebtTokensImpl.join(','),
-      aaveGovernance: AAVE_GOVERNANCE_V2,
-      shortExecutor: AAVE_SHORT_EXECUTOR,
+      aaveGovernance: GOVERNANCE_V2,
+      shortExecutor: STARLAY_SHORT_EXECUTOR,
       ipfsHash: IPFS_HASH,
     });
     console.log('submited');

@@ -10,7 +10,7 @@ import { logError } from '../../helpers/tenderly-utils';
 
 const {
   AAVE_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
-  AAVE_GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
+  GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
   AAVE_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
 } = process.env;
 const VOTING_DURATION = 19200;
@@ -37,7 +37,7 @@ task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to A
       // Transfer enough AAVE to proposer
       await (await aave.transfer(await proposer.getAddress(), parseEther('2000000'))).wait();
 
-      if (!AAVE_TOKEN || !AAVE_GOVERNANCE_V2 || !AAVE_SHORT_EXECUTOR) {
+      if (!AAVE_TOKEN || !GOVERNANCE_V2 || !AAVE_SHORT_EXECUTOR) {
         throw new Error(
           'You have not set correctly the .env file, make sure to read the README.md'
         );
@@ -56,7 +56,7 @@ task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to A
       // Initialize contracts and tokens
       const gov = (await DRE.ethers.getContractAt(
         'IAaveGovernanceV2',
-        AAVE_GOVERNANCE_V2,
+        GOVERNANCE_V2,
         proposer
       )) as IAaveGovernanceV2;
 
@@ -78,7 +78,7 @@ task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to A
         proposalExecutionPayload,
         aTokens,
         variableDebtTokens,
-        aaveGovernance: AAVE_GOVERNANCE_V2,
+        aaveGovernance: GOVERNANCE_V2,
         shortExecutor: AAVE_SHORT_EXECUTOR,
         defender: true,
       };

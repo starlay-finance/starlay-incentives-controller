@@ -48,7 +48,7 @@ const {
   AAVE_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
   TREASURY = '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
   IPFS_HASH = 'QmT9qk3CRYbFDWpDFYeAv8T8H1gnongwKhh5J68NLkLir6',
-  AAVE_GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
+  GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
   STARLAY_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
 } = process.env;
 
@@ -59,7 +59,7 @@ if (
   !ECO_RESERVE ||
   !AAVE_TOKEN ||
   !IPFS_HASH ||
-  !AAVE_GOVERNANCE_V2 ||
+  !GOVERNANCE_V2 ||
   !STARLAY_SHORT_EXECUTOR ||
   !TREASURY
 ) {
@@ -200,7 +200,7 @@ describe('Enable incentives in target assets', () => {
     // Send ether to the GOV, which is a non payable contract via selfdestruct
     const selfDestructContractV2 = await new SelfdestructTransferFactory(proposer).deploy();
     await (
-      await selfDestructContractV2.destroyAndTransfer(AAVE_GOVERNANCE_V2, {
+      await selfDestructContractV2.destroyAndTransfer(GOVERNANCE_V2, {
         value: ethers.utils.parseEther('1'),
       })
     ).wait();
@@ -214,7 +214,7 @@ describe('Enable incentives in target assets', () => {
     await impersonateAccountsHardhat([
       AAVE_WHALE,
       ...Object.keys(spendList).map((k) => spendList[k].holder),
-      AAVE_GOVERNANCE_V2,
+      GOVERNANCE_V2,
       STARLAY_SHORT_EXECUTOR,
     ]);
 
@@ -225,7 +225,7 @@ describe('Enable incentives in target assets', () => {
     // Initialize contracts and tokens
     gov = (await ethers.getContractAt(
       'IAaveGovernanceV2',
-      AAVE_GOVERNANCE_V2,
+      GOVERNANCE_V2,
       proposer
     )) as IAaveGovernanceV2;
     pool = (await ethers.getContractAt(
@@ -277,7 +277,6 @@ describe('Enable incentives in target assets', () => {
   });
 
   it('Proposal should be executed', async () => {
-    const impersonatedGovernance = await ethers.provider.getSigner(AAVE_GOVERNANCE_V2);
     const impersonateExecutor = await ethers.provider.getSigner(STARLAY_SHORT_EXECUTOR);
 
     const executionPayload = ProposalIncentivesExecutorFactory.connect(
