@@ -90,10 +90,10 @@ export async function initializeMakeSuite(
   testEnv.aaveIncentivesController = aaveIncentivesController;
   testEnv.pullRewardsIncentivesController = pullRewardsIncentivesController;
   testEnv.aaveToken = aaveToken;
-  testEnv.aDaiMock = await getATokenMock({ slug: 'aDai' });
-  testEnv.aWethMock = await getATokenMock({ slug: 'aWeth' });
-  testEnv.aDaiBaseMock = await getATokenMock({ slug: 'aDaiBase' });
-  testEnv.aWethBaseMock = await getATokenMock({ slug: 'aWethBase' });
+  testEnv.aDaiMock = await getATokenMock({ slug: 'lDai' });
+  testEnv.aWethMock = await getATokenMock({ slug: 'lWeth' });
+  testEnv.aDaiBaseMock = await getATokenMock({ slug: 'lDaiBase' });
+  testEnv.aWethBaseMock = await getATokenMock({ slug: 'lWethBase' });
 }
 
 export function makeSuite(name: string, tests: (testEnv: TestEnv) => void) {
