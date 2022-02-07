@@ -3,7 +3,7 @@ pragma solidity 0.7.5;
 
 interface IProposalIncentivesExecutor {
   function execute(
-    address[6] memory aTokenImplementations,
-    address[6] memory variableDebtImplementation
+    address[8] memory aTokenImplementations,
+    address[8] memory variableDebtImplementation
   ) external;
 }
