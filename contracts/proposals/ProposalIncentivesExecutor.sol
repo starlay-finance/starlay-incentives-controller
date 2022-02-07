@@ -27,48 +27,54 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
   address constant INCENTIVES_CONTROLLER_PROXY_ADDRESS = 0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5;
   address constant INCENTIVES_CONTROLLER_IMPL_ADDRESS = 0x83D055D382f25e6793099713505c68a5C7535a35;
 
-  uint256 constant DISTRIBUTION_DURATION = 7776000; // 90 days
-  uint256 constant DISTRIBUTION_AMOUNT = 198000000000000000000000; // 198000 AAVE during 90 days
+  uint256 constant DISTRIBUTION_DURATION = 2592000; // 30 days
+  uint256 constant DISTRIBUTION_AMOUNT = 32600420000000000000000000; // 32600420 LAY during 30 days
 
   function execute(
-    address[6] memory aTokenImplementations,
-    address[6] memory variableDebtImplementations
+    address[8] memory aTokenImplementations,
+    address[8] memory variableDebtImplementations
   ) external override {
     uint256 tokensCounter;
 
-    address[] memory assets = new address[](12);
+    address[] memory assets = new address[](16);
 
     // Reserves Order: DAI/GUSD/USDC/USDT/WBTC/WETH
-    address payable[6] memory reserves =
-      [
-        0x6B175474E89094C44Da98b954EedeAC495271d0F,
-        0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd,
-        0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48,
-        0xdAC17F958D2ee523a2206206994597C13D831ec7,
-        0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599,
-        0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
-      ];
+    address payable[8] memory reserves = [
+      0xDE35705D679dF73474E7926F39c3387Db15Be8A9, // ASTL at shibuya
+      0xB71Bf258d5Dd9d257f8d2018ECC560f225863eF7, // USDC 18 at shibuya
+      0x5C56E2a9B5e0d04eA9674984c813D40D1b960d23, // USDT 18 at shibuya
+      0x04efa209F9e74E612a529c393Cf9F1141E696F06, // WETH at shibuya
+      0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599, // WBTC at shibuya TODO: fix address
+      0x580B50B913C602A9aE17FbcA815a70cdd8cAE713, // WSDN at shibuya
+      0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2, // ARSW at shibuya TODO: fix address
+      0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2 // LAY at shibuya TODO: fix address
+    ];
 
-    uint256[] memory emissions = new uint256[](12);
+    uint256[] memory emissions = new uint256[](16);
 
-    emissions[0] = 1706018518518520; //aDAI
-    emissions[1] = 1706018518518520; //vDebtDAI
-    emissions[2] = 92939814814815; //aGUSD
-    emissions[3] = 92939814814815; //vDebtGUSD
-    emissions[4] = 5291203703703700; //aUSDC
-    emissions[5] = 5291203703703700; //vDebtUSDC
-    emissions[6] = 3293634259259260; //aUSDT
-    emissions[7] = 3293634259259260; //vDebtUSDT
-    emissions[8] = 1995659722222220; //aWBTC
-    emissions[9] = 105034722222222; //vDebtWBTC
-    emissions[10] = 2464942129629630; //aETH
-    emissions[11] = 129733796296296; //vDebtWETH
-
+    emissions[0] = 808542150297619000; //lASTR
+    emissions[1] = 1886598350694440000; //vdASTR
+    emissions[2] = 808542150297619000; //lUSDC
+    emissions[3] = 1886598350694440000; //vdUSDC
+    emissions[4] = 808542150297619000; //lUSDT
+    emissions[5] = 1886598350694440000; //vdUSDT
+    emissions[6] = 539028100198413000; //lWETH
+    emissions[7] = 1886598350694440000; //vdWETH
+    emissions[8] = 539028100198413000; //lWBTC
+    emissions[9] = 1886598350694440000; //vdWBTC
+    emissions[10] = 269514050099206000; //lWSDN
+    emissions[11] = 628866116898148000; //vdWSDN
+    emissions[12] = 0; //lARSW
+    emissions[13] = 0; //vdARSW
+    emissions[14] = 0; //lLAY
+    emissions[15] = 0; //vdLAY
     ILendingPoolConfigurator poolConfigurator = ILendingPoolConfigurator(POOL_CONFIGURATOR);
-    IIncentivesController incentivesController =
-      IIncentivesController(INCENTIVES_CONTROLLER_PROXY_ADDRESS);
-    IAaveEcosystemReserveController ecosystemReserveController =
-      IAaveEcosystemReserveController(ECO_RESERVE_ADDRESS);
+    IIncentivesController incentivesController = IIncentivesController(
+      INCENTIVES_CONTROLLER_PROXY_ADDRESS
+    );
+    IAaveEcosystemReserveController ecosystemReserveController = IAaveEcosystemReserveController(
+      ECO_RESERVE_ADDRESS
+    );
 
     ILendingPoolAddressesProvider provider = ILendingPoolAddressesProvider(ADDRESSES_PROVIDER);
 
@@ -76,7 +82,10 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
     provider.setAddress(keccak256('INCENTIVES_CONTROLLER'), INCENTIVES_CONTROLLER_PROXY_ADDRESS);
 
     //updating the implementation of the incentives controller proxy
-    provider.setAddressAsProxy(keccak256('INCENTIVES_CONTROLLER'), INCENTIVES_CONTROLLER_IMPL_ADDRESS);
+    provider.setAddressAsProxy(
+      keccak256('INCENTIVES_CONTROLLER'),
+      INCENTIVES_CONTROLLER_IMPL_ADDRESS
+    );
 
     require(
       aTokenImplementations.length == variableDebtImplementations.length &&
@@ -94,8 +103,9 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
         IATokenDetailed(variableDebtImplementations[x]).UNDERLYING_ASSET_ADDRESS() == reserves[x],
         'Debt Token underlying does not match'
       );
-      DataTypes.ReserveData memory reserveData =
-        ILendingPoolData(LENDING_POOL).getReserveData(reserves[x]);
+      DataTypes.ReserveData memory reserveData = ILendingPoolData(LENDING_POOL).getReserveData(
+        reserves[x]
+      );
 
       // Update aToken impl
       poolConfigurator.updateAToken(reserves[x], aTokenImplementations[x]);
@@ -107,7 +117,6 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
 
       // Configure variable debt token at incentives controller
       assets[tokensCounter++] = reserveData.variableDebtTokenAddress;
-
     }
     // Transfer AAVE funds to the Incentives Controller
     ecosystemReserveController.transfer(
