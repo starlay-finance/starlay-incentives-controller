@@ -7,12 +7,8 @@ import {
   eContractid,
   eEthereumNetwork,
   iParamsPerNetwork,
-  ePolygonNetwork,
-  eXDaiNetwork,
   eNetwork,
   iEthereumParamsPerNetwork,
-  iPolygonParamsPerNetwork,
-  iXDaiParamsPerNetwork,
   eAstarNetwork,
   iAstarParamsPerNetwork,
 } from './types';
@@ -138,14 +134,11 @@ export const linkBytecode = (artifact: Artifact, libraries: any) => {
 export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNetwork) => {
   const {
     main,
-    ropsten,
     kovan,
     coverage,
     buidlerevm,
     tenderlyMain,
   } = param as iEthereumParamsPerNetwork<T>;
-  const { matic, mumbai } = param as iPolygonParamsPerNetwork<T>;
-  const { xdai } = param as iXDaiParamsPerNetwork<T>;
   const { shibuya } = param as iAstarParamsPerNetwork<T>;
   const MAINNET_FORK = process.env.MAINNET_FORK === 'true';
   if (MAINNET_FORK) {
@@ -161,18 +154,10 @@ export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNet
       return buidlerevm;
     case eEthereumNetwork.kovan:
       return kovan;
-    case eEthereumNetwork.ropsten:
-      return ropsten;
     case eEthereumNetwork.main:
       return main;
     case eEthereumNetwork.tenderlyMain:
       return tenderlyMain;
-    case ePolygonNetwork.matic:
-      return matic;
-    case ePolygonNetwork.mumbai:
-      return mumbai;
-    case eXDaiNetwork.xdai:
-      return xdai;
     case eAstarNetwork.shibuya:
       return shibuya;
   }
