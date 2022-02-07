@@ -48,8 +48,8 @@ export const testDeployIncentivesController = async (
       emissionManagerAddress,
       emissionManagerAddress,
       '2000',
-      'Staked AAVE',
-      'stkAAVE',
+      'Staked Lay',
+      'sLay',
       '18',
     ]
   );
