@@ -17,16 +17,16 @@ export const testDeployIncentivesController = async (
   emissionManager: Signer,
   vaultOfRewards: Signer,
   proxyAdmin: Signer,
-  aaveToken: MintableErc20
+  token: MintableErc20
 ) => {
   const emissionManagerAddress = await emissionManager.getAddress();
   // Deploy proxies and implementations
   const stakeProxy = await deployInitializableAdminUpgradeabilityProxy();
   const incentivesProxy = await deployInitializableAdminUpgradeabilityProxy();
 
-  const aaveStakeV3 = await deployStakedAaveV3([
-    aaveToken.address,
-    aaveToken.address,
+  const stakeV3 = await deployStakedAaveV3([
+    token.address,
+    token.address,
     COOLDOWN_SECONDS,
     UNSTAKE_WINDOW,
     await vaultOfRewards.getAddress(),
@@ -40,7 +40,7 @@ export const testDeployIncentivesController = async (
   ]);
 
   // Initialize proxies
-  const aaveStakeInit = aaveStakeV3.interface.encodeFunctionData(
+  const stakeInit = stakeV3.interface.encodeFunctionData(
     // @ts-ignore
     'initialize(address,address,address,uint256,string,string,uint8)',
     [
@@ -57,9 +57,9 @@ export const testDeployIncentivesController = async (
 
   await (
     await stakeProxy['initialize(address,address,bytes)'](
-      aaveStakeV3.address,
+      stakeV3.address,
       await proxyAdmin.getAddress(),
-      aaveStakeInit
+      stakeInit
     )
   ).wait();
   await (
