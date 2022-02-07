@@ -23,11 +23,11 @@ const {
   POOL_PROVIDER = '0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5',
   POOL_DATA_PROVIDER = '0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d',
   ECO_RESERVE = '0x25F2226B597E8F9514B3F68F00f494cF4f286491',
-  AAVE_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
+  STARLAY_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
   TREASURY = '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
   IPFS_HASH = 'QmT9qk3CRYbFDWpDFYeAv8T8H1gnongwKhh5J68NLkLir6',
-  AAVE_GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
-  AAVE_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
+  GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
+  STARLAY_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
 } = process.env;
 
 if (
@@ -35,19 +35,19 @@ if (
   !POOL_CONFIGURATOR ||
   !POOL_DATA_PROVIDER ||
   !ECO_RESERVE ||
-  !AAVE_TOKEN ||
+  !STARLAY_TOKEN ||
   !IPFS_HASH ||
-  !AAVE_GOVERNANCE_V2 ||
-  !AAVE_SHORT_EXECUTOR ||
+  !GOVERNANCE_V2 ||
+  !STARLAY_SHORT_EXECUTOR ||
   !TREASURY
 ) {
   throw new Error('You have not set correctly the .env file, make sure to read the README.md');
 }
 
-const AAVE_LENDING_POOL = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
+const LENDING_POOL = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
 const VOTING_DURATION = 19200;
 
-const AAVE_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
+const STARLAY_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
 
 const DAI_TOKEN = '0x6b175474e89094c44da98b954eedeac495271d0f';
 const DAI_HOLDER = '0x72aabd13090af25dbb804f84de6280c697ed1150';
@@ -102,35 +102,35 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
       address: proposalExecutionPayloadAddress,
     } = await new ProposalIncentivesExecutor__factory(proposer).deploy();
     proposalExecutionPayload = proposalExecutionPayloadAddress;
-    // Send ether to the AAVE_WHALE, which is a non payable contract via selfdestruct
+    // Send ether to the STARLAY_WHALE, which is a non payable contract via selfdestruct
     const selfDestructContract = await new SelfdestructTransfer__factory(proposer).deploy();
     await (
-      await selfDestructContract.destroyAndTransfer(AAVE_WHALE, {
+      await selfDestructContract.destroyAndTransfer(STARLAY_WHALE, {
         value: ethers.utils.parseEther('1'),
       })
     ).wait();
 
     // Impersonating holders
-    whale = ethers.provider.getSigner(AAVE_WHALE);
+    whale = ethers.provider.getSigner(STARLAY_WHALE);
     daiHolder = ethers.provider.getSigner(DAI_HOLDER);
 
     // Initialize contracts and tokens
     gov = (await ethers.getContractAt(
       'IAaveGovernanceV2',
-      AAVE_GOVERNANCE_V2,
+      GOVERNANCE_V2,
       proposer
     )) as IAaveGovernanceV2;
     pool = (await ethers.getContractAt(
       'ILendingPool',
-      AAVE_LENDING_POOL,
+      LENDING_POOL,
       proposer
     )) as ILendingPool;
 
-    const aave = IERC20__factory.connect(AAVE_TOKEN, whale);
+    const layToken = IERC20__factory.connect(STARLAY_TOKEN, whale);
     const dai = IERC20__factory.connect(DAI_TOKEN, daiHolder);
 
-    // Transfer enough AAVE to proposer
-    await (await aave.transfer(proposer.address, parseEther('2000000'))).wait();
+    // Transfer enough Starlay to proposer
+    await (await layToken.transfer(proposer.address, parseEther('2000000'))).wait();
 
     // Transfer DAI to repay future DAI loan
     await (await dai.transfer(proposer.address, parseEther('100000'))).wait();
@@ -158,10 +158,10 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
 
     await advanceBlockTo((await latestBlock()) + 10);
 
-    const balance = await aave.balanceOf(proposer.address);
-    console.log('AAVE Balance proposer', formatEther(balance));
-    const aaveGovToken = IGovernancePowerDelegationToken__factory.connect(AAVE_TOKEN, proposer);
-    const propositionPower = await aaveGovToken.getPowerAtBlock(
+    const balance = await layToken.balanceOf(proposer.address);
+    console.log('Starlay Balance proposer', formatEther(balance));
+    const govToken = IGovernancePowerDelegationToken__factory.connect(STARLAY_TOKEN, proposer);
+    const propositionPower = await govToken.getPowerAtBlock(
       proposer.address,
       ((await latestBlock()) - 1).toString(),
       '1'
@@ -178,8 +178,8 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
       proposalExecutionPayload,
       aTokens: aTokensImpl.join(','),
       variableDebtTokens: variableDebtTokensImpl.join(','),
-      aaveGovernance: AAVE_GOVERNANCE_V2,
-      shortExecutor: AAVE_SHORT_EXECUTOR,
+      governance: GOVERNANCE_V2,
+      shortExecutor: STARLAY_SHORT_EXECUTOR,
       ipfsHash: IPFS_HASH,
     });
     console.log('- Proposal Submited');

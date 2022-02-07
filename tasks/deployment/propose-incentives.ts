@@ -15,7 +15,7 @@ task('propose-incentives', 'Create some proposals and votes')
   .addParam('proposalExecutionPayload')
   .addParam('aTokens')
   .addParam('variableDebtTokens')
-  .addParam('aaveGovernance')
+  .addParam('governance')
   .addParam('shortExecutor')
   .addFlag('defender')
   .setAction(
@@ -23,7 +23,7 @@ task('propose-incentives', 'Create some proposals and votes')
       {
         aTokens,
         variableDebtTokens,
-        aaveGovernance,
+        governance,
         shortExecutor,
         proposalExecutionPayload,
         defender,
@@ -50,6 +50,7 @@ task('propose-incentives', 'Create some proposals and votes')
 
       const executeSignature = 'execute(address[8],address[8])';
       const gov = await IAaveGovernanceV2__factory.connect(aaveGovernance, proposer);
+
       const ipfsEncoded = '0xf7a1f565fcd7684fba6fea5d77c5e699653e21cb6ae25fbf8c5dbc8d694c7949';
 
       try {
