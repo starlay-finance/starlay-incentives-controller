@@ -66,7 +66,7 @@ if (
   throw new Error('You have not set correctly the .env file, make sure to read the README.md');
 }
 
-const AAVE_LENDING_POOL = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
+const LENDING_POOL = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
 const VOTING_DURATION = 19200;
 
 const AAVE_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
@@ -230,7 +230,7 @@ describe('Enable incentives in target assets', () => {
     )) as IAaveGovernanceV2;
     pool = (await ethers.getContractAt(
       'ILendingPool',
-      AAVE_LENDING_POOL,
+      LENDING_POOL,
       proposer
     )) as ILendingPool;
 

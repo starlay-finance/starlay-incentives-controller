@@ -16,7 +16,6 @@ const {
   TREASURY = '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
 } = process.env;
 
-const AAVE_LENDING_POOL = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
 const INCENTIVES_PROXY = '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5';
 
 task(
