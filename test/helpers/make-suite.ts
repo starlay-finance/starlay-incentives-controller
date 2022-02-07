@@ -32,7 +32,7 @@ export interface TestEnv {
   deployer: SignerWithAddress;
   users: SignerWithAddress[];
   token: MintableErc20;
-  aaveIncentivesController: StakedTokenIncentivesController;
+  incentivesController: StakedTokenIncentivesController;
   pullRewardsIncentivesController: PullRewardsIncentivesController;
   stakedToken: StakedAaveV3;
   aDaiMock: ATokenMock;
@@ -53,7 +53,7 @@ const testEnv: TestEnv = {
   users: [] as SignerWithAddress[],
   token: {} as MintableErc20,
   stakedToken: {} as StakedAaveV3,
-  aaveIncentivesController: {} as StakedTokenIncentivesController,
+  incentivesController: {} as StakedTokenIncentivesController,
   pullRewardsIncentivesController: {} as PullRewardsIncentivesController,
   aDaiMock: {} as ATokenMock,
   aWethMock: {} as ATokenMock,
@@ -87,7 +87,7 @@ export async function initializeMakeSuite(
   testEnv.deployer = deployer;
   testEnv.rewardsVault = rewardsVault;
   testEnv.stakedToken = starlayStake;
-  testEnv.aaveIncentivesController = incentivesController;
+  testEnv.incentivesController = incentivesController;
   testEnv.pullRewardsIncentivesController = pullRewardsIncentivesController;
   testEnv.token = starlayToken;
   testEnv.aDaiMock = await getATokenMock({ slug: 'lDai' });
