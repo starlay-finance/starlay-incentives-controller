@@ -33,14 +33,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aave/incentives-controller.git"
+    "url": "git+https://github.com/starley-finance/starley-incentives-controller.git"
   },
   "author": "David Racero",
   "license": "AGPLv3",
   "bugs": {
-    "url": "https://github.com/aave/incentives-controller/issues"
+    "url": "https://github.com/starley-finance/starley-incentives-controller/issues"
   },
-  "homepage": "https://github.com/aave/incentives-controller#readme",
+  "homepage": "https://github.com/starley-finance/starley-incentives-controller#readme",
   "devDependencies": {
     "@aave/protocol-v2": "^1.0.2-fat.3",
     "@nomiclabs/hardhat-ethers": "^2.0.0",
