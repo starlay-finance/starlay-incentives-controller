@@ -81,8 +81,8 @@ describe('Enable incentives in target assets', () => {
   let incentivesProxy: tEthereumAddress;
   let gov: IAaveGovernanceV2;
   let pool: ILendingPool;
-  let aave: IERC20;
-  let stkAave: IERC20;
+  let layToken: IERC20;
+  let stakedLay: IERC20;
   let dai: IERC20;
   let aDAI: AToken;
   let variableDebtDAI: IERC20;
@@ -160,14 +160,14 @@ describe('Enable incentives in target assets', () => {
       variableDebtTokenAddress,
     } = await pool.getReserveData(DAI_TOKEN);
 
-    aave = IERC20Factory.connect(STARLAY_TOKEN, whale);
-    stkAave = IERC20Factory.connect(STAKED_STARLAY, proposer);
+    layToken = IERC20Factory.connect(STARLAY_TOKEN, whale);
+    stakedLay = IERC20Factory.connect(STAKED_STARLAY, proposer);
     dai = IERC20Factory.connect(DAI_TOKEN, daiHolder);
     aDAI = ATokenFactory.connect(aTokenAddress, proposer);
     variableDebtDAI = IERC20Factory.connect(variableDebtTokenAddress, proposer);
 
     // Transfer enough AAVE to proposer
-    await (await aave.transfer(proposer.address, parseEther('2000000'))).wait();
+    await (await layToken.transfer(proposer.address, parseEther('2000000'))).wait();
 
     // Transfer DAI to repay future DAI loan
     await (await dai.transfer(proposer.address, parseEther('100000'))).wait();
@@ -200,10 +200,10 @@ describe('Enable incentives in target assets', () => {
     await advanceBlockTo((await latestBlock()) + 10);
 
     try {
-      const balance = await aave.balanceOf(proposer.address);
+      const balance = await layToken.balanceOf(proposer.address);
       console.log('AAVE Balance proposer', formatEther(balance));
-      const aaveGovToken = IGovernancePowerDelegationTokenFactory.connect(STARLAY_TOKEN, proposer);
-      const propositionPower = await aaveGovToken.getPowerAtBlock(
+      const govToken = IGovernancePowerDelegationTokenFactory.connect(STARLAY_TOKEN, proposer);
+      const propositionPower = await govToken.getPowerAtBlock(
         proposer.address,
         ((await latestBlock()) - 1).toString(),
         '1'
@@ -288,7 +288,7 @@ describe('Enable incentives in target assets', () => {
     const atokenBalance = await IATokenFactory.connect(aTokenAddress, proposer).scaledBalanceOf(
       proposer.address
     );
-    const priorStkBalance = await IERC20Factory.connect(stkAave.address, proposer).balanceOf(
+    const priorStkBalance = await IERC20Factory.connect(stakedLay.address, proposer).balanceOf(
       proposer.address
     );
     const userIndexBefore = await getUserIndex(incentives, proposer.address, aTokenAddress);
@@ -299,7 +299,7 @@ describe('Enable incentives in target assets', () => {
       .claimRewards([aTokenAddress], MAX_UINT_AMOUNT, proposer.address);
 
     expect(tx2).to.emit(incentives, 'RewardsClaimed');
-    const afterStkBalance = await stkAave.balanceOf(proposer.address);
+    const afterStkBalance = await stakedLay.balanceOf(proposer.address);
     const claimed = afterStkBalance.sub(priorStkBalance);
 
     const userIndexAfter = await getUserIndex(incentives, proposer.address, aTokenAddress);
@@ -366,9 +366,9 @@ describe('Enable incentives in target assets', () => {
     const reserveConfigs = await getReserveConfigs(POOL_PROVIDER, RESERVES, proposer);
 
     // Deposit AAVE to LendingPool to have enought collateral for future borrows
-    await (await aave.connect(proposer).approve(pool.address, parseEther('1000'))).wait();
+    await (await layToken.connect(proposer).approve(pool.address, parseEther('1000'))).wait();
     await (
-      await pool.connect(proposer).deposit(aave.address, parseEther('1000'), proposer.address, 0)
+      await pool.connect(proposer).deposit(layToken.address, parseEther('1000'), proposer.address, 0)
     ).wait();
 
     for (let x = 0; x < reserveConfigs.length; x++) {
@@ -424,14 +424,14 @@ describe('Enable incentives in target assets', () => {
 
       await increaseTime(86400);
 
-      const priorBalance = await stkAave.balanceOf(proposer.address);
+      const priorBalance = await stakedLay.balanceOf(proposer.address);
       const tx = await incentives
         .connect(proposer)
         .claimRewards([aTokenAddress, variableDebtTokenAddress], MAX_UINT_AMOUNT, proposer.address);
       await tx.wait();
       expect(tx).to.emit(incentives, 'RewardsClaimed');
 
-      const afterBalance = await stkAave.balanceOf(proposer.address);
+      const afterBalance = await stakedLay.balanceOf(proposer.address);
       expect(afterBalance).to.be.gt(priorBalance);
     }
   });
