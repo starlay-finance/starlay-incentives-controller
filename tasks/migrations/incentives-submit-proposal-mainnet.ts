@@ -13,7 +13,7 @@ const {
   STARLAY_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
 } = process.env;
 
-task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to Aave Governance')
+task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to Starlay Governance')
   .addParam('proposalExecutionPayload')
   .addParam('aTokens')
   .addParam('variableDebtTokens')
@@ -52,15 +52,15 @@ task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to Aa
         proposer
       )) as IAaveGovernanceV2;
 
-      const aave = IERC20__factory.connect(STARLAY_TOKEN, proposer);
+      const layToken = IERC20__factory.connect(STARLAY_TOKEN, proposer);
 
       // Balance and proposal power check
-      const balance = await aave.balanceOf(proposerAddress);
+      const balance = await layToken.balanceOf(proposerAddress);
       const priorBlock = ((await latestBlock()) - 1).toString();
-      const aaveGovToken = IGovernancePowerDelegationToken__factory.connect(STARLAY_TOKEN, proposer);
-      const propositionPower = await aaveGovToken.getPowerAtBlock(proposerAddress, priorBlock, '1');
+      const govToken = IGovernancePowerDelegationToken__factory.connect(STARLAY_TOKEN, proposer);
+      const propositionPower = await govToken.getPowerAtBlock(proposerAddress, priorBlock, '1');
 
-      console.log('- AAVE Balance proposer', formatEther(balance));
+      console.log('- Starlay Balance proposer', formatEther(balance));
       console.log(
         `- Proposition power of ${proposerAddress} at block: ${priorBlock}`,
         formatEther(propositionPower)
@@ -72,7 +72,7 @@ task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to Aa
         proposalExecutionPayload,
         aTokens,
         variableDebtTokens,
-        aaveGovernance: GOVERNANCE_V2,
+        governance: GOVERNANCE_V2,
         shortExecutor: STARLAY_SHORT_EXECUTOR,
         defender: true,
       };

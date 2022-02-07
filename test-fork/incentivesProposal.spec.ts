@@ -223,7 +223,7 @@ describe('Enable incentives in target assets', () => {
       proposalExecutionPayload,
       aTokens: aTokensImpl.join(','),
       variableDebtTokens: variableDebtTokensImpl.join(','),
-      aaveGovernance: GOVERNANCE_V2,
+      governance: GOVERNANCE_V2,
       shortExecutor: STARLAY_SHORT_EXECUTOR,
       ipfsHash: IPFS_HASH,
     });

@@ -126,11 +126,11 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
       proposer
     )) as ILendingPool;
 
-    const aave = IERC20__factory.connect(STARLAY_TOKEN, whale);
+    const layToken = IERC20__factory.connect(STARLAY_TOKEN, whale);
     const dai = IERC20__factory.connect(DAI_TOKEN, daiHolder);
 
-    // Transfer enough AAVE to proposer
-    await (await aave.transfer(proposer.address, parseEther('2000000'))).wait();
+    // Transfer enough Starlay to proposer
+    await (await layToken.transfer(proposer.address, parseEther('2000000'))).wait();
 
     // Transfer DAI to repay future DAI loan
     await (await dai.transfer(proposer.address, parseEther('100000'))).wait();
@@ -158,10 +158,10 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
 
     await advanceBlockTo((await latestBlock()) + 10);
 
-    const balance = await aave.balanceOf(proposer.address);
-    console.log('AAVE Balance proposer', formatEther(balance));
-    const aaveGovToken = IGovernancePowerDelegationToken__factory.connect(STARLAY_TOKEN, proposer);
-    const propositionPower = await aaveGovToken.getPowerAtBlock(
+    const balance = await layToken.balanceOf(proposer.address);
+    console.log('Starlay Balance proposer', formatEther(balance));
+    const govToken = IGovernancePowerDelegationToken__factory.connect(STARLAY_TOKEN, proposer);
+    const propositionPower = await govToken.getPowerAtBlock(
       proposer.address,
       ((await latestBlock()) - 1).toString(),
       '1'
@@ -178,7 +178,7 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
       proposalExecutionPayload,
       aTokens: aTokensImpl.join(','),
       variableDebtTokens: variableDebtTokensImpl.join(','),
-      aaveGovernance: GOVERNANCE_V2,
+      governance: GOVERNANCE_V2,
       shortExecutor: STARLAY_SHORT_EXECUTOR,
       ipfsHash: IPFS_HASH,
     });
