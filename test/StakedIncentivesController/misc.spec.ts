@@ -56,12 +56,12 @@ makeSuite('AaveIncentivesController misc tests', (testEnv) => {
   });
 
   it('Should REWARD_TOKEN getter returns the stake token address to keep old interface compatibility', async () => {
-    const { aaveIncentivesController, stakedAave } = testEnv;
-    await expect(await aaveIncentivesController.REWARD_TOKEN()).to.be.equal(stakedAave.address);
+    const { aaveIncentivesController, stakedToken } = testEnv;
+    await expect(await aaveIncentivesController.REWARD_TOKEN()).to.be.equal(stakedToken.address);
   });
 
   it('Should claimRewards revert if to argument is ZERO_ADDRESS', async () => {
-    const { aaveIncentivesController, users, aDaiMock, stakedAave } = testEnv;
+    const { aaveIncentivesController, users, aDaiMock } = testEnv;
     const [userWithRewards] = users;
 
     await waitForTx(await aaveIncentivesController.configureAssets([aDaiMock.address], ['2000']));

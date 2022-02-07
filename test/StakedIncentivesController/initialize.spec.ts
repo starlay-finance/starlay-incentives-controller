@@ -10,9 +10,9 @@ makeSuite('AaveIncentivesController initialize', (testEnv: TestEnv) => {
     await expect(aaveIncentivesController.initialize()).to.be.reverted;
   });
   it('allowance on aave token should be granted to psm contract for pei', async () => {
-    const { aaveIncentivesController, stakedAave, aaveToken } = testEnv;
+    const { aaveIncentivesController, stakedToken, token } = testEnv;
     await expect(
-      (await aaveToken.allowance(aaveIncentivesController.address, stakedAave.address)).toString()
+      (await token.allowance(aaveIncentivesController.address, stakedToken.address)).toString()
     ).to.be.equal(MAX_UINT_AMOUNT);
   });
 });

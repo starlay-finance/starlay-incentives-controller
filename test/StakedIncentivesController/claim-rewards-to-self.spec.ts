@@ -55,7 +55,7 @@ makeSuite('AaveIncentivesController claimRewardsToSelf tests', (testEnv) => {
     let amountToClaim = _amountToClaim;
     it(caseName, async () => {
       await increaseTime(100);
-      const { aaveIncentivesController, stakedAave, aDaiMock } = testEnv;
+      const { aaveIncentivesController, stakedToken, aDaiMock } = testEnv;
 
       const distributionEndTimestamp = await aaveIncentivesController.getDistributionEnd();
       const userAddress = await aaveIncentivesController.signer.getAddress();
@@ -71,7 +71,7 @@ makeSuite('AaveIncentivesController claimRewardsToSelf tests', (testEnv) => {
 
       const destinationAddress = userAddress;
 
-      const destinationAddressBalanceBefore = await stakedAave.balanceOf(destinationAddress);
+      const destinationAddressBalanceBefore = await stakedToken.balanceOf(destinationAddress);
       await aDaiMock.setUserBalanceAndSupply(stakedByUser, totalStaked);
       await aDaiMock.handleActionOnAic(userAddress, totalStaked, stakedByUser);
 
@@ -105,7 +105,7 @@ makeSuite('AaveIncentivesController claimRewardsToSelf tests', (testEnv) => {
         userAddress
       );
 
-      const destinationAddressBalanceAfter = await stakedAave.balanceOf(destinationAddress);
+      const destinationAddressBalanceAfter = await stakedToken.balanceOf(destinationAddress);
 
       const claimedAmount = destinationAddressBalanceAfter.sub(destinationAddressBalanceBefore);
 

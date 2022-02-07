@@ -15,7 +15,7 @@ makeSuite('PullRewardsIncentivesController - Claim rewards on behalf', (testEnv:
     ).to.be.revertedWith('ONLY_EMISSION_MANAGER');
   });
   it('Should claimRewardsOnBehalf revert if called claimer is not authorized', async () => {
-    const { pullRewardsIncentivesController, users, aDaiBaseMock, aaveToken } = testEnv;
+    const { pullRewardsIncentivesController, users, aDaiBaseMock, token } = testEnv;
     const [userWithRewards, thirdClaimer] = users;
 
     await waitForTx(
@@ -24,7 +24,7 @@ makeSuite('PullRewardsIncentivesController - Claim rewards on behalf', (testEnv:
     await waitForTx(await aDaiBaseMock.setUserBalanceAndSupply('300000', '300000'));
 
     // Claim from third party claimer
-    const priorStkBalance = await aaveToken.balanceOf(thirdClaimer.address);
+    const priorStkBalance = await token.balanceOf(thirdClaimer.address);
 
     await expect(
       pullRewardsIncentivesController
@@ -37,7 +37,7 @@ makeSuite('PullRewardsIncentivesController - Claim rewards on behalf', (testEnv:
         )
     ).to.be.revertedWith('CLAIMER_UNAUTHORIZED');
 
-    const afterStkBalance = await aaveToken.balanceOf(thirdClaimer.address);
+    const afterStkBalance = await token.balanceOf(thirdClaimer.address);
     expect(afterStkBalance).to.be.eq(priorStkBalance);
   });
   it('Should setClaimer pass if called by emission manager', async () => {
@@ -57,7 +57,7 @@ makeSuite('PullRewardsIncentivesController - Claim rewards on behalf', (testEnv:
     ).to.be.equal(thirdClaimer.address);
   });
   it('Should claimRewardsOnBehalf pass if called by the assigned claimer', async () => {
-    const { pullRewardsIncentivesController, users, aDaiBaseMock, aaveToken } = testEnv;
+    const { pullRewardsIncentivesController, users, aDaiBaseMock, token } = testEnv;
     const [userWithRewards, thirdClaimer] = users;
 
     await waitForTx(
@@ -66,7 +66,7 @@ makeSuite('PullRewardsIncentivesController - Claim rewards on behalf', (testEnv:
     await waitForTx(await aDaiBaseMock.setUserBalanceAndSupply('300000', '30000'));
 
     // Claim from third party claimer
-    const priorBalance = await aaveToken.balanceOf(thirdClaimer.address);
+    const priorBalance = await token.balanceOf(thirdClaimer.address);
 
     await expect(
       pullRewardsIncentivesController
@@ -80,12 +80,12 @@ makeSuite('PullRewardsIncentivesController - Claim rewards on behalf', (testEnv:
     )
       .to.emit(pullRewardsIncentivesController, 'RewardsClaimed')
       .withArgs(userWithRewards.address, thirdClaimer.address, thirdClaimer.address, '99999');
-    const afterStkBalance = await aaveToken.balanceOf(thirdClaimer.address);
+    const afterStkBalance = await token.balanceOf(thirdClaimer.address);
     expect(afterStkBalance).to.be.gt(priorBalance);
   });
 
   it('Should claimRewardsOnBehalf revert if to argument address is ZERO_ADDRESS', async () => {
-    const { pullRewardsIncentivesController, users, aDaiBaseMock, aaveToken } = testEnv;
+    const { pullRewardsIncentivesController, users, aDaiBaseMock } = testEnv;
     const [userWithRewards, thirdClaimer] = users;
 
     await waitForTx(
