@@ -5,7 +5,7 @@ pragma abicoder v2;
 import {IERC20} from '@aave/aave-stake/contracts/interfaces/IERC20.sol';
 import {ILendingPoolAddressesProvider} from '../interfaces/ILendingPoolAddressesProvider.sol';
 import {ILendingPoolConfigurator} from '../interfaces/ILendingPoolConfigurator.sol';
-import {IAaveIncentivesController} from '../interfaces/IAaveIncentivesController.sol';
+import {IIncentivesController} from '../interfaces/IIncentivesController.sol';
 import {IAaveEcosystemReserveController} from '../interfaces/IAaveEcosystemReserveController.sol';
 import {IProposalIncentivesExecutor} from '../interfaces/IProposalIncentivesExecutor.sol';
 import {DistributionTypes} from '../lib/DistributionTypes.sol';
@@ -65,8 +65,8 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
     emissions[11] = 129733796296296; //vDebtWETH
 
     ILendingPoolConfigurator poolConfigurator = ILendingPoolConfigurator(POOL_CONFIGURATOR);
-    IAaveIncentivesController incentivesController =
-      IAaveIncentivesController(INCENTIVES_CONTROLLER_PROXY_ADDRESS);
+    IIncentivesController incentivesController =
+      IIncentivesController(INCENTIVES_CONTROLLER_PROXY_ADDRESS);
     IAaveEcosystemReserveController ecosystemReserveController =
       IAaveEcosystemReserveController(ECO_RESERVE_ADDRESS);
 
