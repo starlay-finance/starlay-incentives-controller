@@ -14,13 +14,13 @@ import {
 import { parseEther } from '@ethersproject/units';
 import { MAX_UINT_AMOUNT } from '../helpers/constants';
 
-const topUpWalletsWithAave = async (
+const topUpWalletsWithStarlay = async (
   wallets: Signer[],
-  aaveToken: MintableErc20,
+  starlayToken: MintableErc20,
   amount: string
 ) => {
   for (const wallet of wallets) {
-    await waitForTx(await aaveToken.connect(wallet).mint(amount));
+    await waitForTx(await starlayToken.connect(wallet).mint(amount));
   }
 };
 
@@ -32,12 +32,12 @@ const buildTestEnv = async (
 ) => {
   console.time('setup');
 
-  const aaveToken = await deployMintableErc20(['Aave', 'aave']);
+  const starlayToken = await deployMintableErc20(['Starlay', 'lay']);
 
-  await waitForTx(await aaveToken.connect(vaultOfRewards).mint(ethers.utils.parseEther('2000000')));
-  await topUpWalletsWithAave(
+  await waitForTx(await starlayToken.connect(vaultOfRewards).mint(ethers.utils.parseEther('2000000')));
+  await topUpWalletsWithStarlay(
     [restWallets[0], restWallets[1], restWallets[2], restWallets[3], restWallets[4]],
-    aaveToken,
+    starlayToken,
     ethers.utils.parseEther('100').toString()
   );
 
@@ -45,17 +45,17 @@ const buildTestEnv = async (
     deployer,
     vaultOfRewards,
     proxyAdmin,
-    aaveToken
+    starlayToken
   );
   const { proxy: baseIncentivesProxy } = await DRE.run('deploy-pull-rewards-incentives', {
     emissionManager: await deployer.getAddress(),
-    rewardToken: aaveToken.address,
+    rewardToken: starlayToken.address,
     rewardsVault: await vaultOfRewards.getAddress(),
     proxyAdmin: await proxyAdmin.getAddress(),
   });
 
   await waitForTx(
-    await aaveToken.connect(vaultOfRewards).approve(baseIncentivesProxy, MAX_UINT_AMOUNT)
+    await starlayToken.connect(vaultOfRewards).approve(baseIncentivesProxy, MAX_UINT_AMOUNT)
   );
 
   const distributionDuration = ((await getBlockTimestamp()) + 1000 * 60 * 60).toString();
@@ -77,7 +77,7 @@ const buildTestEnv = async (
   await incentivesController.setDistributionEnd(distributionDuration);
   await pullRewardsIncentivesController.setDistributionEnd(distributionDuration);
   await waitForTx(
-    await aaveToken
+    await starlayToken
       .connect(vaultOfRewards)
       .transfer(incentivesController.address, parseEther('1000000'))
   );
@@ -85,10 +85,10 @@ const buildTestEnv = async (
   console.timeEnd('setup');
 
   return {
-    aaveToken,
+    starlayToken,
     incentivesController,
     pullRewardsIncentivesController,
-    aaveStake: StakedAaveV3__factory.connect(stakeProxy.address, deployer),
+    starlayStake: StakedAaveV3__factory.connect(stakeProxy.address, deployer),
   };
 };
 
@@ -96,14 +96,14 @@ before(async () => {
   await rawBRE.run('set-DRE');
   const [deployer, proxyAdmin, rewardsVault, ...restWallets] = await getEthersSigners();
   const {
-    aaveToken,
-    aaveStake,
+    starlayToken,
+    starlayStake,
     incentivesController,
     pullRewardsIncentivesController,
   } = await buildTestEnv(deployer, rewardsVault, proxyAdmin, restWallets);
   await initializeMakeSuite(
-    aaveToken,
-    aaveStake,
+    starlayToken,
+    starlayStake,
     incentivesController,
     pullRewardsIncentivesController
   );
