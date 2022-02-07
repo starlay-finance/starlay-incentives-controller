@@ -52,18 +52,18 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
 
     uint256[] memory emissions = new uint256[](16);
 
-    emissions[0] = 808542150297619000; //lASTR
-    emissions[1] = 1886598350694440000; //vdASTR
-    emissions[2] = 808542150297619000; //lUSDC
-    emissions[3] = 1886598350694440000; //vdUSDC
-    emissions[4] = 808542150297619000; //lUSDT
-    emissions[5] = 1886598350694440000; //vdUSDT
-    emissions[6] = 539028100198413000; //lWETH
-    emissions[7] = 1886598350694440000; //vdWETH
-    emissions[8] = 539028100198413000; //lWBTC
-    emissions[9] = 1886598350694440000; //vdWBTC
-    emissions[10] = 269514050099206000; //lWSDN
-    emissions[11] = 628866116898148000; //vdWSDN
+    emissions[0] = 808542052469135802; //lASTR
+    emissions[1] = 1886598379629629629; //vdASTR
+    emissions[2] = 808542052469135802; //lUSDC
+    emissions[3] = 1886598379629629629; //vdUSDC
+    emissions[4] = 808542052469135802; //lUSDT
+    emissions[5] = 1886598379629629629; //vdUSDT
+    emissions[6] = 539028163580246913; //lWETH
+    emissions[7] = 1886598379629629629; //vdWETH
+    emissions[8] = 539028163580246913; //lWBTC
+    emissions[9] = 1886598379629629629; //vdWBTC
+    emissions[10] = 269513888888888888; //lWSDN
+    emissions[11] = 628866126543209876; //vdWSDN
     emissions[12] = 0; //lARSW
     emissions[13] = 0; //vdARSW
     emissions[14] = 0; //lLAY
