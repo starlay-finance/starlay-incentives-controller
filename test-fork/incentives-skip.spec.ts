@@ -246,7 +246,7 @@ describe('Enable incentives in target assets', () => {
     aDAI = ATokenFactory.connect(aTokenAddress, proposer);
     variableDebtDAI = IERC20Factory.connect(variableDebtTokenAddress, proposer);
 
-    // Transfer enough AAVE to proposer
+    // Transfer enough Starlay to proposer
     await (await layToken.transfer(proposer.address, parseEther('2000000'))).wait();
 
     // Transfer DAI to repay future DAI loan
@@ -407,7 +407,7 @@ describe('Enable incentives in target assets', () => {
   xit('User should be able to interact with LendingPool with DAI/GUSD/USDC/USDT/WBTC/WETH', async () => {
     const reserveConfigs = await getReserveConfigs(POOL_PROVIDER, RESERVES, proposer);
 
-    // Deposit AAVE to LendingPool to have enought collateral for future borrows
+    // Deposit Starlay to LendingPool to have enought collateral for future borrows
     await (await layToken.connect(proposer).approve(pool.address, parseEther('1000'))).wait();
     await (
       await pool.connect(proposer).deposit(layToken.address, parseEther('1000'), proposer.address, 0)
