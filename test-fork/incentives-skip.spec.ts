@@ -69,7 +69,7 @@ if (
 const LENDING_POOL = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
 const VOTING_DURATION = 19200;
 
-const AAVE_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
+const STARLAY_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
 
 const STAKED_STARLAY = '0x4da27a545c0c5B758a6BA100e3a049001de870f5';
 const DAI_TOKEN = '0x6b175474e89094c44da98b954eedeac495271d0f';
@@ -190,10 +190,10 @@ describe('Enable incentives in target assets', () => {
       true
     );
     proposalExecutionPayload = proposalExecutionPayloadAddress;
-    // Send ether to the AAVE_WHALE, which is a non payable contract via selfdestruct
+    // Send ether to the STARLAY_WHALE, which is a non payable contract via selfdestruct
     const selfDestructContract = await new SelfdestructTransferFactory(proposer).deploy();
     await (
-      await selfDestructContract.destroyAndTransfer(AAVE_WHALE, {
+      await selfDestructContract.destroyAndTransfer(STARLAY_WHALE, {
         value: ethers.utils.parseEther('1'),
       })
     ).wait();
@@ -212,14 +212,14 @@ describe('Enable incentives in target assets', () => {
       })
     ).wait();
     await impersonateAccountsHardhat([
-      AAVE_WHALE,
+      STARLAY_WHALE,
       ...Object.keys(spendList).map((k) => spendList[k].holder),
       GOVERNANCE_V2,
       STARLAY_SHORT_EXECUTOR,
     ]);
 
     // Impersonating holders
-    whale = ethers.provider.getSigner(AAVE_WHALE);
+    whale = ethers.provider.getSigner(STARLAY_WHALE);
     daiHolder = ethers.provider.getSigner(DAI_HOLDER);
 
     // Initialize contracts and tokens

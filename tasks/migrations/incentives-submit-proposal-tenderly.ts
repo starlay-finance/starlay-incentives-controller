@@ -15,7 +15,7 @@ const {
 } = process.env;
 const VOTING_DURATION = 19200;
 
-const AAVE_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
+const STARLAY_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
 
 task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to Aave Governance')
   .addParam('proposalExecutionPayload')
@@ -31,7 +31,7 @@ task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to A
       const { signer } = await getDefenderRelaySigner();
       proposer = signer;
 
-      const whale = DRE.ethers.provider.getSigner(AAVE_WHALE);
+      const whale = DRE.ethers.provider.getSigner(STARLAY_WHALE);
       const aave = IERC20__factory.connect(STARLAY_TOKEN, whale);
 
       // Transfer enough AAVE to proposer

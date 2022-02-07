@@ -16,7 +16,7 @@ const {
 
 const VOTING_DURATION = 18200;
 
-const AAVE_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
+const STARLAY_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
 
 const INCENTIVES_PROXY = '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5';
 
@@ -44,7 +44,7 @@ task('execute-proposal:tenderly', 'Spin a tenderly fork with incentives activate
     ethers = DRE.ethers;
 
     // Impersonating holders
-    whale = ethers.provider.getSigner(AAVE_WHALE);
+    whale = ethers.provider.getSigner(STARLAY_WHALE);
 
     // Initialize contracts and tokens
     gov = (await ethers.getContractAt(
