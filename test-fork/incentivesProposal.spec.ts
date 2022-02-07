@@ -30,7 +30,7 @@ import { getRewards } from '../test/DistributionManager/data-helpers/base-math';
 import { getUserIndex } from '../test/DistributionManager/data-helpers/asset-user-data';
 import { IERC20DetailedFactory } from '../types/IERC20DetailedFactory';
 import { fullCycleLendingPool, getReserveConfigs, spendList } from './helpers';
-import { deployAaveIncentivesController } from '../helpers/contracts-accessors';
+import { deployStakedTokenIncentivesController } from '../helpers/contracts-accessors';
 import { IGovernancePowerDelegationTokenFactory } from '../types/IGovernancePowerDelegationTokenFactory';
 import { logError } from '../helpers/tenderly-utils';
 
@@ -45,7 +45,7 @@ const {
   IPFS_HASH = 'QmT9qk3CRYbFDWpDFYeAv8T8H1gnongwKhh5J68NLkLir6',
   INCENTIVES_PROXY = '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5',
   AAVE_GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
-  AAVE_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
+  STARLAY_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
 } = process.env;
 
 if (
@@ -56,7 +56,7 @@ if (
   !AAVE_TOKEN ||
   !IPFS_HASH ||
   !AAVE_GOVERNANCE_V2 ||
-  !AAVE_SHORT_EXECUTOR ||
+  !STARLAY_SHORT_EXECUTOR ||
   !TREASURY
 ) {
   throw new Error('You have not set correctly the .env file, make sure to read the README.md');
@@ -67,7 +67,7 @@ const VOTING_DURATION = 19200;
 
 const AAVE_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
 
-const AAVE_STAKE = '0x4da27a545c0c5B758a6BA100e3a049001de870f5';
+const STAKED_STARLAY = '0x4da27a545c0c5B758a6BA100e3a049001de870f5';
 const DAI_TOKEN = '0x6b175474e89094c44da98b954eedeac495271d0f';
 const DAI_HOLDER = '0x72aabd13090af25dbb804f84de6280c697ed1150';
 
@@ -103,9 +103,9 @@ describe('Enable incentives in target assets', () => {
     [proposer, incentivesProxyAdmin] = await DRE.ethers.getSigners();
 
     // Deploy incentives implementation
-    const { address: incentivesImplementation } = await deployAaveIncentivesController([
-      AAVE_STAKE,
-      AAVE_SHORT_EXECUTOR,
+    const { address: incentivesImplementation } = await deployStakedTokenIncentivesController([
+      STAKED_STARLAY,
+      STARLAY_SHORT_EXECUTOR,
     ]);
 
     incentivesProxy = INCENTIVES_PROXY;
@@ -161,7 +161,7 @@ describe('Enable incentives in target assets', () => {
     } = await pool.getReserveData(DAI_TOKEN);
 
     aave = IERC20Factory.connect(AAVE_TOKEN, whale);
-    stkAave = IERC20Factory.connect(AAVE_STAKE, proposer);
+    stkAave = IERC20Factory.connect(STAKED_STARLAY, proposer);
     dai = IERC20Factory.connect(DAI_TOKEN, daiHolder);
     aDAI = ATokenFactory.connect(aTokenAddress, proposer);
     variableDebtDAI = IERC20Factory.connect(variableDebtTokenAddress, proposer);

@@ -3,7 +3,7 @@ import { timeLatest, waitForTx } from '../../helpers/misc-utils';
 import { expect } from 'chai';
 
 import { makeSuite } from '../helpers/make-suite';
-import { deployAaveIncentivesController } from '../../helpers/contracts-accessors';
+import { deployStakedTokenIncentivesController } from '../../helpers/contracts-accessors';
 import { MAX_UINT_AMOUNT, RANDOM_ADDRESSES, ZERO_ADDRESS } from '../../helpers/constants';
 
 makeSuite('AaveIncentivesController misc tests', (testEnv) => {
@@ -11,7 +11,7 @@ makeSuite('AaveIncentivesController misc tests', (testEnv) => {
     const peiEmissionManager = RANDOM_ADDRESSES[1];
     const psm = RANDOM_ADDRESSES[5];
 
-    const incentivesController = await deployAaveIncentivesController([
+    const incentivesController = await deployStakedTokenIncentivesController([
       psm,
       peiEmissionManager,
     ]);

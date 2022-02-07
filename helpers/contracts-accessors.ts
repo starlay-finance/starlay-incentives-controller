@@ -20,12 +20,12 @@ import {
 import { DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { Signer } from 'ethers';
 
-export const deployAaveIncentivesController = async (
-  [aavePsm, emissionManager]: [tEthereumAddress, tEthereumAddress],
+export const deployStakedTokenIncentivesController = async (
+  [psm, emissionManager]: [tEthereumAddress, tEthereumAddress],
   verify?: boolean,
   signer?: Signer | DefenderRelaySigner
 ) => {
-  const args: [string, string] = [aavePsm, emissionManager];
+  const args: [string, string] = [psm, emissionManager];
   const instance = await new StakedTokenIncentivesController__factory(
     signer || (await getFirstSigner())
   ).deploy(...args);
@@ -74,7 +74,7 @@ export const deployATokenMock = async (aicAddress: tEthereumAddress, slug: strin
 
 export const getMintableErc20 = getContractFactory<MintableErc20>(eContractid.MintableErc20);
 
-export const getAaveIncentivesController = getContractFactory<StakedTokenIncentivesController>(
+export const getStakedTokenIncentivesController = getContractFactory<StakedTokenIncentivesController>(
   eContractid.StakedTokenIncentivesController
 );
 
