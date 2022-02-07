@@ -9,7 +9,7 @@ import {DistributionTypes} from '../../lib/DistributionTypes.sol';
 /**
  * @title DistributionManager
  * @notice Accounting contract to manage multiple staking distributions
- * @author Aave
+ * @author Starlay
  **/
 contract DistributionManager is IDistributionManager {
   using SafeMath for uint256;

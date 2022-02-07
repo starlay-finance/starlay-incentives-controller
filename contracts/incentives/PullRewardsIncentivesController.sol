@@ -9,8 +9,8 @@ import {BaseIncentivesController} from './base/BaseIncentivesController.sol';
 
 /**
  * @title PullRewardsIncentivesController
- * @notice Distributor contract for ERC20 rewards to the Aave protocol participants that pulls ERC20 from external account
- * @author Aave
+ * @notice Distributor contract for ERC20 rewards to the protocol participants that pulls ERC20 from external account
+ * @author Starlay
  **/
 contract PullRewardsIncentivesController is
   BaseIncentivesController
@@ -26,7 +26,7 @@ contract PullRewardsIncentivesController is
   {}
 
   /**
-   * @dev Initialize AaveIncentivesController
+   * @dev Initialize BaseIncentivesController
    * @param rewardsVault rewards vault to pull ERC20 funds
    **/
   function initialize(address rewardsVault) external initializer {
