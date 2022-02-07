@@ -18,9 +18,9 @@ import {
 
 chai.use(bignumberChai());
 
-export let stakedAaveInitializeTimestamp = 0;
-export const setStakedAaveInitializeTimestamp = (timestamp: number) => {
-  stakedAaveInitializeTimestamp = timestamp;
+export let stakedTokenInitializeTimestamp = 0;
+export const setStakedTokenInitializeTimestamp = (timestamp: number) => {
+  stakedTokenInitializeTimestamp = timestamp;
 };
 
 export interface SignerWithAddress {
@@ -31,10 +31,10 @@ export interface TestEnv {
   rewardsVault: SignerWithAddress;
   deployer: SignerWithAddress;
   users: SignerWithAddress[];
-  aaveToken: MintableErc20;
-  aaveIncentivesController: StakedTokenIncentivesController;
+  token: MintableErc20;
+  incentivesController: StakedTokenIncentivesController;
   pullRewardsIncentivesController: PullRewardsIncentivesController;
-  stakedAave: StakedAaveV3;
+  stakedToken: StakedAaveV3;
   aDaiMock: ATokenMock;
   aWethMock: ATokenMock;
   aDaiBaseMock: ATokenMock;
@@ -51,9 +51,9 @@ const setBuidlerevmSnapshotId = (id: string) => {
 const testEnv: TestEnv = {
   deployer: {} as SignerWithAddress,
   users: [] as SignerWithAddress[],
-  aaveToken: {} as MintableErc20,
-  stakedAave: {} as StakedAaveV3,
-  aaveIncentivesController: {} as StakedTokenIncentivesController,
+  token: {} as MintableErc20,
+  stakedToken: {} as StakedAaveV3,
+  incentivesController: {} as StakedTokenIncentivesController,
   pullRewardsIncentivesController: {} as PullRewardsIncentivesController,
   aDaiMock: {} as ATokenMock,
   aWethMock: {} as ATokenMock,
@@ -62,9 +62,9 @@ const testEnv: TestEnv = {
 } as TestEnv;
 
 export async function initializeMakeSuite(
-  aaveToken: MintableErc20,
-  stakedAave: StakedAaveV3,
-  aaveIncentivesController: StakedTokenIncentivesController,
+  starlayToken: MintableErc20,
+  starlayStake: StakedAaveV3,
+  incentivesController: StakedTokenIncentivesController,
   pullRewardsIncentivesController: PullRewardsIncentivesController
 ) {
   const [_deployer, _proxyAdmin, ...restSigners] = await getEthersSigners();
@@ -86,10 +86,10 @@ export async function initializeMakeSuite(
   }
   testEnv.deployer = deployer;
   testEnv.rewardsVault = rewardsVault;
-  testEnv.stakedAave = stakedAave;
-  testEnv.aaveIncentivesController = aaveIncentivesController;
+  testEnv.stakedToken = starlayStake;
+  testEnv.incentivesController = incentivesController;
   testEnv.pullRewardsIncentivesController = pullRewardsIncentivesController;
-  testEnv.aaveToken = aaveToken;
+  testEnv.token = starlayToken;
   testEnv.aDaiMock = await getATokenMock({ slug: 'lDai' });
   testEnv.aWethMock = await getATokenMock({ slug: 'lWeth' });
   testEnv.aDaiBaseMock = await getATokenMock({ slug: 'lDaiBase' });

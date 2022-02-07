@@ -1,7 +1,7 @@
 import { Signer } from 'ethers';
 import { ZERO_ADDRESS } from '../../helpers/constants';
 import {
-  deployAaveIncentivesController,
+  deployStakedTokenIncentivesController,
   deployInitializableAdminUpgradeabilityProxy,
   deployMintableErc20,
 } from '../../helpers/contracts-accessors';
@@ -34,7 +34,7 @@ export const testDeployIncentivesController = async (
     (1000 * 60 * 60).toString(),
   ]);
 
-  const incentivesImplementation = await deployAaveIncentivesController([
+  const incentivesImplementation = await deployStakedTokenIncentivesController([
     stakeProxy.address,
     emissionManagerAddress,
   ]);

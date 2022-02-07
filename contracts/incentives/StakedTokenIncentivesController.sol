@@ -9,10 +9,10 @@ import {IStakedTokenWithConfig} from '../interfaces/IStakedTokenWithConfig.sol';
 
 /**
  * @title StakedTokenIncentivesController
- * @notice Distributor contract for rewards to the Aave protocol, using a staked token as rewards asset.
- * The contract stakes the rewards before redistributing them to the Aave protocol participants.
- * The reference staked token implementation is at https://github.com/aave/aave-stake-v2
- * @author Aave
+ * @notice Distributor contract for rewards to the protocol, using a staked token as rewards asset.
+ * The contract stakes the rewards before redistributing them to the protocol participants.
+ * The reference staked token implementation is at https://github.com/starlay-finance/starlay-stake
+ * @author Starlay
  **/
 contract StakedTokenIncentivesController is BaseIncentivesController {
   using SafeERC20 for IERC20;

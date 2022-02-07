@@ -2,16 +2,16 @@
 pragma solidity 0.7.5;
 pragma experimental ABIEncoderV2;
 
-import {IAaveDistributionManager} from '../../interfaces/IAaveDistributionManager.sol';
+import {IDistributionManager} from '../../interfaces/IDistributionManager.sol';
 import {SafeMath} from '../../lib/SafeMath.sol';
 import {DistributionTypes} from '../../lib/DistributionTypes.sol';
 
 /**
  * @title DistributionManager
  * @notice Accounting contract to manage multiple staking distributions
- * @author Aave
+ * @author Starlay
  **/
-contract DistributionManager is IAaveDistributionManager {
+contract DistributionManager is IDistributionManager {
   using SafeMath for uint256;
 
   struct AssetData {
@@ -38,28 +38,28 @@ contract DistributionManager is IAaveDistributionManager {
     EMISSION_MANAGER = emissionManager;
   }
 
-  /// @inheritdoc IAaveDistributionManager
+  /// @inheritdoc IDistributionManager
   function setDistributionEnd(uint256 distributionEnd) external override onlyEmissionManager {
     _distributionEnd = distributionEnd;
     emit DistributionEndUpdated(distributionEnd);
   }
 
-  /// @inheritdoc IAaveDistributionManager
+  /// @inheritdoc IDistributionManager
   function getDistributionEnd() external view override returns (uint256) {
     return _distributionEnd;
   }
 
-  /// @inheritdoc IAaveDistributionManager
+  /// @inheritdoc IDistributionManager
   function DISTRIBUTION_END() external view override returns (uint256) {
     return _distributionEnd;
   }
 
-  /// @inheritdoc IAaveDistributionManager
+  /// @inheritdoc IDistributionManager
   function getUserAssetData(address user, address asset) public view override returns (uint256) {
     return assets[asset].users[user];
   }
 
-  /// @inheritdoc IAaveDistributionManager
+  /// @inheritdoc IDistributionManager
   function getAssetData(address asset) public view override returns (uint256, uint256, uint256) {
     return (assets[asset].index, assets[asset].emissionPerSecond, assets[asset].lastUpdateTimestamp);
   }

@@ -55,7 +55,7 @@ makeSuite('pullRewardsIncentivesController claimRewardsToSelf tests', (testEnv) 
     let amountToClaim = _amountToClaim;
     it(caseName, async () => {
       await increaseTime(100);
-      const { pullRewardsIncentivesController, aaveToken, aDaiBaseMock } = testEnv;
+      const { pullRewardsIncentivesController, token, aDaiBaseMock } = testEnv;
 
       const distributionEndTimestamp = await pullRewardsIncentivesController.getDistributionEnd();
       const userAddress = await pullRewardsIncentivesController.signer.getAddress();
@@ -74,7 +74,7 @@ makeSuite('pullRewardsIncentivesController claimRewardsToSelf tests', (testEnv) 
 
       const destinationAddress = userAddress;
 
-      const destinationAddressBalanceBefore = await aaveToken.balanceOf(destinationAddress);
+      const destinationAddressBalanceBefore = await token.balanceOf(destinationAddress);
       await aDaiBaseMock.setUserBalanceAndSupply(stakedByUser, totalStaked);
       await aDaiBaseMock.handleActionOnAic(userAddress, totalStaked, stakedByUser);
 
@@ -113,7 +113,7 @@ makeSuite('pullRewardsIncentivesController claimRewardsToSelf tests', (testEnv) 
         userAddress
       );
 
-      const destinationAddressBalanceAfter = await aaveToken.balanceOf(destinationAddress);
+      const destinationAddressBalanceAfter = await token.balanceOf(destinationAddress);
 
       const claimedAmount = destinationAddressBalanceAfter.sub(destinationAddressBalanceBefore);
 
