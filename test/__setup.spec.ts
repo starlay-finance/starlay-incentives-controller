@@ -7,13 +7,11 @@ import { DRE, waitForTx } from '../helpers/misc-utils';
 import { MintableErc20 } from '../types/MintableErc20';
 import { testDeployIncentivesController } from './helpers/deploy';
 import {
-  PullRewardsIncentivesController,
   PullRewardsIncentivesController__factory,
   StakedAaveV3__factory,
   StakedTokenIncentivesController__factory,
 } from '../types';
 import { parseEther } from '@ethersproject/units';
-import { hrtime } from 'process';
 import { MAX_UINT_AMOUNT } from '../helpers/constants';
 
 const topUpWalletsWithAave = async (
@@ -61,11 +59,11 @@ const buildTestEnv = async (
   );
 
   const distributionDuration = ((await getBlockTimestamp()) + 1000 * 60 * 60).toString();
-  await deployATokenMock(incentivesProxy.address, 'aDai');
-  await deployATokenMock(incentivesProxy.address, 'aWeth');
+  await deployATokenMock(incentivesProxy.address, 'lDai');
+  await deployATokenMock(incentivesProxy.address, 'lWeth');
 
-  await deployATokenMock(baseIncentivesProxy, 'aDaiBase');
-  await deployATokenMock(baseIncentivesProxy, 'aWethBase');
+  await deployATokenMock(baseIncentivesProxy, 'lDaiBase');
+  await deployATokenMock(baseIncentivesProxy, 'lWethBase');
 
   const incentivesController = StakedTokenIncentivesController__factory.connect(
     incentivesProxy.address,

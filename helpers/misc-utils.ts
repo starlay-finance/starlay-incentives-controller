@@ -8,8 +8,6 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { tEthereumAddress } from './types';
 import { isAddress } from 'ethers/lib/utils';
 import { isZeroAddress } from 'ethereumjs-util';
-import { TenderlyNetwork } from '@tenderly/hardhat-tenderly/dist/TenderlyNetwork';
-import { setNewHead } from './tenderly-utils';
 
 export const toWad = (value: string | number) => new BigNumber(value).times(WAD).toFixed();
 
