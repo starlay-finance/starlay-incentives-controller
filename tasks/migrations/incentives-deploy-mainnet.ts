@@ -12,13 +12,9 @@ const {
   RESERVES = 'DAI,GUSD,USDC,USDT,WBTC,WETH',
   POOL_PROVIDER = '0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5',
   POOL_DATA_PROVIDER = '0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d',
-  AAVE_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
   TREASURY = '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
-  AAVE_GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
-  AAVE_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
 } = process.env;
 
-const AAVE_LENDING_POOL = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
 const INCENTIVES_PROXY = '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5';
 
 task(
@@ -54,9 +50,6 @@ task(
     if (
       !RESERVES ||
       !POOL_DATA_PROVIDER ||
-      !AAVE_TOKEN ||
-      !AAVE_GOVERNANCE_V2 ||
-      !AAVE_SHORT_EXECUTOR ||
       !TREASURY
     ) {
       throw new Error('You have not set correctly the .env file, make sure to read the README.md');

@@ -40,11 +40,11 @@ const {
   POOL_PROVIDER = '0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5',
   POOL_DATA_PROVIDER = '0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d',
   ECO_RESERVE = '0x25F2226B597E8F9514B3F68F00f494cF4f286491',
-  AAVE_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
+  STARLAY_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
   TREASURY = '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
   IPFS_HASH = 'QmT9qk3CRYbFDWpDFYeAv8T8H1gnongwKhh5J68NLkLir6',
   INCENTIVES_PROXY = '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5',
-  AAVE_GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
+  GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
   STARLAY_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
 } = process.env;
 
@@ -53,19 +53,19 @@ if (
   !POOL_CONFIGURATOR ||
   !POOL_DATA_PROVIDER ||
   !ECO_RESERVE ||
-  !AAVE_TOKEN ||
+  !STARLAY_TOKEN ||
   !IPFS_HASH ||
-  !AAVE_GOVERNANCE_V2 ||
+  !GOVERNANCE_V2 ||
   !STARLAY_SHORT_EXECUTOR ||
   !TREASURY
 ) {
   throw new Error('You have not set correctly the .env file, make sure to read the README.md');
 }
 
-const AAVE_LENDING_POOL = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
+const LENDING_POOL = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
 const VOTING_DURATION = 19200;
 
-const AAVE_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
+const STARLAY_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
 
 const STAKED_STARLAY = '0x4da27a545c0c5B758a6BA100e3a049001de870f5';
 const DAI_TOKEN = '0x6b175474e89094c44da98b954eedeac495271d0f';
@@ -81,8 +81,8 @@ describe('Enable incentives in target assets', () => {
   let incentivesProxy: tEthereumAddress;
   let gov: IAaveGovernanceV2;
   let pool: ILendingPool;
-  let aave: IERC20;
-  let stkAave: IERC20;
+  let layToken: IERC20;
+  let stakedLay: IERC20;
   let dai: IERC20;
   let aDAI: AToken;
   let variableDebtDAI: IERC20;
@@ -126,31 +126,31 @@ describe('Enable incentives in target assets', () => {
       address: proposalExecutionPayloadAddress,
     } = await new ProposalIncentivesExecutorFactory(proposer).deploy();
     proposalExecutionPayload = proposalExecutionPayloadAddress;
-    // Send ether to the AAVE_WHALE, which is a non payable contract via selfdestruct
+    // Send ether to the STARLAY_WHALE, which is a non payable contract via selfdestruct
     const selfDestructContract = await new SelfdestructTransferFactory(proposer).deploy();
     await (
-      await selfDestructContract.destroyAndTransfer(AAVE_WHALE, {
+      await selfDestructContract.destroyAndTransfer(STARLAY_WHALE, {
         value: ethers.utils.parseEther('1'),
       })
     ).wait();
     await impersonateAccountsHardhat([
-      AAVE_WHALE,
+      STARLAY_WHALE,
       ...Object.keys(spendList).map((k) => spendList[k].holder),
     ]);
 
     // Impersonating holders
-    whale = ethers.provider.getSigner(AAVE_WHALE);
+    whale = ethers.provider.getSigner(STARLAY_WHALE);
     daiHolder = ethers.provider.getSigner(DAI_HOLDER);
 
     // Initialize contracts and tokens
     gov = (await ethers.getContractAt(
       'IAaveGovernanceV2',
-      AAVE_GOVERNANCE_V2,
+      GOVERNANCE_V2,
       proposer
     )) as IAaveGovernanceV2;
     pool = (await ethers.getContractAt(
       'ILendingPool',
-      AAVE_LENDING_POOL,
+      LENDING_POOL,
       proposer
     )) as ILendingPool;
 
@@ -160,14 +160,14 @@ describe('Enable incentives in target assets', () => {
       variableDebtTokenAddress,
     } = await pool.getReserveData(DAI_TOKEN);
 
-    aave = IERC20Factory.connect(AAVE_TOKEN, whale);
-    stkAave = IERC20Factory.connect(STAKED_STARLAY, proposer);
+    layToken = IERC20Factory.connect(STARLAY_TOKEN, whale);
+    stakedLay = IERC20Factory.connect(STAKED_STARLAY, proposer);
     dai = IERC20Factory.connect(DAI_TOKEN, daiHolder);
     aDAI = ATokenFactory.connect(aTokenAddress, proposer);
     variableDebtDAI = IERC20Factory.connect(variableDebtTokenAddress, proposer);
 
-    // Transfer enough AAVE to proposer
-    await (await aave.transfer(proposer.address, parseEther('2000000'))).wait();
+    // Transfer enough Starlay to proposer
+    await (await layToken.transfer(proposer.address, parseEther('2000000'))).wait();
 
     // Transfer DAI to repay future DAI loan
     await (await dai.transfer(proposer.address, parseEther('100000'))).wait();
@@ -200,10 +200,10 @@ describe('Enable incentives in target assets', () => {
     await advanceBlockTo((await latestBlock()) + 10);
 
     try {
-      const balance = await aave.balanceOf(proposer.address);
-      console.log('AAVE Balance proposer', formatEther(balance));
-      const aaveGovToken = IGovernancePowerDelegationTokenFactory.connect(AAVE_TOKEN, proposer);
-      const propositionPower = await aaveGovToken.getPowerAtBlock(
+      const balance = await layToken.balanceOf(proposer.address);
+      console.log('Starlay Balance proposer', formatEther(balance));
+      const govToken = IGovernancePowerDelegationTokenFactory.connect(STARLAY_TOKEN, proposer);
+      const propositionPower = await govToken.getPowerAtBlock(
         proposer.address,
         ((await latestBlock()) - 1).toString(),
         '1'
@@ -223,8 +223,8 @@ describe('Enable incentives in target assets', () => {
       proposalExecutionPayload,
       aTokens: aTokensImpl.join(','),
       variableDebtTokens: variableDebtTokensImpl.join(','),
-      aaveGovernance: AAVE_GOVERNANCE_V2,
-      shortExecutor: AAVE_SHORT_EXECUTOR,
+      governance: GOVERNANCE_V2,
+      shortExecutor: STARLAY_SHORT_EXECUTOR,
       ipfsHash: IPFS_HASH,
     });
     console.log('submited');
@@ -288,7 +288,7 @@ describe('Enable incentives in target assets', () => {
     const atokenBalance = await IATokenFactory.connect(aTokenAddress, proposer).scaledBalanceOf(
       proposer.address
     );
-    const priorStkBalance = await IERC20Factory.connect(stkAave.address, proposer).balanceOf(
+    const priorStkBalance = await IERC20Factory.connect(stakedLay.address, proposer).balanceOf(
       proposer.address
     );
     const userIndexBefore = await getUserIndex(incentives, proposer.address, aTokenAddress);
@@ -299,7 +299,7 @@ describe('Enable incentives in target assets', () => {
       .claimRewards([aTokenAddress], MAX_UINT_AMOUNT, proposer.address);
 
     expect(tx2).to.emit(incentives, 'RewardsClaimed');
-    const afterStkBalance = await stkAave.balanceOf(proposer.address);
+    const afterStkBalance = await stakedLay.balanceOf(proposer.address);
     const claimed = afterStkBalance.sub(priorStkBalance);
 
     const userIndexAfter = await getUserIndex(incentives, proposer.address, aTokenAddress);
@@ -365,10 +365,10 @@ describe('Enable incentives in target assets', () => {
   it('User should be able to interact with LendingPool with DAI/GUSD/USDC/USDT/WBTC/WETH', async () => {
     const reserveConfigs = await getReserveConfigs(POOL_PROVIDER, RESERVES, proposer);
 
-    // Deposit AAVE to LendingPool to have enought collateral for future borrows
-    await (await aave.connect(proposer).approve(pool.address, parseEther('1000'))).wait();
+    // Deposit Starlay to LendingPool to have enought collateral for future borrows
+    await (await layToken.connect(proposer).approve(pool.address, parseEther('1000'))).wait();
     await (
-      await pool.connect(proposer).deposit(aave.address, parseEther('1000'), proposer.address, 0)
+      await pool.connect(proposer).deposit(layToken.address, parseEther('1000'), proposer.address, 0)
     ).wait();
 
     for (let x = 0; x < reserveConfigs.length; x++) {
@@ -424,14 +424,14 @@ describe('Enable incentives in target assets', () => {
 
       await increaseTime(86400);
 
-      const priorBalance = await stkAave.balanceOf(proposer.address);
+      const priorBalance = await stakedLay.balanceOf(proposer.address);
       const tx = await incentives
         .connect(proposer)
         .claimRewards([aTokenAddress, variableDebtTokenAddress], MAX_UINT_AMOUNT, proposer.address);
       await tx.wait();
       expect(tx).to.emit(incentives, 'RewardsClaimed');
 
-      const afterBalance = await stkAave.balanceOf(proposer.address);
+      const afterBalance = await stakedLay.balanceOf(proposer.address);
       expect(afterBalance).to.be.gt(priorBalance);
     }
   });

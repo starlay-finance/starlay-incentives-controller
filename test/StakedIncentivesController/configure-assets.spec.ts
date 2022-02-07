@@ -118,7 +118,7 @@ const configureAssetScenarios: ScenarioAction[] = [
   },
 ];
 
-makeSuite('AaveIncentivesController configureAssets', (testEnv: TestEnv) => {
+makeSuite('IncentivesController configureAssets', (testEnv: TestEnv) => {
   let deployedAssets;
 
   before(async () => {

@@ -17,7 +17,7 @@ if (!POOL_PROVIDER || !TREASURY) {
   throw new Error('You have not set correctly the .env file, make sure to read the README.md');
 }
 
-const AAVE_LENDING_POOL = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
+const LENDING_POOL = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
 const INCENTIVES_PROXY = '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5';
 
 task('verify-proposal-etherscan', 'Verify proposals')
@@ -35,7 +35,7 @@ task('verify-proposal-etherscan', 'Verify proposals')
     // Instances
     const pool = (await localBRE.ethers.getContractAt(
       'ILendingPool',
-      AAVE_LENDING_POOL,
+      LENDING_POOL,
       deployer
     )) as ILendingPool;
 
@@ -75,7 +75,7 @@ task('verify-proposal-etherscan', 'Verify proposals')
       const aTokenSymbol = await IERC20Detailed__factory.connect(aTokenAddress, deployer).symbol();
 
       await verifyContract(aTokens[x], [
-        AAVE_LENDING_POOL,
+        LENDING_POOL,
         reserveConfigs[x].tokenAddress,
         TREASURY,
         aTokenName,
@@ -96,7 +96,7 @@ task('verify-proposal-etherscan', 'Verify proposals')
       ).symbol();
 
       await verifyContract(variableDebtTokens[x], [
-        AAVE_LENDING_POOL,
+        LENDING_POOL,
         reserveConfigs[x].tokenAddress,
         varTokenName,
         varTokenSymbol,
