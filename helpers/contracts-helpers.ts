@@ -139,7 +139,7 @@ export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNet
     buidlerevm,
     tenderlyMain,
   } = param as iEthereumParamsPerNetwork<T>;
-  const { shibuya } = param as iAstarParamsPerNetwork<T>;
+  const { astar, shiden, shibuya } = param as iAstarParamsPerNetwork<T>;
   const MAINNET_FORK = process.env.MAINNET_FORK === 'true';
   if (MAINNET_FORK) {
     return main;
@@ -158,6 +158,10 @@ export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNet
       return main;
     case eEthereumNetwork.tenderlyMain:
       return tenderlyMain;
+    case eAstarNetwork.astar:
+      return astar;
+    case eAstarNetwork.shiden:
+      return shiden;
     case eAstarNetwork.shibuya:
       return shibuya;
   }
