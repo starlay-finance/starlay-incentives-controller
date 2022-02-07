@@ -27,7 +27,7 @@ const {
   TREASURY = '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
   IPFS_HASH = 'QmT9qk3CRYbFDWpDFYeAv8T8H1gnongwKhh5J68NLkLir6',
   GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
-  AAVE_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
+  STARLAY_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
 } = process.env;
 
 if (
@@ -38,7 +38,7 @@ if (
   !AAVE_TOKEN ||
   !IPFS_HASH ||
   !GOVERNANCE_V2 ||
-  !AAVE_SHORT_EXECUTOR ||
+  !STARLAY_SHORT_EXECUTOR ||
   !TREASURY
 ) {
   throw new Error('You have not set correctly the .env file, make sure to read the README.md');
@@ -179,7 +179,7 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
       aTokens: aTokensImpl.join(','),
       variableDebtTokens: variableDebtTokensImpl.join(','),
       aaveGovernance: GOVERNANCE_V2,
-      shortExecutor: AAVE_SHORT_EXECUTOR,
+      shortExecutor: STARLAY_SHORT_EXECUTOR,
       ipfsHash: IPFS_HASH,
     });
     console.log('- Proposal Submited');
