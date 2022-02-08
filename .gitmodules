@@ -1,0 +1,3 @@
+[submodule "submodule-stake"]
+	path = submodule-stake
+	url = https://github.com/starlay-finance/starlay-stake

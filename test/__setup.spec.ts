@@ -8,7 +8,7 @@ import { MintableErc20 } from '../types/MintableErc20';
 import { testDeployIncentivesController } from './helpers/deploy';
 import {
   PullRewardsIncentivesController__factory,
-  StakedAaveV3__factory,
+  StakedLayV2__factory,
   StakedTokenIncentivesController__factory,
 } from '../types';
 import { parseEther } from '@ethersproject/units';
@@ -88,7 +88,7 @@ const buildTestEnv = async (
     starlayToken,
     incentivesController,
     pullRewardsIncentivesController,
-    starlayStake: StakedAaveV3__factory.connect(stakeProxy.address, deployer),
+    starlayStake: StakedLayV2__factory.connect(stakeProxy.address, deployer),
   };
 };
 

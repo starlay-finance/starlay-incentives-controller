@@ -12,7 +12,7 @@ import { ATokenMock } from '../../types/ATokenMock';
 import {
   PullRewardsIncentivesController,
   PullRewardsIncentivesController__factory,
-  StakedAaveV3,
+  StakedLayV2,
   StakedTokenIncentivesController,
 } from '../../types';
 
@@ -34,7 +34,7 @@ export interface TestEnv {
   token: MintableErc20;
   incentivesController: StakedTokenIncentivesController;
   pullRewardsIncentivesController: PullRewardsIncentivesController;
-  stakedToken: StakedAaveV3;
+  stakedToken: StakedLayV2;
   aDaiMock: ATokenMock;
   aWethMock: ATokenMock;
   aDaiBaseMock: ATokenMock;
@@ -52,7 +52,7 @@ const testEnv: TestEnv = {
   deployer: {} as SignerWithAddress,
   users: [] as SignerWithAddress[],
   token: {} as MintableErc20,
-  stakedToken: {} as StakedAaveV3,
+  stakedToken: {} as StakedLayV2,
   incentivesController: {} as StakedTokenIncentivesController,
   pullRewardsIncentivesController: {} as PullRewardsIncentivesController,
   aDaiMock: {} as ATokenMock,
@@ -63,7 +63,7 @@ const testEnv: TestEnv = {
 
 export async function initializeMakeSuite(
   starlayToken: MintableErc20,
-  starlayStake: StakedAaveV3,
+  starlayStake: StakedLayV2,
   incentivesController: StakedTokenIncentivesController,
   pullRewardsIncentivesController: PullRewardsIncentivesController
 ) {

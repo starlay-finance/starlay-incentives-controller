@@ -14,7 +14,7 @@ export enum eContractid {
   IERC20Detailed = 'IERC20Detailed',
   StakedTokenIncentivesController = 'StakedTokenIncentivesController',
   MockSelfDestruct = 'MockSelfDestruct',
-  StakedAaveV3 = 'StakedAaveV3',
+  StakedLayV2 = 'StakedLayV2',
   PullRewardsIncentivesController = 'PullRewardsIncentivesController',
 }
 
