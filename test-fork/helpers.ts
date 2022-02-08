@@ -2,7 +2,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { tEthereumAddress } from '../helpers/types';
 import {
   StarlayProtocolDataProvider__factory,
-  AToken__factory,
+  LToken__factory,
   IERC20__factory,
   ILendingPoolAddressesProvider__factory,
 } from '../types';
@@ -84,7 +84,7 @@ export const fullCycleLendingPool = async (
 ) => {
   const { aTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
   const reserve = IERC20__factory.connect(tokenAddress, proposer);
-  const aToken = AToken__factory.connect(aTokenAddress, proposer);
+  const aToken = LToken__factory.connect(aTokenAddress, proposer);
   const holderSigner = DRE.ethers.provider.getSigner(spendList[symbol].holder);
 
   // Transfer assets to proposer from reserve holder
