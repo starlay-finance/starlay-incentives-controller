@@ -14,7 +14,7 @@ import {
 } from '../helpers/misc-utils';
 import { MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../helpers/constants';
 import { IERC20 } from '../types/IERC20';
-import { IAaveGovernanceV2 } from '../types/IAaveGovernanceV2';
+import { IStarlayGovernanceV2 } from '../types/IStarlayGovernanceV2';
 import { ILendingPool } from '../types/ILendingPool';
 import {
   StakedTokenIncentivesControllerFactory,
@@ -79,7 +79,7 @@ describe('Enable incentives in target assets', () => {
   let proposer: SignerWithAddress;
   let incentivesProxyAdmin: SignerWithAddress;
   let incentivesProxy: tEthereumAddress;
-  let gov: IAaveGovernanceV2;
+  let gov: IStarlayGovernanceV2;
   let pool: ILendingPool;
   let layToken: IERC20;
   let stakedLay: IERC20;
@@ -144,10 +144,10 @@ describe('Enable incentives in target assets', () => {
 
     // Initialize contracts and tokens
     gov = (await ethers.getContractAt(
-      'IAaveGovernanceV2',
+      'IStarlayGovernanceV2',
       GOVERNANCE_V2,
       proposer
-    )) as IAaveGovernanceV2;
+    )) as IStarlayGovernanceV2;
     pool = (await ethers.getContractAt(
       'ILendingPool',
       LENDING_POOL,
