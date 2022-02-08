@@ -1,7 +1,6 @@
 import { BigNumber, BigNumberish } from 'ethers';
 import { comparatorEngine, CompareRules } from '../../helpers/comparator-engine';
 import { getNormalizedDistribution } from '../../helpers/ray-math';
-import { AaveDistributionManager } from '../../../types/AaveDistributionManager';
 import { PullRewardsIncentivesController, StakedTokenIncentivesController } from '../../../types';
 
 export type AssetUpdateData = {
@@ -17,7 +16,6 @@ export type AssetData = {
 
 export async function getAssetsData(
   peiContract:
-    | AaveDistributionManager
     | StakedTokenIncentivesController
     | PullRewardsIncentivesController,
   assets: string[]
