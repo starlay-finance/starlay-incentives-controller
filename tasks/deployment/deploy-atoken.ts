@@ -51,14 +51,16 @@ task('deploy-atoken', 'Deploy AToken using prior reserve config')
         tokenSymbol = await IERC20Detailed__factory.connect(aTokenAddress, deployer).symbol();
       }
 
-      const { address } = await new AToken__factory(deployer).deploy(
-        pool,
-        asset,
-        treasury,
-        tokenName,
-        tokenSymbol,
-        incentivesController
-      );
+      // const { address } = await new AToken__factory(deployer).deploy(
+      //   pool,
+      //   asset,
+      //   treasury,
+      //   tokenName,
+      //   tokenSymbol,
+      //   incentivesController
+      // );
+      // TODO: follow starlay-protocol's AToken / maybe use proxy update
+      const { address } = await new AToken__factory(deployer).deploy()
 
       return address;
     }

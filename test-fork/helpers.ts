@@ -1,7 +1,7 @@
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { tEthereumAddress } from '../helpers/types';
 import {
-  AaveProtocolDataProvider__factory,
+  StarlayProtocolDataProvider__factory,
   AToken__factory,
   IERC20__factory,
   ILendingPoolAddressesProvider__factory,
@@ -61,7 +61,7 @@ export const getReserveConfigs = async (
     poolProviderAddress,
     proposer
   );
-  const protocolDataProvider = await AaveProtocolDataProvider__factory.connect(
+  const protocolDataProvider = await StarlayProtocolDataProvider__factory.connect(
     await poolProvider.getAddress(
       '0x0100000000000000000000000000000000000000000000000000000000000000'
     ),
