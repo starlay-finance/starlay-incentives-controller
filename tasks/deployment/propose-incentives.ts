@@ -15,7 +15,7 @@ task('propose-incentives', 'Create some proposals and votes')
   .addParam('proposalExecutionPayload')
   .addParam('aTokens')
   .addParam('variableDebtTokens')
-  .addParam('aaveGovernance')
+  .addParam('governance')
   .addParam('shortExecutor')
   .addFlag('defender')
   .setAction(
@@ -23,7 +23,7 @@ task('propose-incentives', 'Create some proposals and votes')
       {
         aTokens,
         variableDebtTokens,
-        aaveGovernance,
+        governance,
         shortExecutor,
         proposalExecutionPayload,
         defender,

@@ -6,7 +6,7 @@ import { makeSuite } from '../helpers/make-suite';
 import { deployStakedTokenIncentivesController } from '../../helpers/contracts-accessors';
 import { MAX_UINT_AMOUNT, RANDOM_ADDRESSES, ZERO_ADDRESS } from '../../helpers/constants';
 
-makeSuite('AaveIncentivesController misc tests', (testEnv) => {
+makeSuite('IncentivesController misc tests', (testEnv) => {
   it('constructor should assign correct params', async () => {
     const peiEmissionManager = RANDOM_ADDRESSES[1];
     const psm = RANDOM_ADDRESSES[5];

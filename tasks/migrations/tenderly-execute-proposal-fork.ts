@@ -11,13 +11,12 @@ import { getDefenderRelaySigner } from '../../helpers/defender-utils';
 import { Signer } from 'ethers';
 
 const {
-  AAVE_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
-  AAVE_GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c',
+  GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c',
 } = process.env;
 
 const VOTING_DURATION = 18200;
 
-const AAVE_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
+const STARLAY_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
 
 const INCENTIVES_PROXY = '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5';
 
@@ -45,12 +44,12 @@ task('execute-proposal:tenderly', 'Spin a tenderly fork with incentives activate
     ethers = DRE.ethers;
 
     // Impersonating holders
-    whale = ethers.provider.getSigner(AAVE_WHALE);
+    whale = ethers.provider.getSigner(STARLAY_WHALE);
 
     // Initialize contracts and tokens
     gov = (await ethers.getContractAt(
       'IStarlayGovernanceV2',
-      AAVE_GOVERNANCE_V2,
+      GOVERNANCE_V2,
       whale
     )) as IStarlayGovernanceV2;
 

@@ -4,7 +4,7 @@ import { waitForTx } from '../../helpers/misc-utils';
 
 import { makeSuite, TestEnv } from '../helpers/make-suite';
 
-makeSuite('AaveIncentivesController - Claim rewards on behalf', (testEnv: TestEnv) => {
+makeSuite('IncentivesController - Claim rewards on behalf', (testEnv: TestEnv) => {
   it('Should setClaimer revert if not called by emission manager', async () => {
     const { incentivesController, users } = testEnv;
     const [userWithRewards, thirdClaimer] = users;

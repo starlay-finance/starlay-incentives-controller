@@ -9,15 +9,15 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { logError } from '../../helpers/tenderly-utils';
 
 const {
-  AAVE_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
-  AAVE_GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
-  AAVE_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
+  STARLAY_TOKEN = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
+  GOVERNANCE_V2 = '0xEC568fffba86c094cf06b22134B23074DFE2252c', // mainnet
+  STARLAY_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5', // mainnet
 } = process.env;
 const VOTING_DURATION = 19200;
 
-const AAVE_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
+const STARLAY_WHALE = '0x25f2226b597e8f9514b3f68f00f494cf4f286491';
 
-task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to Aave Governance')
+task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to Starlay Governance')
   .addParam('proposalExecutionPayload')
   .addParam('aTokens')
   .addParam('variableDebtTokens')
@@ -31,13 +31,13 @@ task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to A
       const { signer } = await getDefenderRelaySigner();
       proposer = signer;
 
-      const whale = DRE.ethers.provider.getSigner(AAVE_WHALE);
-      const aave = IERC20__factory.connect(AAVE_TOKEN, whale);
+      const whale = DRE.ethers.provider.getSigner(STARLAY_WHALE);
+      const layToken = IERC20__factory.connect(STARLAY_TOKEN, whale);
 
-      // Transfer enough AAVE to proposer
-      await (await aave.transfer(await proposer.getAddress(), parseEther('2000000'))).wait();
+      // Transfer enough Starlay to proposer
+      await (await layToken.transfer(await proposer.getAddress(), parseEther('2000000'))).wait();
 
-      if (!AAVE_TOKEN || !AAVE_GOVERNANCE_V2 || !AAVE_SHORT_EXECUTOR) {
+      if (!STARLAY_TOKEN || !GOVERNANCE_V2 || !STARLAY_SHORT_EXECUTOR) {
         throw new Error(
           'You have not set correctly the .env file, make sure to read the README.md'
         );
@@ -56,17 +56,17 @@ task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to A
       // Initialize contracts and tokens
       const gov = (await DRE.ethers.getContractAt(
         'IStarlayGovernanceV2',
-        AAVE_GOVERNANCE_V2,
+        GOVERNANCE_V2,
         proposer
       )) as IStarlayGovernanceV2;
 
       // Balance and proposal power check
-      const balance = await aave.balanceOf(proposerAddress);
+      const balance = await layToken.balanceOf(proposerAddress);
       const priorBlock = ((await latestBlock()) - 1).toString();
-      const aaveGovToken = IGovernancePowerDelegationToken__factory.connect(AAVE_TOKEN, proposer);
-      const propositionPower = await aaveGovToken.getPowerAtBlock(proposerAddress, priorBlock, '1');
+      const govToken = IGovernancePowerDelegationToken__factory.connect(STARLAY_TOKEN, proposer);
+      const propositionPower = await govToken.getPowerAtBlock(proposerAddress, priorBlock, '1');
 
-      console.log('- AAVE Balance proposer', formatEther(balance));
+      console.log('- Starlay Balance proposer', formatEther(balance));
       console.log(
         `- Proposition power of ${proposerAddress} at block: ${priorBlock}`,
         formatEther(propositionPower)
@@ -78,8 +78,8 @@ task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to A
         proposalExecutionPayload,
         aTokens,
         variableDebtTokens,
-        aaveGovernance: AAVE_GOVERNANCE_V2,
-        shortExecutor: AAVE_SHORT_EXECUTOR,
+        governance: GOVERNANCE_V2,
+        shortExecutor: STARLAY_SHORT_EXECUTOR,
         defender: true,
       };
       console.log('- Submitting proposal with following params:');
