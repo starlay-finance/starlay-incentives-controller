@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
 import { config } from 'dotenv';
-import { IAaveGovernanceV2__factory } from '../../types';
+import { IStarlayGovernanceV2__factory } from '../../types';
 import { Signer } from 'ethers';
 import { getDefenderRelaySigner } from '../../helpers/defender-utils';
 import { DRE } from '../../helpers/misc-utils';
@@ -49,7 +49,7 @@ task('propose-incentives', 'Create some proposals and votes')
       );
 
       const executeSignature = 'execute(address[6],address[6])';
-      const gov = await IAaveGovernanceV2__factory.connect(governance, proposer);
+      const gov = await IStarlayGovernanceV2__factory.connect(governance, proposer);
       const ipfsEncoded = '0xf7a1f565fcd7684fba6fea5d77c5e699653e21cb6ae25fbf8c5dbc8d694c7949';
 
       try {

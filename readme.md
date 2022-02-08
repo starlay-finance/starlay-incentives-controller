@@ -12,6 +12,9 @@ This repo contains the code and implementation of the contracts used to activate
 
 ### Setup
 
+set specified node version
+reference: `.node-version`
+
 create `.env` file like
 
 ```bash

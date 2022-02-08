@@ -14,7 +14,7 @@ import {
   IERC20__factory,
   IGovernancePowerDelegationToken__factory,
 } from '../../types';
-import { IAaveGovernanceV2 } from '../../types/IAaveGovernanceV2';
+import { IStarlayGovernanceV2 } from '../../types/IStarlayGovernanceV2';
 import { ILendingPool } from '../../types/ILendingPool';
 
 const {
@@ -61,7 +61,7 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
     let proposer: SignerWithAddress;
     let incentivesProxyAdmin: SignerWithAddress;
     let incentivesProxy: tEthereumAddress;
-    let gov: IAaveGovernanceV2;
+    let gov: IStarlayGovernanceV2;
     let pool: ILendingPool;
     let proposalId: BigNumber;
     let aTokensImpl: tEthereumAddress[];
@@ -116,10 +116,10 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
 
     // Initialize contracts and tokens
     gov = (await ethers.getContractAt(
-      'IAaveGovernanceV2',
+      'IStarlayGovernanceV2',
       GOVERNANCE_V2,
       proposer
-    )) as IAaveGovernanceV2;
+    )) as IStarlayGovernanceV2;
     pool = (await ethers.getContractAt(
       'ILendingPool',
       LENDING_POOL,
