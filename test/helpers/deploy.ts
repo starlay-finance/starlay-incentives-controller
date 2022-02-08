@@ -42,16 +42,8 @@ export const testDeployIncentivesController = async (
   // Initialize proxies
   const stakeInit = stakeV3.interface.encodeFunctionData(
     // @ts-ignore
-    'initialize(address,address,address,uint256,string,string,uint8)',
-    [
-      emissionManagerAddress,
-      emissionManagerAddress,
-      emissionManagerAddress,
-      '2000',
-      'Staked Lay',
-      'sLay',
-      '18',
-    ]
+    'initialize()',
+    []
   );
   const incentivesInit = incentivesImplementation.interface.encodeFunctionData('initialize');
 
