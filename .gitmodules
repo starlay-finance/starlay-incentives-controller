@@ -1,3 +1,6 @@
 [submodule "submodule-stake"]
 	path = submodule-stake
 	url = https://github.com/starlay-finance/starlay-stake
+[submodule "submodule-protocol"]
+	path = submodule-protocol
+	url = https://github.com/starlay-finance/starlay-protocol
