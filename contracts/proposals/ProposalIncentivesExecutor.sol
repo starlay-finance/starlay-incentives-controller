@@ -2,7 +2,7 @@
 pragma solidity 0.7.5;
 pragma abicoder v2;
 
-import {IERC20} from '@aave/aave-stake/contracts/interfaces/IERC20.sol';
+import {IERC20} from '../stake-v1/contracts/interfaces/IERC20.sol';
 import {ILendingPoolAddressesProvider} from '../interfaces/ILendingPoolAddressesProvider.sol';
 import {ILendingPoolConfigurator} from '../interfaces/ILendingPoolConfigurator.sol';
 import {IIncentivesController} from '../interfaces/IIncentivesController.sol';
