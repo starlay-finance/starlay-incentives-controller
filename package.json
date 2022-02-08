@@ -87,7 +87,6 @@
     "typescript": "^4.0.5"
   },
   "dependencies": {
-    "@aave/aave-stake": "^1.0.4",
     "hardhat-deploy": "^0.7.2"
   }
 }
