@@ -62,7 +62,7 @@ export const testDeployIncentivesController = async (
     )
   ).wait();
 
-  await insertContractAddressInDb(eContractid.AaveIncentivesController, incentivesProxy.address);
+  await insertContractAddressInDb(eContractid.StakedTokenIncentivesController, incentivesProxy.address);
 
   return { incentivesProxy, stakeProxy };
 };

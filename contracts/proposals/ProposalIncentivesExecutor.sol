@@ -6,7 +6,7 @@ import {IERC20} from '../stake-v1/contracts/interfaces/IERC20.sol';
 import {ILendingPoolAddressesProvider} from '../interfaces/ILendingPoolAddressesProvider.sol';
 import {ILendingPoolConfigurator} from '../interfaces/ILendingPoolConfigurator.sol';
 import {IIncentivesController} from '../interfaces/IIncentivesController.sol';
-import {IAaveEcosystemReserveController} from '../interfaces/IAaveEcosystemReserveController.sol';
+import {IStarlayEcosystemReserveController} from '../interfaces/IStarlayEcosystemReserveController.sol';
 import {IProposalIncentivesExecutor} from '../interfaces/IProposalIncentivesExecutor.sol';
 import {DistributionTypes} from '../lib/DistributionTypes.sol';
 import {DataTypes} from '../utils/DataTypes.sol';
@@ -28,7 +28,7 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
   address constant INCENTIVES_CONTROLLER_IMPL_ADDRESS = 0x83D055D382f25e6793099713505c68a5C7535a35;
 
   uint256 constant DISTRIBUTION_DURATION = 7776000; // 90 days
-  uint256 constant DISTRIBUTION_AMOUNT = 198000000000000000000000; // 198000 AAVE during 90 days
+  uint256 constant DISTRIBUTION_AMOUNT = 198000000000000000000000; // 198000 LAY during 90 days
 
   function execute(
     address[6] memory aTokenImplementations,
@@ -67,8 +67,8 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
     ILendingPoolConfigurator poolConfigurator = ILendingPoolConfigurator(POOL_CONFIGURATOR);
     IIncentivesController incentivesController =
       IIncentivesController(INCENTIVES_CONTROLLER_PROXY_ADDRESS);
-    IAaveEcosystemReserveController ecosystemReserveController =
-      IAaveEcosystemReserveController(ECO_RESERVE_ADDRESS);
+    IStarlayEcosystemReserveController ecosystemReserveController =
+      IStarlayEcosystemReserveController(ECO_RESERVE_ADDRESS);
 
     ILendingPoolAddressesProvider provider = ILendingPoolAddressesProvider(ADDRESSES_PROVIDER);
 
@@ -109,7 +109,7 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
       assets[tokensCounter++] = reserveData.variableDebtTokenAddress;
 
     }
-    // Transfer AAVE funds to the Incentives Controller
+    // Transfer Starlay funds to the Incentives Controller
     ecosystemReserveController.transfer(
       STARLAY_TOKEN,
       INCENTIVES_CONTROLLER_PROXY_ADDRESS,
