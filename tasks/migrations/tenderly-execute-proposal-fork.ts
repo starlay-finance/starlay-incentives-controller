@@ -5,7 +5,7 @@ import { task } from 'hardhat/config';
 import { DRE, advanceBlockTo, latestBlock, increaseTime } from '../../helpers/misc-utils';
 import { tEthereumAddress } from '../../helpers/types';
 import { IERC20__factory, IGovernancePowerDelegationToken__factory } from '../../types';
-import { IAaveGovernanceV2 } from '../../types/IAaveGovernanceV2';
+import { IStarlayGovernanceV2 } from '../../types/IStarlayGovernanceV2';
 import { logError } from '../../helpers/tenderly-utils';
 import { getDefenderRelaySigner } from '../../helpers/defender-utils';
 import { Signer } from 'ethers';
@@ -27,7 +27,7 @@ task('execute-proposal:tenderly', 'Spin a tenderly fork with incentives activate
     let ethers;
     let whale: JsonRpcSigner;
     let proposer: Signer;
-    let gov: IAaveGovernanceV2;
+    let gov: IStarlayGovernanceV2;
 
     await localBRE.run('set-DRE');
 
@@ -49,10 +49,10 @@ task('execute-proposal:tenderly', 'Spin a tenderly fork with incentives activate
 
     // Initialize contracts and tokens
     gov = (await ethers.getContractAt(
-      'IAaveGovernanceV2',
+      'IStarlayGovernanceV2',
       AAVE_GOVERNANCE_V2,
       whale
-    )) as IAaveGovernanceV2;
+    )) as IStarlayGovernanceV2;
 
     // Mine block due flash loan voting protection
     await advanceBlockTo((await latestBlock()) + 100);

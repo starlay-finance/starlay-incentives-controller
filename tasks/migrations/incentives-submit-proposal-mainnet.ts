@@ -2,7 +2,7 @@ import { formatEther } from 'ethers/lib/utils';
 import { task } from 'hardhat/config';
 import { DRE, impersonateAccountsHardhat, latestBlock } from '../../helpers/misc-utils';
 import { IERC20__factory, IGovernancePowerDelegationToken__factory } from '../../types';
-import { IAaveGovernanceV2 } from '../../types/IAaveGovernanceV2';
+import { IStarlayGovernanceV2 } from '../../types/IStarlayGovernanceV2';
 import { getDefenderRelaySigner } from '../../helpers/defender-utils';
 import isIPFS from 'is-ipfs';
 import { Signer } from '@ethersproject/abstract-signer';
@@ -47,10 +47,10 @@ task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to Aa
 
       // Initialize contracts and tokens
       const gov = (await DRE.ethers.getContractAt(
-        'IAaveGovernanceV2',
+        'IStarlayGovernanceV2',
         AAVE_GOVERNANCE_V2,
         proposer
-      )) as IAaveGovernanceV2;
+      )) as IStarlayGovernanceV2;
 
       const aave = IERC20__factory.connect(AAVE_TOKEN, proposer);
 
