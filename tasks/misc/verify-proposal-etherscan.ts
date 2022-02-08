@@ -69,17 +69,17 @@ task('verify-proposal-etherscan', 'Verify proposals')
     for (let x = 0; x < reserveConfigs.length; x++) {
       const { tokenAddress } = reserveConfigs[x];
       console.log(`- Verifying ${reserveConfigs[x].symbol} aToken implementation at ${aTokens[x]}`);
-      const { aTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
+      const { lTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
 
-      const aTokenName = await IERC20Detailed__factory.connect(aTokenAddress, deployer).name();
-      const aTokenSymbol = await IERC20Detailed__factory.connect(aTokenAddress, deployer).symbol();
+      const lTokenName = await IERC20Detailed__factory.connect(lTokenAddress, deployer).name();
+      const lTokenSymbol = await IERC20Detailed__factory.connect(lTokenAddress, deployer).symbol();
 
       await verifyContract(aTokens[x], [
         LENDING_POOL,
         reserveConfigs[x].tokenAddress,
         TREASURY,
-        aTokenName,
-        aTokenSymbol,
+        lTokenName,
+        lTokenSymbol,
         INCENTIVES_PROXY,
       ]);
       console.log(

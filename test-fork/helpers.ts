@@ -82,9 +82,9 @@ export const fullCycleLendingPool = async (
   proposer: SignerWithAddress,
   pool: ILendingPool
 ) => {
-  const { aTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
+  const { lTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
   const reserve = IERC20__factory.connect(tokenAddress, proposer);
-  const aToken = LToken__factory.connect(aTokenAddress, proposer);
+  const lToken = LToken__factory.connect(lTokenAddress, proposer);
   const holderSigner = DRE.ethers.provider.getSigner(spendList[symbol].holder);
 
   // Transfer assets to proposer from reserve holder
@@ -122,12 +122,12 @@ export const fullCycleLendingPool = async (
 
   // Withdraw from LendingPool
   const priorBalance = await reserve.balanceOf(proposer.address);
-  await (await aToken.connect(proposer).approve(pool.address, MAX_UINT_AMOUNT)).wait();
+  await (await lToken.connect(proposer).approve(pool.address, MAX_UINT_AMOUNT)).wait();
   const tx4 = await pool.withdraw(reserve.address, MAX_UINT_AMOUNT, proposer.address);
   await tx4.wait();
   expect(tx4).to.emit(pool, 'Withdraw');
 
   const afterBalance = await reserve.balanceOf(proposer.address);
-  expect(await aToken.balanceOf(proposer.address)).to.be.eq('0');
+  expect(await lToken.balanceOf(proposer.address)).to.be.eq('0');
   expect(afterBalance).to.be.gt(priorBalance);
 };

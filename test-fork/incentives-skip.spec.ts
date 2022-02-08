@@ -236,14 +236,14 @@ describe('Enable incentives in target assets', () => {
 
     const {
       configuration: { data },
-      aTokenAddress,
+      lTokenAddress,
       variableDebtTokenAddress,
     } = await pool.getReserveData(DAI_TOKEN);
 
     layToken = IERC20Factory.connect(STARLAY_TOKEN, whale);
     stakedLay = IERC20Factory.connect(STAKED_STARLAY, proposer);
     dai = IERC20Factory.connect(DAI_TOKEN, daiHolder);
-    aDAI = ATokenFactory.connect(aTokenAddress, proposer);
+    aDAI = ATokenFactory.connect(lTokenAddress, proposer);
     variableDebtDAI = IERC20Factory.connect(variableDebtTokenAddress, proposer);
 
     // Transfer enough Starlay to proposer
@@ -257,16 +257,16 @@ describe('Enable incentives in target assets', () => {
 
     for (let x = 0; x < reserveConfigs.length; x++) {
       const { tokenAddress, symbol } = reserveConfigs[x];
-      const { aTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(
+      const { lTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(
         reserveConfigs[x].tokenAddress
       );
-      const aToken = IERC20DetailedFactory.connect(aTokenAddress, proposer);
+      const lToken = IERC20DetailedFactory.connect(lTokenAddress, proposer);
       const varDebtToken = IERC20DetailedFactory.connect(variableDebtTokenAddress, proposer);
 
       symbols[symbol] = {
         aToken: {
-          name: await aToken.name(),
-          symbol: await aToken.symbol(),
+          name: await lToken.name(),
+          symbol: await lToken.symbol(),
         },
         variableDebtToken: {
           name: await varDebtToken.name(),
@@ -306,7 +306,7 @@ describe('Enable incentives in target assets', () => {
   it('Check emission rate', async () => {
     const incentives = StakedTokenIncentivesControllerFactory.connect(incentivesProxy, proposer);
     const tokenAddress = DAI_TOKEN;
-    const { aTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
+    const { lTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
     const reserve = IERC20Factory.connect(tokenAddress, proposer);
 
     // Amounts
@@ -321,30 +321,30 @@ describe('Enable incentives in target assets', () => {
 
     // Check unclaimed rewards before time travel and claim
     const unclaimedRewardsBefore = await incentives.getRewardsBalance(
-      [aTokenAddress],
+      [lTokenAddress],
       proposer.address
     );
 
     await increaseTime(86400);
 
-    const atokenBalance = await IATokenFactory.connect(aTokenAddress, proposer).scaledBalanceOf(
+    const atokenBalance = await IATokenFactory.connect(lTokenAddress, proposer).scaledBalanceOf(
       proposer.address
     );
     const priorStkBalance = await IERC20Factory.connect(stakedLay.address, proposer).balanceOf(
       proposer.address
     );
-    const userIndexBefore = await getUserIndex(incentives, proposer.address, aTokenAddress);
+    const userIndexBefore = await getUserIndex(incentives, proposer.address, lTokenAddress);
 
     // Claim after timetravel
     const tx2 = await incentives
       .connect(proposer)
-      .claimRewards([aTokenAddress], MAX_UINT_AMOUNT, proposer.address);
+      .claimRewards([lTokenAddress], MAX_UINT_AMOUNT, proposer.address);
 
     expect(tx2).to.emit(incentives, 'RewardsClaimed');
     const afterStkBalance = await stakedLay.balanceOf(proposer.address);
     const claimed = afterStkBalance.sub(priorStkBalance);
 
-    const userIndexAfter = await getUserIndex(incentives, proposer.address, aTokenAddress);
+    const userIndexAfter = await getUserIndex(incentives, proposer.address, lTokenAddress);
     const expectedAccruedRewards = getRewards(
       atokenBalance,
       userIndexAfter,
@@ -391,7 +391,7 @@ describe('Enable incentives in target assets', () => {
   xit('Users should be able to withdraw DAI from Lending Pool', async () => {
     const {
       configuration: { data },
-      aTokenAddress,
+      lTokenAddress,
     } = await pool.getReserveData(DAI_TOKEN);
 
     // Withdraw DAI from LendingPool
@@ -424,20 +424,20 @@ describe('Enable incentives in target assets', () => {
 
     for (let x = 0; x < reserveConfigs.length; x++) {
       const { tokenAddress, symbol } = reserveConfigs[x];
-      const { aTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
-      const aToken = IERC20DetailedFactory.connect(aTokenAddress, proposer);
+      const { lTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
+      const lToken = IERC20DetailedFactory.connect(lTokenAddress, proposer);
       const varDebtToken = IERC20DetailedFactory.connect(variableDebtTokenAddress, proposer);
 
-      const aTokenDetails = {
-        name: await aToken.name(),
-        symbol: await aToken.symbol(),
+      const lTokenDetails = {
+        name: await lToken.name(),
+        symbol: await lToken.symbol(),
       };
       const variableDebtTokenDetails = {
         name: await varDebtToken.name(),
         symbol: await varDebtToken.symbol(),
       };
 
-      expect(aTokenDetails).to.be.deep.equal(symbols[symbol].aToken);
+      expect(lTokenDetails).to.be.deep.equal(symbols[symbol].aToken);
       expect(variableDebtTokenDetails).to.be.deep.equal(symbols[symbol].variableDebtToken);
     }
   });
@@ -449,7 +449,7 @@ describe('Enable incentives in target assets', () => {
 
     for (let x = 0; x < reserveConfigs.length; x++) {
       const { tokenAddress, symbol } = reserveConfigs[x];
-      const { aTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(
+      const { lTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(
         reserveConfigs[x].tokenAddress
       );
       const reserve = IERC20Factory.connect(tokenAddress, proposer);
@@ -469,7 +469,7 @@ describe('Enable incentives in target assets', () => {
       const priorBalance = await stakedLay.balanceOf(proposer.address);
       const tx = await incentives
         .connect(proposer)
-        .claimRewards([aTokenAddress, variableDebtTokenAddress], MAX_UINT_AMOUNT, proposer.address);
+        .claimRewards([lTokenAddress, variableDebtTokenAddress], MAX_UINT_AMOUNT, proposer.address);
       await tx.wait();
       expect(tx).to.emit(incentives, 'RewardsClaimed');
 
@@ -491,13 +491,13 @@ describe('Enable incentives in target assets', () => {
 
     for (let x = 0; x < reserveConfigs.length; x++) {
       const { symbol, tokenAddress } = reserveConfigs[x];
-      const { aTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
+      const { lTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
       // Claim any leftovers
       await (
         await incentives
           .connect(proposer)
           .claimRewards(
-            [aTokenAddress, variableDebtTokenAddress],
+            [lTokenAddress, variableDebtTokenAddress],
             MAX_UINT_AMOUNT,
             proposer.address
           )
