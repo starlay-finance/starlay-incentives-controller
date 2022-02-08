@@ -88,7 +88,6 @@
   },
   "dependencies": {
     "@aave/aave-stake": "^1.0.4",
-    "@aave/governance-v2": "^1.0.0",
     "hardhat-deploy": "^0.7.2"
   }
 }
