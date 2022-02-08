@@ -44,7 +44,7 @@ task(
     }
 
     for (let x = 0; x < reserveConfigs.length; x++) {
-      aTokens[x] = await localBRE.run('deploy-atoken', {
+      aTokens[x] = await localBRE.run('deploy-ltoken', {
         pool,
         asset: reserveConfigs[x].tokenAddress,
         treasury,

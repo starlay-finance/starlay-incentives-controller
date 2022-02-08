@@ -2,9 +2,9 @@ import { Signer } from 'ethers';
 import { task } from 'hardhat/config';
 import { ZERO_ADDRESS } from '../../helpers/constants';
 import { getDefenderRelaySigner } from '../../helpers/defender-utils';
-import { ILendingPoolData__factory, IERC20Detailed__factory, AToken__factory } from '../../types';
+import { ILendingPoolData__factory, IERC20Detailed__factory, LToken__factory } from '../../types';
 
-task('deploy-atoken', 'Deploy AToken using prior reserve config')
+task('deploy-ltoken', 'Deploy LToken using prior reserve config')
   .addParam('pool')
   .addParam('asset')
   .addParam('treasury')
@@ -51,7 +51,7 @@ task('deploy-atoken', 'Deploy AToken using prior reserve config')
         tokenSymbol = await IERC20Detailed__factory.connect(aTokenAddress, deployer).symbol();
       }
 
-      // const { address } = await new AToken__factory(deployer).deploy(
+      // const { address } = await new LToken__factory(deployer).deploy(
       //   pool,
       //   asset,
       //   treasury,
@@ -59,8 +59,8 @@ task('deploy-atoken', 'Deploy AToken using prior reserve config')
       //   tokenSymbol,
       //   incentivesController
       // );
-      // TODO: follow starlay-protocol's AToken / maybe use proxy update
-      const { address } = await new AToken__factory(deployer).deploy()
+      // TODO: follow starlay-protocol's LToken / maybe use proxy update
+      const { address } = await new LToken__factory(deployer).deploy()
 
       return address;
     }

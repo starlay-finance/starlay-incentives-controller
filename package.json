@@ -45,7 +45,6 @@
   },
   "homepage": "https://github.com/starlay-finance/starlay-incentives-controller#readme",
   "devDependencies": {
-    "@aave/protocol-v2": "^1.0.2-fat.3",
     "@nomiclabs/hardhat-ethers": "^2.0.0",
     "@nomiclabs/hardhat-waffle": "^2.0.0",
     "@openzeppelin/contracts": "3.1.0",
@@ -87,8 +86,7 @@
     "typescript": "^4.0.5"
   },
   "dependencies": {
-    "@aave/aave-stake": "^1.0.4",
-    "@aave/aave-token": "^1.0.4",
-    "hardhat-deploy": "^0.7.2"
+    "hardhat-deploy": "^0.7.2",
+    "tmp-promise": "^3.0.3"
   }
 }

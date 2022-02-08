@@ -140,14 +140,14 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
 
     for (let x = 0; x < reserveConfigs.length; x++) {
       const { tokenAddress, symbol } = reserveConfigs[x];
-      const { aTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
-      const aToken = IERC20Detailed__factory.connect(aTokenAddress, proposer);
+      const { lTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
+      const lToken = IERC20Detailed__factory.connect(lTokenAddress, proposer);
       const varDebtToken = IERC20Detailed__factory.connect(variableDebtTokenAddress, proposer);
 
       symbols[symbol] = {
         aToken: {
-          name: await aToken.name(),
-          symbol: await aToken.symbol(),
+          name: await lToken.name(),
+          symbol: await lToken.symbol(),
         },
         variableDebtToken: {
           name: await varDebtToken.name(),
