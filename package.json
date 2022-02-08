@@ -88,6 +88,7 @@
   },
   "dependencies": {
     "@aave/aave-stake": "^1.0.4",
+    "@aave/aave-token": "^1.0.4",
     "hardhat-deploy": "^0.7.2"
   }
 }
