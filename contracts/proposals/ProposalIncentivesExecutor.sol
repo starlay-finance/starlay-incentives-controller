@@ -28,7 +28,7 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
   address constant INCENTIVES_CONTROLLER_IMPL_ADDRESS = 0x83D055D382f25e6793099713505c68a5C7535a35;
 
   uint256 constant DISTRIBUTION_DURATION = 7776000; // 90 days
-  uint256 constant DISTRIBUTION_AMOUNT = 198000000000000000000000; // 198000 AAVE during 90 days
+  uint256 constant DISTRIBUTION_AMOUNT = 198000000000000000000000; // 198000 LAY during 90 days
 
   function execute(
     address[6] memory aTokenImplementations,
@@ -109,7 +109,7 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
       assets[tokensCounter++] = reserveData.variableDebtTokenAddress;
 
     }
-    // Transfer AAVE funds to the Incentives Controller
+    // Transfer Starlay funds to the Incentives Controller
     ecosystemReserveController.transfer(
       STARLAY_TOKEN,
       INCENTIVES_CONTROLLER_PROXY_ADDRESS,
