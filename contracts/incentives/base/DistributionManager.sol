@@ -14,6 +14,8 @@ import {DistributionTypes} from '../../lib/DistributionTypes.sol';
 contract DistributionManager is IDistributionManager {
   using SafeMath for uint256;
 
+  event EmissionManagerChanged(address previousManager, address newManager);
+
   struct AssetData {
     uint104 emissionPerSecond;
     uint104 index;
@@ -21,7 +23,8 @@ contract DistributionManager is IDistributionManager {
     mapping(address => uint256) users;
   }
 
-  address public immutable EMISSION_MANAGER;
+  address public immutable MANAGER_CONTROLLER;
+  address public emissionManager;
 
   uint8 public constant PRECISION = 18;
 
@@ -29,13 +32,24 @@ contract DistributionManager is IDistributionManager {
 
   uint256 internal _distributionEnd;
 
-  modifier onlyEmissionManager() {
-    require(msg.sender == EMISSION_MANAGER, 'ONLY_EMISSION_MANAGER');
+  modifier onlyManagerController() {
+    require(msg.sender == MANAGER_CONTROLLER, 'ONLY_MANAGER_CONTROLLER');
     _;
   }
 
-  constructor(address emissionManager) {
-    EMISSION_MANAGER = emissionManager;
+  modifier onlyEmissionManager() {
+    require(msg.sender == emissionManager, 'ONLY_EMISSION_MANAGER');
+    _;
+  }
+
+  modifier onlyManagers() {
+    require(msg.sender == emissionManager || msg.sender == MANAGER_CONTROLLER, 'ONLY_MANAGERS');
+    _;
+  }
+
+  constructor(address _managerController, address _emissionManager) {
+    MANAGER_CONTROLLER = _managerController;
+    emissionManager = _emissionManager;
   }
 
   /// @inheritdoc IDistributionManager
@@ -62,6 +76,12 @@ contract DistributionManager is IDistributionManager {
   /// @inheritdoc IDistributionManager
   function getAssetData(address asset) public view override returns (uint256, uint256, uint256) {
     return (assets[asset].index, assets[asset].emissionPerSecond, assets[asset].lastUpdateTimestamp);
+  }
+
+  function changeEmissionManager(address newManager) external onlyManagerController {
+    require(newManager != address(0), 'Cannot change the emission manager of a proxy to the zero address');
+    emit EmissionManagerChanged(emissionManager, newManager);
+    emissionManager = newManager;
   }
 
   /**

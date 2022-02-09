@@ -21,8 +21,8 @@ contract PullRewardsIncentivesController is
 
   event RewardsVaultUpdated(address indexed vault);
   
-  constructor(IERC20 rewardToken, address emissionManager)
-    BaseIncentivesController(rewardToken, emissionManager)
+  constructor(IERC20 rewardToken, address managerController, address emissionManager)
+    BaseIncentivesController(rewardToken, managerController, emissionManager)
   {}
 
   /**

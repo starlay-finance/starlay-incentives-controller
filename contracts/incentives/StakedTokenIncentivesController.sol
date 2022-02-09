@@ -19,8 +19,8 @@ contract StakedTokenIncentivesController is BaseIncentivesController {
 
   IStakedTokenWithConfig public immutable STAKE_TOKEN;
 
-  constructor(IStakedTokenWithConfig stakeToken, address emissionManager)
-    BaseIncentivesController(IERC20(address(stakeToken)), emissionManager)
+  constructor(IStakedTokenWithConfig stakeToken, address managerController, address emissionManager)
+    BaseIncentivesController(IERC20(address(stakeToken)), managerController, emissionManager)
   {
     STAKE_TOKEN = stakeToken;
   }
