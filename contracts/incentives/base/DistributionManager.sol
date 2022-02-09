@@ -21,7 +21,7 @@ contract DistributionManager is IDistributionManager {
     mapping(address => uint256) users;
   }
 
-  address public immutable EMISSION_MANAGER;
+  address public EMISSION_MANAGER;
 
   uint8 public constant PRECISION = 18;
 
