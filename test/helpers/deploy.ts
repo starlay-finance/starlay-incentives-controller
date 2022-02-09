@@ -36,6 +36,7 @@ export const testDeployIncentivesController = async (
 
   const incentivesImplementation = await deployStakedTokenIncentivesController([
     stakeProxy.address,
+    emissionManagerAddress, // dummy managerController
     emissionManagerAddress,
   ]);
 

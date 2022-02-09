@@ -21,11 +21,11 @@ import { DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { Signer } from 'ethers';
 
 export const deployStakedTokenIncentivesController = async (
-  [psm, emissionManager]: [tEthereumAddress, tEthereumAddress],
+  [psm, managerController, emissionManager]: [tEthereumAddress, tEthereumAddress, tEthereumAddress],
   verify?: boolean,
   signer?: Signer | DefenderRelaySigner
 ) => {
-  const args: [string, string] = [psm, emissionManager];
+  const args: [string, string, string] = [psm, managerController, emissionManager];
   const instance = await new StakedTokenIncentivesController__factory(
     signer || (await getFirstSigner())
   ).deploy(...args);
@@ -37,11 +37,11 @@ export const deployStakedTokenIncentivesController = async (
 };
 
 export const deployPullRewardsIncentivesController = async (
-  [rewardToken, emissionManager]: [tEthereumAddress, tEthereumAddress],
+  [rewardToken, managerController, emissionManager]: [tEthereumAddress, tEthereumAddress, tEthereumAddress],
   verify?: boolean,
   signer?: Signer | DefenderRelaySigner
 ) => {
-  const args: [string, string] = [rewardToken, emissionManager];
+  const args: [string, string, string] = [rewardToken, managerController, emissionManager];
   const instance = await new PullRewardsIncentivesController__factory(
     signer || (await getFirstSigner())
   ).deploy(...args);

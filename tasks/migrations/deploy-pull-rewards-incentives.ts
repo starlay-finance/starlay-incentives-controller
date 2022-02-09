@@ -33,7 +33,7 @@ task(
       console.log(`[PullRewardsIncentivesController] Starting deployment:`);
 
       const incentivesControllerImpl = await deployPullRewardsIncentivesController(
-        [rewardToken, emissionManager],
+        [rewardToken, emissionManager, emissionManager], // dummy managerController
         verify
       );
       console.log(`  - Deployed implementation of PullRewardsIncentivesController`);
