@@ -6,7 +6,7 @@ import {IIncentivesController} from '../interfaces/IIncentivesController.sol';
 import {DistributionTypes} from '../lib/DistributionTypes.sol';
 import {IAToken} from '../stake-v1/contracts/interfaces/IAToken.sol';
 
-contract ATokenMock is IAToken {
+contract LTokenMock is IAToken {
   IIncentivesController public _ic;
   uint256 internal _userBalance;
   uint256 internal _totalSupply;
