@@ -3,22 +3,70 @@ import { timeLatest, waitForTx } from '../../helpers/misc-utils';
 import { expect } from 'chai';
 
 import { makeSuite } from '../helpers/make-suite';
-import { deployStakedTokenIncentivesController } from '../../helpers/contracts-accessors';
+import { deployInitializableAdminUpgradeabilityProxy, deployMintableErc20, deployStakedTokenIncentivesController } from '../../helpers/contracts-accessors';
 import { MAX_UINT_AMOUNT, RANDOM_ADDRESSES, ZERO_ADDRESS } from '../../helpers/constants';
+import { StakedTokenIncentivesController__factory } from '../../types';
+import { deployStakedLayV2 } from '../helpers/deploy';
 
 makeSuite('IncentivesController misc tests', (testEnv) => {
   it('constructor should assign correct params', async () => {
-    const peiEmissionManager = RANDOM_ADDRESSES[1];
     const psm = RANDOM_ADDRESSES[5];
 
     const incentivesController = await deployStakedTokenIncentivesController([
-      psm,
-      peiEmissionManager,
+      psm
     ]);
     await expect(await incentivesController.STAKE_TOKEN()).to.be.equal(psm);
     await expect((await incentivesController.EMISSION_MANAGER()).toString()).to.be.equal(
-      peiEmissionManager
+      ZERO_ADDRESS
     );
+  });
+
+  it('initializer should assign correct params', async () => {
+    const { users } = testEnv;
+    const emissionManager = users[0];
+    const proxyAdmin = RANDOM_ADDRESSES[1];
+
+    const token = await deployMintableErc20(['Token', 'TOKEN']);
+    const stkTokenProxy = await deployInitializableAdminUpgradeabilityProxy();
+    const incentiveProxy = await deployInitializableAdminUpgradeabilityProxy();
+    const stkTokenImpl = await deployStakedLayV2([
+      token.address,
+      token.address,
+      '0', // dummy
+      '0', // dummy
+      RANDOM_ADDRESSES[0], // dummy
+      RANDOM_ADDRESSES[0], // dummy
+      '0', // dummy
+    ]);
+    const incentiveImpl = await deployStakedTokenIncentivesController([
+      stkTokenProxy.address
+    ]);
+    // @ts-ignore
+    const stkTokenEncodedParams = stkTokenImpl.interface.encodeFunctionData('initialize', []);
+    const incentiveEncodedParams = incentiveImpl.interface.encodeFunctionData('initialize', [
+      emissionManager.address
+    ]);
+    await (
+      await stkTokenProxy.functions['initialize(address,address,bytes)'](
+        stkTokenImpl.address,
+        proxyAdmin,
+        stkTokenEncodedParams
+      )
+    ).wait();
+    await (
+      await incentiveProxy.functions['initialize(address,address,bytes)'](
+        incentiveImpl.address,
+        proxyAdmin,
+        incentiveEncodedParams
+      )
+    ).wait();
+    const connectedImpl = StakedTokenIncentivesController__factory.connect(
+      incentiveProxy.address,
+      emissionManager.signer
+    );
+
+    await expect((await connectedImpl.EMISSION_MANAGER()).toString())
+      .to.be.equal(emissionManager.address);
   });
 
   it('Should return same index while multiple asset index updates', async () => {

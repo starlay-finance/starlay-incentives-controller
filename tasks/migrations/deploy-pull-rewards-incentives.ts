@@ -33,7 +33,7 @@ task(
       console.log(`[PullRewardsIncentivesController] Starting deployment:`);
 
       const incentivesControllerImpl = await deployPullRewardsIncentivesController(
-        [rewardToken, emissionManager],
+        [rewardToken],
         verify
       );
       console.log(`  - Deployed implementation of PullRewardsIncentivesController`);
@@ -43,6 +43,7 @@ task(
 
       const encodedParams = incentivesControllerImpl.interface.encodeFunctionData('initialize', [
         rewardsVault,
+        emissionManager,
       ]);
 
       await waitForTx(

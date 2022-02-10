@@ -21,7 +21,7 @@ contract DistributionManager is IDistributionManager {
     mapping(address => uint256) users;
   }
 
-  address public immutable EMISSION_MANAGER;
+  address internal _emissionManager;
 
   uint8 public constant PRECISION = 18;
 
@@ -30,12 +30,8 @@ contract DistributionManager is IDistributionManager {
   uint256 internal _distributionEnd;
 
   modifier onlyEmissionManager() {
-    require(msg.sender == EMISSION_MANAGER, 'ONLY_EMISSION_MANAGER');
+    require(msg.sender == _emissionManager, 'ONLY_EMISSION_MANAGER');
     _;
-  }
-
-  constructor(address emissionManager) {
-    EMISSION_MANAGER = emissionManager;
   }
 
   /// @inheritdoc IDistributionManager
@@ -62,6 +58,10 @@ contract DistributionManager is IDistributionManager {
   /// @inheritdoc IDistributionManager
   function getAssetData(address asset) public view override returns (uint256, uint256, uint256) {
     return (assets[asset].index, assets[asset].emissionPerSecond, assets[asset].lastUpdateTimestamp);
+  }
+
+  function EMISSION_MANAGER() external view override returns (address) {
+    return _emissionManager;
   }
 
   /**
