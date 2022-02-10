@@ -111,14 +111,14 @@ describe('Enable incentives in target assets', () => {
     incentivesProxy = INCENTIVES_PROXY;
 
     // Deploy lTokens and debt tokens
-    const { aTokens, variableDebtTokens } = await rawHRE.run('deploy-reserve-implementations', {
+    const { lTokens, variableDebtTokens } = await rawHRE.run('deploy-reserve-implementations', {
       provider: POOL_PROVIDER,
       assets: RESERVES,
       incentivesController: incentivesProxy,
       treasury: TREASURY,
     });
 
-    lTokensImpl = [...aTokens];
+    lTokensImpl = [...lTokens];
     variableDebtTokensImpl = [...variableDebtTokens];
 
     // Deploy Proposal Executor Payload

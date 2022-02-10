@@ -57,8 +57,8 @@ task(
 
     console.log('- Deploying lTokens and Variable Debt Tokens implementations');
 
-    // Deploy aTokens and debt tokens
-    const { aTokens, variableDebtTokens } = await DRE.run('deploy-reserve-implementations', {
+    // Deploy lTokens and debt tokens
+    const { lTokens, variableDebtTokens } = await DRE.run('deploy-reserve-implementations', {
       provider: POOL_PROVIDER,
       assets: RESERVES,
       incentivesController: incentivesProxy,
@@ -66,7 +66,7 @@ task(
       defender: true,
     });
 
-    lTokensImpl = [...aTokens];
+    lTokensImpl = [...lTokens];
     variableDebtTokensImpl = [...variableDebtTokens];
 
     // Deploy Proposal Executor Payload

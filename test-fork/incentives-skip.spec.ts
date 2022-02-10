@@ -154,7 +154,7 @@ describe('Enable incentives in target assets', () => {
     );
 
     // Deploy aTokens and debt tokens
-    const { aTokens, variableDebtTokens } = await rawHRE.run('deploy-reserve-implementations', {
+    const { lTokens, variableDebtTokens } = await rawHRE.run('deploy-reserve-implementations', {
       provider: POOL_PROVIDER,
       assets: RESERVES,
       incentivesController: incentivesProxy,
@@ -162,7 +162,7 @@ describe('Enable incentives in target assets', () => {
     });
 
     lTokensImpl = [
-      ...(aTokens as [
+      ...(lTokens as [
         tEthereumAddress,
         tEthereumAddress,
         tEthereumAddress,

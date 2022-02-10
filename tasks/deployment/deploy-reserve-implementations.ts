@@ -64,7 +64,7 @@ task(
     }
 
     return {
-      aTokens: lTokens,
+      lTokens,
       variableDebtTokens,
     };
   });

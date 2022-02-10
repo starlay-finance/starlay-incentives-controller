@@ -64,7 +64,7 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
     let gov: IStarlayGovernanceV2;
     let pool: ILendingPool;
     let proposalId: BigNumber;
-    let aTokensImpl: tEthereumAddress[];
+    let lTokensImpl: tEthereumAddress[];
     let variableDebtTokensImpl: tEthereumAddress[];
     let proposalExecutionPayload: tEthereumAddress;
     let symbols: {
@@ -87,14 +87,14 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
     incentivesProxy = INCENTIVES_PROXY;
 
     // Deploy lTokens and debt tokens
-    const { aTokens, variableDebtTokens } = await DRE.run('deploy-reserve-implementations', {
+    const { lTokens, variableDebtTokens } = await DRE.run('deploy-reserve-implementations', {
       provider: POOL_PROVIDER,
       assets: RESERVES,
       incentivesController: incentivesProxy,
       treasury: TREASURY,
     });
 
-    aTokensImpl = [...aTokens];
+    lTokensImpl = [...lTokens];
     variableDebtTokensImpl = [...variableDebtTokens];
 
     // Deploy Proposal Executor Payload
@@ -176,7 +176,7 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
 
     await DRE.run('propose-incentives', {
       proposalExecutionPayload,
-      aTokens: aTokensImpl.join(','),
+      aTokens: lTokensImpl.join(','),
       variableDebtTokens: variableDebtTokensImpl.join(','),
       governance: GOVERNANCE_V2,
       shortExecutor: STARLAY_SHORT_EXECUTOR,

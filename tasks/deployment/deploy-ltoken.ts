@@ -27,7 +27,7 @@ task('deploy-ltoken', 'Deploy LToken using prior reserve config')
         deployer = signer;
       }
 
-      const { aTokenAddress: lTokenAddress } = await ILendingPoolData__factory.connect(
+      const { lTokenAddress } = await ILendingPoolData__factory.connect(
         pool,
         deployer
       ).getReserveData(asset);
