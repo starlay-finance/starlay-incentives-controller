@@ -122,7 +122,7 @@ makeSuite('pullRewardsIncentivesController configureAssets', (testEnv: TestEnv) 
   let deployedAssets;
 
   before(async () => {
-    deployedAssets = [testEnv.lDaiBaseMock, testEnv.aWethBaseMock];
+    deployedAssets = [testEnv.lDaiBaseMock, testEnv.lWethBaseMock];
   });
 
   // custom checks

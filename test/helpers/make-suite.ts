@@ -38,7 +38,7 @@ export interface TestEnv {
   lDaiMock: LTokenMock;
   lWethMock: LTokenMock;
   lDaiBaseMock: LTokenMock;
-  aWethBaseMock: LTokenMock;
+  lWethBaseMock: LTokenMock;
 }
 
 let buidlerevmSnapshotId: string = '0x1';
@@ -58,7 +58,7 @@ const testEnv: TestEnv = {
   lDaiMock: {} as LTokenMock,
   lWethMock: {} as LTokenMock,
   lDaiBaseMock: {} as LTokenMock,
-  aWethBaseMock: {} as LTokenMock,
+  lWethBaseMock: {} as LTokenMock,
 } as TestEnv;
 
 export async function initializeMakeSuite(
@@ -93,7 +93,7 @@ export async function initializeMakeSuite(
   testEnv.lDaiMock = await getLTokenMock({ slug: 'lDai' });
   testEnv.lWethMock = await getLTokenMock({ slug: 'lWeth' });
   testEnv.lDaiBaseMock = await getLTokenMock({ slug: 'lDaiBase' });
-  testEnv.aWethBaseMock = await getLTokenMock({ slug: 'lWethBase' });
+  testEnv.lWethBaseMock = await getLTokenMock({ slug: 'lWethBase' });
 }
 
 export function makeSuite(name: string, tests: (testEnv: TestEnv) => void) {
