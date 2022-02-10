@@ -8,16 +8,14 @@ import { MAX_UINT_AMOUNT, RANDOM_ADDRESSES, ZERO_ADDRESS } from '../../helpers/c
 
 makeSuite('IncentivesController misc tests', (testEnv) => {
   it('constructor should assign correct params', async () => {
-    const peiEmissionManager = RANDOM_ADDRESSES[1];
     const psm = RANDOM_ADDRESSES[5];
 
     const incentivesController = await deployStakedTokenIncentivesController([
-      psm,
-      peiEmissionManager,
+      psm
     ]);
     await expect(await incentivesController.STAKE_TOKEN()).to.be.equal(psm);
     await expect((await incentivesController.EMISSION_MANAGER()).toString()).to.be.equal(
-      peiEmissionManager
+      ZERO_ADDRESS
     );
   });
 
