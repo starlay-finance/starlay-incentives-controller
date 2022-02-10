@@ -11,7 +11,7 @@ import {IProposalIncentivesExecutor} from '../interfaces/IProposalIncentivesExec
 import {DistributionTypes} from '../lib/DistributionTypes.sol';
 import {DataTypes} from '../utils/DataTypes.sol';
 import {ILendingPoolData} from '../interfaces/ILendingPoolData.sol';
-import {IATokenDetailed} from '../interfaces/IATokenDetailed.sol';
+import {ILTokenDetailed} from '../interfaces/ILTokenDetailed.sol';
 import {PercentageMath} from '../utils/PercentageMath.sol';
 import {SafeMath} from '../lib/SafeMath.sol';
 
@@ -87,11 +87,11 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
     // Update each reserve LToken implementation, Debt implementation, and prepare incentives configuration input
     for (uint256 x = 0; x < reserves.length; x++) {
       require(
-        IATokenDetailed(lTokenImplementations[x]).UNDERLYING_ASSET_ADDRESS() == reserves[x],
+        ILTokenDetailed(lTokenImplementations[x]).UNDERLYING_ASSET_ADDRESS() == reserves[x],
         'LToken underlying does not match'
       );
       require(
-        IATokenDetailed(variableDebtImplementations[x]).UNDERLYING_ASSET_ADDRESS() == reserves[x],
+        ILTokenDetailed(variableDebtImplementations[x]).UNDERLYING_ASSET_ADDRESS() == reserves[x],
         'Debt Token underlying does not match'
       );
       DataTypes.ReserveData memory reserveData =
