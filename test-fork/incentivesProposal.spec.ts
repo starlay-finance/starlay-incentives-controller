@@ -105,7 +105,6 @@ describe('Enable incentives in target assets', () => {
     // Deploy incentives implementation
     const { address: incentivesImplementation } = await deployStakedTokenIncentivesController([
       STAKED_STARLAY,
-      STARLAY_SHORT_EXECUTOR,
     ]);
 
     incentivesProxy = INCENTIVES_PROXY;
