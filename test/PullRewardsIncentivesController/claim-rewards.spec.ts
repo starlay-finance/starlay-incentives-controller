@@ -70,12 +70,12 @@ makeSuite('pullRewardsIncentivesController claimRewards tests', (testEnv) => {
     let amountToClaim = _amountToClaim;
     it(caseName, async () => {
       await increaseTime(100);
-      const { pullRewardsIncentivesController, token, aDaiBaseMock } = testEnv;
+      const { pullRewardsIncentivesController, token, lDaiBaseMock } = testEnv;
 
       const distributionEndTimestamp = await pullRewardsIncentivesController.getDistributionEnd();
       const userAddress = await pullRewardsIncentivesController.signer.getAddress();
 
-      const underlyingAsset = aDaiBaseMock.address;
+      const underlyingAsset = lDaiBaseMock.address;
       const stakedByUser = 22 * caseName.length;
       const totalStaked = 33 * caseName.length;
 
@@ -90,8 +90,8 @@ makeSuite('pullRewardsIncentivesController claimRewards tests', (testEnv) => {
       const destinationAddress = to || userAddress;
 
       const destinationAddressBalanceBefore = await token.balanceOf(destinationAddress);
-      await aDaiBaseMock.setUserBalanceAndSupply(stakedByUser, totalStaked);
-      await aDaiBaseMock.handleActionOnAic(userAddress, totalStaked, stakedByUser);
+      await lDaiBaseMock.setUserBalanceAndSupply(stakedByUser, totalStaked);
+      await lDaiBaseMock.handleActionOnAic(userAddress, totalStaked, stakedByUser);
 
       const unclaimedRewardsBefore = await pullRewardsIncentivesController.getRewardsBalance(
         [underlyingAsset],
@@ -142,7 +142,7 @@ makeSuite('pullRewardsIncentivesController claimRewards tests', (testEnv) => {
         userIndexBefore
       ).toString();
 
-      await aDaiBaseMock.cleanUserState();
+      await lDaiBaseMock.cleanUserState();
 
       if (amountToClaim === '0') {
         // state should not change
