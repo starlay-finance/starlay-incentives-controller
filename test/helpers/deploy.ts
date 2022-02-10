@@ -66,7 +66,7 @@ export const testDeployIncentivesController = async (
   return { incentivesProxy, stakeProxy };
 };
 
-const deployStakedLayV2 = async (
+export const deployStakedLayV2 = async (
   [
     stakedToken,
     rewardsToken,
