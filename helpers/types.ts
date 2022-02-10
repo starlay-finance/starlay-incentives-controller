@@ -9,7 +9,7 @@ export type eNetwork = eEthereumNetwork | eAstarNetwork;
 export enum eContractid {
   DistributionManager = 'DistributionManager',
   MintableErc20 = 'MintableErc20',
-  ATokenMock = 'ATokenMock',
+  LTokenMock = 'LTokenMock',
   IERC20Detailed = 'IERC20Detailed',
   StakedTokenIncentivesController = 'StakedTokenIncentivesController',
   MockSelfDestruct = 'MockSelfDestruct',

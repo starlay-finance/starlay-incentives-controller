@@ -13,7 +13,7 @@ config();
 
 task('propose-incentives', 'Create some proposals and votes')
   .addParam('proposalExecutionPayload')
-  .addParam('aTokens')
+  .addParam('lTokens')
   .addParam('variableDebtTokens')
   .addParam('governance')
   .addParam('shortExecutor')
@@ -21,7 +21,7 @@ task('propose-incentives', 'Create some proposals and votes')
   .setAction(
     async (
       {
-        aTokens,
+        lTokens,
         variableDebtTokens,
         governance,
         shortExecutor,
@@ -40,12 +40,12 @@ task('propose-incentives', 'Create some proposals and votes')
         proposer = signer;
       }
 
-      aTokens = aTokens.split(',');
-      variableDebtTokens = variableDebtTokens.split(',');
+      const lTokensSplitted = lTokens.split(',');
+      const variableDebtTokensSplitted = variableDebtTokens.split(',');
 
       const callData = DRE.ethers.utils.defaultAbiCoder.encode(
         ['address[6]', 'address[6]'],
-        [aTokens, variableDebtTokens]
+        [lTokensSplitted, variableDebtTokensSplitted]
       );
 
       const executeSignature = 'execute(address[6],address[6])';
