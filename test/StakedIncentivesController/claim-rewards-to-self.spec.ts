@@ -55,12 +55,12 @@ makeSuite('IncentivesController claimRewardsToSelf tests', (testEnv) => {
     let amountToClaim = _amountToClaim;
     it(caseName, async () => {
       await increaseTime(100);
-      const { incentivesController, stakedToken, aDaiMock } = testEnv;
+      const { incentivesController, stakedToken, lDaiMock } = testEnv;
 
       const distributionEndTimestamp = await incentivesController.getDistributionEnd();
       const userAddress = await incentivesController.signer.getAddress();
 
-      const underlyingAsset = aDaiMock.address;
+      const underlyingAsset = lDaiMock.address;
       const stakedByUser = 22 * caseName.length;
       const totalStaked = 33 * caseName.length;
 
@@ -72,8 +72,8 @@ makeSuite('IncentivesController claimRewardsToSelf tests', (testEnv) => {
       const destinationAddress = userAddress;
 
       const destinationAddressBalanceBefore = await stakedToken.balanceOf(destinationAddress);
-      await aDaiMock.setUserBalanceAndSupply(stakedByUser, totalStaked);
-      await aDaiMock.handleActionOnAic(userAddress, totalStaked, stakedByUser);
+      await lDaiMock.setUserBalanceAndSupply(stakedByUser, totalStaked);
+      await lDaiMock.handleActionOnAic(userAddress, totalStaked, stakedByUser);
 
       const unclaimedRewardsBefore = await incentivesController.getRewardsBalance(
         [underlyingAsset],
@@ -115,7 +115,7 @@ makeSuite('IncentivesController claimRewardsToSelf tests', (testEnv) => {
         userIndexBefore
       ).toString();
 
-      await aDaiMock.cleanUserState();
+      await lDaiMock.cleanUserState();
 
       if (amountToClaim === '0') {
         // state should not change
