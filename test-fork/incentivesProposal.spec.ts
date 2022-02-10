@@ -25,7 +25,7 @@ import {
 } from '../types';
 import { tEthereumAddress } from '../helpers/types';
 import { IERC20Factory } from '../types/IERC20Factory';
-import { IATokenFactory } from '../types/IATokenFactory';
+import { ILTokenFactory } from '../types/ILTokenFactory';
 import { getRewards } from '../test/DistributionManager/data-helpers/base-math';
 import { getUserIndex } from '../test/DistributionManager/data-helpers/asset-user-data';
 import { IERC20DetailedFactory } from '../types/IERC20DetailedFactory';
@@ -285,7 +285,7 @@ describe('Enable incentives in target assets', () => {
 
     await increaseTime(86400);
 
-    const lTokenBalance = await IATokenFactory.connect(lTokenAddress, proposer).scaledBalanceOf(
+    const lTokenBalance = await ILTokenFactory.connect(lTokenAddress, proposer).scaledBalanceOf(
       proposer.address
     );
     const priorStkBalance = await IERC20Factory.connect(stakedLay.address, proposer).balanceOf(

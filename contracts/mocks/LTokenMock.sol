@@ -4,9 +4,9 @@ pragma experimental ABIEncoderV2;
 
 import {IIncentivesController} from '../interfaces/IIncentivesController.sol';
 import {DistributionTypes} from '../lib/DistributionTypes.sol';
-import {IAToken} from '../stake-v1/contracts/interfaces/IAToken.sol';
+import {ILToken} from '../stake-v1/contracts/interfaces/ILToken.sol';
 
-contract LTokenMock is IAToken {
+contract LTokenMock is ILToken {
   IIncentivesController public _ic;
   uint256 internal _userBalance;
   uint256 internal _totalSupply;
