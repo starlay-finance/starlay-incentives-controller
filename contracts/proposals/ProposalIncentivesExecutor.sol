@@ -103,7 +103,7 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
       // Update variable debt impl
       poolConfigurator.updateVariableDebtToken(reserves[x], variableDebtImplementations[x]);
 
-      assets[tokensCounter++] = reserveData.aTokenAddress;
+      assets[tokensCounter++] = reserveData.lTokenAddress;
 
       // Configure variable debt token at incentives controller
       assets[tokensCounter++] = reserveData.variableDebtTokenAddress;
