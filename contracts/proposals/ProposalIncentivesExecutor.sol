@@ -98,7 +98,7 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
         ILendingPoolData(LENDING_POOL).getReserveData(reserves[x]);
 
       // Update lToken impl
-      poolConfigurator.updateAToken(reserves[x], lTokenImplementations[x]);
+      poolConfigurator.updateLToken(reserves[x], lTokenImplementations[x]);
 
       // Update variable debt impl
       poolConfigurator.updateVariableDebtToken(reserves[x], variableDebtImplementations[x]);
