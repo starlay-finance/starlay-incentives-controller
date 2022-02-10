@@ -36,7 +36,7 @@ export interface TestEnv {
   pullRewardsIncentivesController: PullRewardsIncentivesController;
   stakedToken: StakedLayV2;
   lDaiMock: LTokenMock;
-  aWethMock: LTokenMock;
+  lWethMock: LTokenMock;
   aDaiBaseMock: LTokenMock;
   aWethBaseMock: LTokenMock;
 }
@@ -56,7 +56,7 @@ const testEnv: TestEnv = {
   incentivesController: {} as StakedTokenIncentivesController,
   pullRewardsIncentivesController: {} as PullRewardsIncentivesController,
   lDaiMock: {} as LTokenMock,
-  aWethMock: {} as LTokenMock,
+  lWethMock: {} as LTokenMock,
   aDaiBaseMock: {} as LTokenMock,
   aWethBaseMock: {} as LTokenMock,
 } as TestEnv;
@@ -91,7 +91,7 @@ export async function initializeMakeSuite(
   testEnv.pullRewardsIncentivesController = pullRewardsIncentivesController;
   testEnv.token = starlayToken;
   testEnv.lDaiMock = await getLTokenMock({ slug: 'lDai' });
-  testEnv.aWethMock = await getLTokenMock({ slug: 'lWeth' });
+  testEnv.lWethMock = await getLTokenMock({ slug: 'lWeth' });
   testEnv.aDaiBaseMock = await getLTokenMock({ slug: 'lDaiBase' });
   testEnv.aWethBaseMock = await getLTokenMock({ slug: 'lWethBase' });
 }
