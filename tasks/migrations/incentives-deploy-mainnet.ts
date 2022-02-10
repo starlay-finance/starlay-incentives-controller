@@ -26,12 +26,6 @@ task(
     let lTokensImpl: tEthereumAddress[];
     let variableDebtTokensImpl: tEthereumAddress[];
     let proposalExecutionPayload: tEthereumAddress;
-    let symbols: {
-      [key: string]: {
-        aToken: { symbol: string; name: string };
-        variableDebtToken: { symbol: string; name: string };
-      };
-    } = {};
 
     await localBRE.run('set-DRE');
 

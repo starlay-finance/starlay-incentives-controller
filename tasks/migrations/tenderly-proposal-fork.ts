@@ -69,7 +69,7 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
     let proposalExecutionPayload: tEthereumAddress;
     let symbols: {
       [key: string]: {
-        aToken: { symbol: string; name: string };
+        lToken: { symbol: string; name: string };
         variableDebtToken: { symbol: string; name: string };
       };
     } = {};
@@ -145,7 +145,7 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
       const varDebtToken = IERC20Detailed__factory.connect(variableDebtTokenAddress, proposer);
 
       symbols[symbol] = {
-        aToken: {
+        lToken: {
           name: await lToken.name(),
           symbol: await lToken.symbol(),
         },
