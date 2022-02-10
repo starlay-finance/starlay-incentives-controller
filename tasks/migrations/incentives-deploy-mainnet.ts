@@ -88,7 +88,7 @@ task(
     );
     const proposalParams = {
       proposalExecutionPayload,
-      aTokens: lTokensImpl.join(','),
+      lTokens: lTokensImpl.join(','),
       variableDebtTokens: variableDebtTokensImpl.join(','),
     };
     console.log(
@@ -100,8 +100,8 @@ task(
 
     await DRE.run('verify-proposal-etherscan', {
       assets: RESERVES,
-      aTokens: lTokensImpl.join(','),
-      variableDebtTokens: variableDebtTokensImpl.join(','),
+      lTokens: proposalParams.lTokens,
+      variableDebtTokens: proposalParams.variableDebtTokens,
       proposalPayloadAddress: proposalExecutionPayloadAddress,
     });
   });

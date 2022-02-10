@@ -22,14 +22,14 @@ const INCENTIVES_PROXY = '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5';
 
 task('verify-proposal-etherscan', 'Verify proposals')
   .addParam('assets')
-  .addParam('aTokens')
+  .addParam('lTokens')
   .addParam('variableDebtTokens')
   .addParam('proposalPayloadAddress')
-  .setAction(async ({ assets, aTokens, variableDebtTokens, proposalPayloadAddress }, localBRE) => {
+  .setAction(async ({ assets, lTokens, variableDebtTokens, proposalPayloadAddress }, localBRE) => {
     await localBRE.run('set-DRE');
     const [deployer] = await localBRE.ethers.getSigners();
     const tokensToUpdate = assets.split(',');
-    const lTokens = aTokens.split(',');
+    lTokens = lTokens.split(',');
     variableDebtTokens = variableDebtTokens.split(',');
 
     // Instances
