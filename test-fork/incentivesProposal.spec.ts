@@ -92,7 +92,7 @@ describe('Enable incentives in target assets', () => {
   let proposalExecutionPayload: tEthereumAddress;
   let symbols: {
     [key: string]: {
-      aToken: { symbol: string; name: string };
+      lToken: { symbol: string; name: string };
       variableDebtToken: { symbol: string; name: string };
     };
   } = {};
@@ -184,7 +184,7 @@ describe('Enable incentives in target assets', () => {
       const varDebtToken = IERC20DetailedFactory.connect(variableDebtTokenAddress, proposer);
 
       symbols[symbol] = {
-        aToken: {
+        lToken: {
           name: await lToken.name(),
           symbol: await lToken.symbol(),
         },
@@ -395,7 +395,7 @@ describe('Enable incentives in target assets', () => {
         symbol: await varDebtToken.symbol(),
       };
 
-      expect(lTokenDetails).to.be.deep.equal(symbols[symbol].aToken);
+      expect(lTokenDetails).to.be.deep.equal(symbols[symbol].lToken);
       expect(variableDebtTokenDetails).to.be.deep.equal(symbols[symbol].variableDebtToken);
     }
   });
