@@ -19,8 +19,8 @@ contract StakedTokenIncentivesController is BaseIncentivesController {
 
   IStakedTokenWithConfig public immutable STAKE_TOKEN;
 
-  constructor(IStakedTokenWithConfig stakeToken, address emissionManager)
-    BaseIncentivesController(IERC20(address(stakeToken)), emissionManager)
+  constructor(IStakedTokenWithConfig stakeToken)
+    BaseIncentivesController(IERC20(address(stakeToken)))
   {
     STAKE_TOKEN = stakeToken;
   }
@@ -28,9 +28,10 @@ contract StakedTokenIncentivesController is BaseIncentivesController {
   /**
    * @dev Initialize IStakedTokenIncentivesController
    **/
-  function initialize() external initializer {
+  function initialize(address emissionManager) external initializer {
     //approves the safety module to allow staking
     IERC20(STAKE_TOKEN.STAKED_TOKEN()).safeApprove(address(STAKE_TOKEN), type(uint256).max);
+    _emissionManager = emissionManager;
   }
 
   /// @inheritdoc BaseIncentivesController
