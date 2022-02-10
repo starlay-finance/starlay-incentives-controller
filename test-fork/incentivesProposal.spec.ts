@@ -18,8 +18,8 @@ import { IStarlayGovernanceV2 } from '../types/IStarlayGovernanceV2';
 import { ILendingPool } from '../types/ILendingPool';
 import {
   StakedTokenIncentivesControllerFactory,
-  AToken,
-  ATokenFactory,
+  LToken,
+  LTokenFactory,
   ProposalIncentivesExecutorFactory,
   SelfdestructTransferFactory,
 } from '../types';
@@ -84,7 +84,7 @@ describe('Enable incentives in target assets', () => {
   let layToken: IERC20;
   let stakedLay: IERC20;
   let dai: IERC20;
-  let lDAI: AToken;
+  let lDAI: LToken;
   let variableDebtDAI: IERC20;
   let proposalId: BigNumber;
   let lTokensImpl: tEthereumAddress[];
@@ -163,7 +163,7 @@ describe('Enable incentives in target assets', () => {
     layToken = IERC20Factory.connect(STARLAY_TOKEN, whale);
     stakedLay = IERC20Factory.connect(STAKED_STARLAY, proposer);
     dai = IERC20Factory.connect(DAI_TOKEN, daiHolder);
-    lDAI = ATokenFactory.connect(lTokenAddress, proposer);
+    lDAI = LTokenFactory.connect(lTokenAddress, proposer);
     variableDebtDAI = IERC20Factory.connect(variableDebtTokenAddress, proposer);
 
     // Transfer enough Starlay to proposer

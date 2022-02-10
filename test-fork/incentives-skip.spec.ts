@@ -20,8 +20,8 @@ import { IStarlayGovernanceV2 } from '../types/IStarlayGovernanceV2';
 import { ILendingPool } from '../types/ILendingPool';
 import {
   StakedTokenIncentivesControllerFactory,
-  AToken,
-  ATokenFactory,
+  LToken,
+  LTokenFactory,
   InitializableAdminUpgradeabilityProxyFactory,
   ProposalIncentivesExecutorFactory,
   SelfdestructTransferFactory,
@@ -88,7 +88,7 @@ describe('Enable incentives in target assets', () => {
   let layToken: IERC20;
   let stakedLay: IERC20;
   let dai: IERC20;
-  let lDAI: AToken;
+  let lDAI: LToken;
   let variableDebtDAI: IERC20;
   let snapshotId: string;
   let proposalId: BigNumber;
@@ -153,7 +153,7 @@ describe('Enable incentives in target assets', () => {
       )
     );
 
-    // Deploy aTokens and debt tokens
+    // Deploy lTokens and debt tokens
     const { lTokens, variableDebtTokens } = await rawHRE.run('deploy-reserve-implementations', {
       provider: POOL_PROVIDER,
       assets: RESERVES,
@@ -243,7 +243,7 @@ describe('Enable incentives in target assets', () => {
     layToken = IERC20Factory.connect(STARLAY_TOKEN, whale);
     stakedLay = IERC20Factory.connect(STAKED_STARLAY, proposer);
     dai = IERC20Factory.connect(DAI_TOKEN, daiHolder);
-    lDAI = ATokenFactory.connect(lTokenAddress, proposer);
+    lDAI = LTokenFactory.connect(lTokenAddress, proposer);
     variableDebtDAI = IERC20Factory.connect(variableDebtTokenAddress, proposer);
 
     // Transfer enough Starlay to proposer
