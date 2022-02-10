@@ -44,7 +44,7 @@ task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to S
       }
 
       if (aTokens.split(',').length !== 6) {
-        throw new Error('aTokens input param should have 6 elements');
+        throw new Error('lTokens input param should have 6 elements');
       }
 
       if (variableDebtTokens.split(',').length !== 6) {

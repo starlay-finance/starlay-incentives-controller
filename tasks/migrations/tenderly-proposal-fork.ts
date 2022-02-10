@@ -86,7 +86,7 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
 
     incentivesProxy = INCENTIVES_PROXY;
 
-    // Deploy aTokens and debt tokens
+    // Deploy lTokens and debt tokens
     const { aTokens, variableDebtTokens } = await DRE.run('deploy-reserve-implementations', {
       provider: POOL_PROVIDER,
       assets: RESERVES,
@@ -135,7 +135,7 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
     // Transfer DAI to repay future DAI loan
     await (await dai.transfer(proposer.address, parseEther('100000'))).wait();
 
-    // Save aToken and debt token names
+    // Save lToken and debt token names
     const reserveConfigs = await getReserveConfigs(POOL_PROVIDER, RESERVES, proposer);
 
     for (let x = 0; x < reserveConfigs.length; x++) {

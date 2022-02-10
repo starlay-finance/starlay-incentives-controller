@@ -29,7 +29,7 @@ task('verify-proposal-etherscan', 'Verify proposals')
     await localBRE.run('set-DRE');
     const [deployer] = await localBRE.ethers.getSigners();
     const tokensToUpdate = assets.split(',');
-    aTokens = aTokens.split(',');
+    const lTokens = aTokens.split(',');
     variableDebtTokens = variableDebtTokens.split(',');
 
     // Instances
@@ -63,18 +63,18 @@ task('verify-proposal-etherscan', 'Verify proposals')
     console.log('==== Etherscan verification ====');
     console.log('- Verify proposal payload');
     await verifyContract(proposalPayloadAddress, []);
-    console.log('- Verify aTokens');
+    console.log('- Verify lTokens');
 
     // Params
     for (let x = 0; x < reserveConfigs.length; x++) {
       const { tokenAddress } = reserveConfigs[x];
-      console.log(`- Verifying ${reserveConfigs[x].symbol} aToken implementation at ${aTokens[x]}`);
+      console.log(`- Verifying ${reserveConfigs[x].symbol} lToken implementation at ${lTokens[x]}`);
       const { lTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
 
       const lTokenName = await IERC20Detailed__factory.connect(lTokenAddress, deployer).name();
       const lTokenSymbol = await IERC20Detailed__factory.connect(lTokenAddress, deployer).symbol();
 
-      await verifyContract(aTokens[x], [
+      await verifyContract(lTokens[x], [
         LENDING_POOL,
         reserveConfigs[x].tokenAddress,
         TREASURY,

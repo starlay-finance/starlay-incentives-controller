@@ -40,12 +40,12 @@ task('propose-incentives', 'Create some proposals and votes')
         proposer = signer;
       }
 
-      aTokens = aTokens.split(',');
+      const lTokens = aTokens.split(',');
       variableDebtTokens = variableDebtTokens.split(',');
 
       const callData = DRE.ethers.utils.defaultAbiCoder.encode(
         ['address[6]', 'address[6]'],
-        [aTokens, variableDebtTokens]
+        [lTokens, variableDebtTokens]
       );
 
       const executeSignature = 'execute(address[6],address[6])';

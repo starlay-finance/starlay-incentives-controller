@@ -84,10 +84,10 @@ describe('Enable incentives in target assets', () => {
   let layToken: IERC20;
   let stakedLay: IERC20;
   let dai: IERC20;
-  let aDAI: AToken;
+  let lDAI: AToken;
   let variableDebtDAI: IERC20;
   let proposalId: BigNumber;
-  let aTokensImpl: tEthereumAddress[];
+  let lTokensImpl: tEthereumAddress[];
   let variableDebtTokensImpl: tEthereumAddress[];
   let proposalExecutionPayload: tEthereumAddress;
   let symbols: {
@@ -110,7 +110,7 @@ describe('Enable incentives in target assets', () => {
 
     incentivesProxy = INCENTIVES_PROXY;
 
-    // Deploy aTokens and debt tokens
+    // Deploy lTokens and debt tokens
     const { aTokens, variableDebtTokens } = await rawHRE.run('deploy-reserve-implementations', {
       provider: POOL_PROVIDER,
       assets: RESERVES,
@@ -118,7 +118,7 @@ describe('Enable incentives in target assets', () => {
       treasury: TREASURY,
     });
 
-    aTokensImpl = [...aTokens];
+    lTokensImpl = [...aTokens];
     variableDebtTokensImpl = [...variableDebtTokens];
 
     // Deploy Proposal Executor Payload
@@ -163,7 +163,7 @@ describe('Enable incentives in target assets', () => {
     layToken = IERC20Factory.connect(STARLAY_TOKEN, whale);
     stakedLay = IERC20Factory.connect(STAKED_STARLAY, proposer);
     dai = IERC20Factory.connect(DAI_TOKEN, daiHolder);
-    aDAI = ATokenFactory.connect(lTokenAddress, proposer);
+    lDAI = ATokenFactory.connect(lTokenAddress, proposer);
     variableDebtDAI = IERC20Factory.connect(variableDebtTokenAddress, proposer);
 
     // Transfer enough Starlay to proposer
@@ -172,7 +172,7 @@ describe('Enable incentives in target assets', () => {
     // Transfer DAI to repay future DAI loan
     await (await dai.transfer(proposer.address, parseEther('100000'))).wait();
 
-    // Save aToken and debt token names
+    // Save lToken and debt token names
     const reserveConfigs = await getReserveConfigs(POOL_PROVIDER, RESERVES, proposer);
 
     for (let x = 0; x < reserveConfigs.length; x++) {
@@ -180,13 +180,13 @@ describe('Enable incentives in target assets', () => {
       const { lTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(
         reserveConfigs[x].tokenAddress
       );
-      const aToken = IERC20DetailedFactory.connect(lTokenAddress, proposer);
+      const lToken = IERC20DetailedFactory.connect(lTokenAddress, proposer);
       const varDebtToken = IERC20DetailedFactory.connect(variableDebtTokenAddress, proposer);
 
       symbols[symbol] = {
         aToken: {
-          name: await aToken.name(),
-          symbol: await aToken.symbol(),
+          name: await lToken.name(),
+          symbol: await lToken.symbol(),
         },
         variableDebtToken: {
           name: await varDebtToken.name(),
@@ -221,7 +221,7 @@ describe('Enable incentives in target assets', () => {
 
     await DRE.run('propose-incentives', {
       proposalExecutionPayload,
-      aTokens: aTokensImpl.join(','),
+      aTokens: lTokensImpl.join(','),
       variableDebtTokens: variableDebtTokensImpl.join(','),
       governance: GOVERNANCE_V2,
       shortExecutor: STARLAY_SHORT_EXECUTOR,
@@ -285,7 +285,7 @@ describe('Enable incentives in target assets', () => {
 
     await increaseTime(86400);
 
-    const atokenBalance = await IATokenFactory.connect(lTokenAddress, proposer).scaledBalanceOf(
+    const lTokenBalance = await IATokenFactory.connect(lTokenAddress, proposer).scaledBalanceOf(
       proposer.address
     );
     const priorStkBalance = await IERC20Factory.connect(stakedLay.address, proposer).balanceOf(
@@ -304,7 +304,7 @@ describe('Enable incentives in target assets', () => {
 
     const userIndexAfter = await getUserIndex(incentives, proposer.address, lTokenAddress);
     const expectedAccruedRewards = getRewards(
-      atokenBalance,
+      lTokenBalance,
       userIndexAfter,
       userIndexBefore
     ).toString();
@@ -324,7 +324,7 @@ describe('Enable incentives in target assets', () => {
 
     const tx = await pool.deposit(dai.address, parseEther('100'), proposer.address, 0);
     expect(tx).to.emit(pool, 'Deposit');
-    expect(await aDAI.balanceOf(proposer.address)).to.be.gte(parseEther('100'));
+    expect(await lDAI.balanceOf(proposer.address)).to.be.gte(parseEther('100'));
   });
 
   it('Users should be able to request DAI loan from Lending Pool', async () => {
@@ -354,11 +354,11 @@ describe('Enable incentives in target assets', () => {
 
     // Withdraw DAI from LendingPool
     const priorDAIBalance = await dai.balanceOf(proposer.address);
-    await (await aDAI.connect(proposer).approve(pool.address, MAX_UINT_AMOUNT)).wait();
+    await (await lDAI.connect(proposer).approve(pool.address, MAX_UINT_AMOUNT)).wait();
     const tx = await pool.withdraw(dai.address, MAX_UINT_AMOUNT, proposer.address);
     expect(tx).to.emit(pool, 'Withdraw');
     const afterDAIBalance = await dai.balanceOf(proposer.address);
-    expect(await aDAI.balanceOf(proposer.address)).to.be.eq('0');
+    expect(await lDAI.balanceOf(proposer.address)).to.be.eq('0');
     expect(afterDAIBalance).to.be.gt(priorDAIBalance);
   });
 
@@ -377,7 +377,7 @@ describe('Enable incentives in target assets', () => {
     }
   });
 
-  it('Check all aToken symbols and debt token matches', async () => {
+  it('Check all lToken symbols and debt token matches', async () => {
     const reserveConfigs = await getReserveConfigs(POOL_PROVIDER, RESERVES, proposer);
 
     for (let x = 0; x < reserveConfigs.length; x++) {
@@ -386,7 +386,7 @@ describe('Enable incentives in target assets', () => {
       const lToken = IERC20DetailedFactory.connect(lTokenAddress, proposer);
       const varDebtToken = IERC20DetailedFactory.connect(variableDebtTokenAddress, proposer);
 
-      const aTokenDetails = {
+      const lTokenDetails = {
         name: await lToken.name(),
         symbol: await lToken.symbol(),
       };
@@ -395,7 +395,7 @@ describe('Enable incentives in target assets', () => {
         symbol: await varDebtToken.symbol(),
       };
 
-      expect(aTokenDetails).to.be.deep.equal(symbols[symbol].aToken);
+      expect(lTokenDetails).to.be.deep.equal(symbols[symbol].aToken);
       expect(variableDebtTokenDetails).to.be.deep.equal(symbols[symbol].variableDebtToken);
     }
   });
