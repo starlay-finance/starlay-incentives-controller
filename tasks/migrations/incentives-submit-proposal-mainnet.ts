@@ -70,7 +70,7 @@ task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to St
       const proposalId = await gov.getProposalsCount();
       const proposalParams = {
         proposalExecutionPayload,
-        aTokens,
+        lTokens: aTokens,
         variableDebtTokens,
         governance: GOVERNANCE_V2,
         shortExecutor: STARLAY_SHORT_EXECUTOR,

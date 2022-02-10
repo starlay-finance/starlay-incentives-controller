@@ -221,7 +221,7 @@ describe('Enable incentives in target assets', () => {
 
     await DRE.run('propose-incentives', {
       proposalExecutionPayload,
-      aTokens: lTokensImpl.join(','),
+      lTokens: lTokensImpl.join(','),
       variableDebtTokens: variableDebtTokensImpl.join(','),
       governance: GOVERNANCE_V2,
       shortExecutor: STARLAY_SHORT_EXECUTOR,

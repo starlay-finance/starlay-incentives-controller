@@ -76,7 +76,7 @@ task('incentives-submit-proposal:tenderly', 'Submit the incentives proposal to S
       const proposalId = await gov.getProposalsCount();
       const proposalParams = {
         proposalExecutionPayload,
-        aTokens,
+        lTokens: aTokens,
         variableDebtTokens,
         governance: GOVERNANCE_V2,
         shortExecutor: STARLAY_SHORT_EXECUTOR,

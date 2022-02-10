@@ -176,7 +176,7 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
 
     await DRE.run('propose-incentives', {
       proposalExecutionPayload,
-      aTokens: lTokensImpl.join(','),
+      lTokens: lTokensImpl.join(','),
       variableDebtTokens: variableDebtTokensImpl.join(','),
       governance: GOVERNANCE_V2,
       shortExecutor: STARLAY_SHORT_EXECUTOR,
