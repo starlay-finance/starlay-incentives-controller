@@ -33,28 +33,28 @@ makeSuite('pullRewardsIncentivesController getRewardsBalance tests', (testEnv: T
     it(caseName, async () => {
       await increaseTime(100);
 
-      const { pullRewardsIncentivesController, users, aDaiBaseMock } = testEnv;
+      const { pullRewardsIncentivesController, users, lDaiBaseMock } = testEnv;
 
       const distributionEndTimestamp = await pullRewardsIncentivesController.DISTRIBUTION_END();
       const userAddress = users[1].address;
       const stakedByUser = 22 * caseName.length;
       const totalStaked = 33 * caseName.length;
-      const underlyingAsset = aDaiBaseMock.address;
+      const underlyingAsset = lDaiBaseMock.address;
 
       // update emissionPerSecond in advance to not affect user calculations
       await advanceBlock((await timeLatest()).plus(100).toNumber());
       if (emissionPerSecond) {
-        await aDaiBaseMock.setUserBalanceAndSupply('0', totalStaked);
+        await lDaiBaseMock.setUserBalanceAndSupply('0', totalStaked);
         await pullRewardsIncentivesController.configureAssets(
           [underlyingAsset],
           [emissionPerSecond]
         );
       }
-      await aDaiBaseMock.handleActionOnAic(userAddress, totalStaked, stakedByUser);
+      await lDaiBaseMock.handleActionOnAic(userAddress, totalStaked, stakedByUser);
       await advanceBlock((await timeLatest()).plus(100).toNumber());
 
       const lastTxReceipt = await waitForTx(
-        await aDaiBaseMock.setUserBalanceAndSupply(stakedByUser, totalStaked)
+        await lDaiBaseMock.setUserBalanceAndSupply(stakedByUser, totalStaked)
       );
       const lastTxTimestamp = await getBlockTimestamp(lastTxReceipt.blockNumber);
 
@@ -76,7 +76,7 @@ makeSuite('pullRewardsIncentivesController getRewardsBalance tests', (testEnv: T
         await getAssetsData(pullRewardsIncentivesController, [underlyingAsset])
       )[0];
 
-      await aDaiBaseMock.cleanUserState();
+      await lDaiBaseMock.cleanUserState();
 
       const expectedAssetIndex = getNormalizedDistribution(
         totalStaked,
