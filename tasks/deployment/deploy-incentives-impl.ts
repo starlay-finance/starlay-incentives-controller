@@ -1,37 +1,61 @@
 import { task } from 'hardhat/config';
-import { DefenderRelaySigner, DefenderRelayProvider } from 'defender-relay-client/lib/ethers';
-import { deployStakedTokenIncentivesController } from '../../helpers/contracts-accessors';
+import { deployInitializableAdminUpgradeabilityProxy, deployStakedTokenIncentivesController } from '../../helpers/contracts-accessors';
 import { getDefenderRelaySigner } from '../../helpers/defender-utils';
+import { waitForTx } from '../../helpers/misc-utils';
+import { eContractid, eNetwork } from '../../helpers/types';
+import { getEmissionManagerPerNetwork, getProxyAdminPerNetwork, getStakedTokenPerNetwork } from '../../helpers/constants';
 
-// Mainnet addresses
-// const STAKED_STARLAY = '0x4da27a545c0c5B758a6BA100e3a049001de870f5';
-// const STARLAY_SHORT_EXECUTOR = '0xee56e2b3d491590b5b31738cc34d5232f378a8d5';
+task('deploy-incentives-impl', 'Deploy and Initialize the StakedTokenIncentivesController contract')
+  .addFlag('verify', 'Verify contracts deployed in this script at Etherscan.')
+  .addOptionalParam('proxyAdmin', 'Admin address for proxy contracts')
+  .addOptionalParam('stakedToken', 'StakedToken address. ref: StakedTokenIncentivesController')
+  .addOptionalParam('emissionManager', 'EmissionManager address. ref: StakedTokenIncentivesController')
+  .setAction(
+    async ({ verify, proxyAdmin, stakedToken, emissionManager }, localBRE) => {
+      await localBRE.run('set-DRE');
 
-// Shibuya (astar network) addresses
-const STAKED_STARLAY = '0x5d666338118763ca0cF6719F479491B76bc88131'; // StakedLay's (StakedTokenV2Rev3) proxy
-const STARLAY_SHORT_EXECUTOR = '0x6543076E4315bd82129105890Bc49c18f496a528'; // PoolAdmin
+      // setup deployer
+      let deployer;
+      if (process.env.DEFENDER_API_KEY && process.env.DEFENDER_SECRET_KEY) {
+        const { signer } = await getDefenderRelaySigner();
+        deployer = signer;
+      } else {
+        const [signer] = await localBRE.ethers.getSigners();
+        deployer = signer;
+      }
 
-task('deploy-incentives-impl', 'Incentives controller implementation deployment').setAction(
-  async (_, localBRE) => {
-    _;
-    await localBRE.run('set-DRE');
+      const networkName = localBRE.network.name as eNetwork
+      console.log(`[StakedTokenIncentivesController] Starting deployment:`);
+      console.log(`  - Network name: ${networkName}`);
 
-    let deployer;
-    if (process.env.DEFENDER_API_KEY && process.env.DEFENDER_SECRET_KEY) {
-      const { signer } = await getDefenderRelaySigner();
-      deployer = signer;
-    } else {
-      const [signer] = await localBRE.ethers.getSigners();
-      deployer = signer;
+      const impl = await deployStakedTokenIncentivesController(
+        [stakedToken || getStakedTokenPerNetwork(networkName)],
+        verify
+      );
+      console.log(`  - Deployed implementation of ${eContractid.StakedTokenIncentivesController}`);
+
+      const proxy = await deployInitializableAdminUpgradeabilityProxy(verify);
+      console.log(`  - Deployed proxy of ${eContractid.StakedTokenIncentivesController}`);
+      const encodedParams = impl.interface.encodeFunctionData('initialize', [
+        emissionManager || getEmissionManagerPerNetwork(networkName)
+      ]);
+
+      await waitForTx(
+        await proxy.functions['initialize(address,address,bytes)'](
+          impl.address,
+          proxyAdmin || getProxyAdminPerNetwork(networkName),
+          encodedParams
+        )
+      );
+      console.log(`  - Initialized ${eContractid.StakedTokenIncentivesController} Proxy`);
+
+      console.log(`  - Finished PullRewardsIncentivesController deployment and initialization`);
+      console.log(`    - Proxy: ${proxy.address}`);
+      console.log(`    - Impl: ${impl.address}`);
+
+      return {
+        proxy: proxy.address,
+        implementation: impl.address
+      };
     }
-
-    const incentives = await deployStakedTokenIncentivesController(
-      [STAKED_STARLAY], // TODO: reflect STARLAY_SHORT_EXECUTOR
-      false, // TODO: revert
-      deployer
-    );
-    console.log(`- Incentives implementation address ${incentives.address}`);
-
-    return incentives.address;
-  }
-);
+  );

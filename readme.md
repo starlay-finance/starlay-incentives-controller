@@ -46,5 +46,5 @@ npm run compile
 docker-compose up
 # --- other terminal ---
 docker-compose exec contracts-env bash
-npm run deploy:incentives-controller-impl:v2:shibuya
+npm run deploy:incentives-controller-impl:shibuya
 ```
