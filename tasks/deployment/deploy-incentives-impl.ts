@@ -26,7 +26,7 @@ task('deploy-incentives-impl', 'Deploy and Initialize the StakedTokenIncentivesC
 
       const networkName = localBRE.network.name as eNetwork
       console.log(`[StakedTokenIncentivesController] Starting deployment:`);
-      console.log(`  - network name: ${networkName}`);
+      console.log(`  - Network name: ${networkName}`);
 
       const impl = await deployStakedTokenIncentivesController(
         [stakedToken || getStakedTokenPerNetwork(networkName)],

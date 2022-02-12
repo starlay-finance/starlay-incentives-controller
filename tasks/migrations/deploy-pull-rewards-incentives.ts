@@ -40,6 +40,7 @@ task(
       }
 
       console.log(`[PullRewardsIncentivesController] Starting deployment:`);
+      console.log(`  - Network name: ${networkName}`);
 
       const incentivesControllerImpl = await deployPullRewardsIncentivesController(
         [rewardToken],
