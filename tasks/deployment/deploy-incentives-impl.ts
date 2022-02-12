@@ -5,7 +5,7 @@ import { waitForTx } from '../../helpers/misc-utils';
 import { eContractid, eNetwork } from '../../helpers/types';
 import { getEmissionManagerPerNetwork, getProxyAdminPerNetwork, getStakedTokenPerNetwork } from '../../helpers/constants';
 
-task('deploy-incentives-impl', 'Incentives controller implementation deployment')
+task('deploy-incentives-impl', 'Deploy and Initialize the StakedTokenIncentivesController contract')
   .addFlag('verify', 'Verify contracts deployed in this script at Etherscan.')
   .addOptionalParam('proxyAdmin', 'Admin address for proxy contracts')
   .addOptionalParam('stakedToken', 'StakedToken address. ref: StakedTokenIncentivesController')
