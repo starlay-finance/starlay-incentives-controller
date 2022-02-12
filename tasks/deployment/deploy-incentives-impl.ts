@@ -6,9 +6,12 @@ import { eContractid, eNetwork } from '../../helpers/types';
 import { getEmissionManagerPerNetwork, getProxyAdminPerNetwork, getStakedTokenPerNetwork } from '../../helpers/constants';
 
 task('deploy-incentives-impl', 'Incentives controller implementation deployment')
-  .addFlag('verify')
+  .addFlag('verify', 'Verify contracts deployed in this script at Etherscan.')
+  .addOptionalParam('proxyAdmin', 'Admin address for proxy contracts')
+  .addOptionalParam('stakedToken', 'StakedToken address. ref: StakedTokenIncentivesController')
+  .addOptionalParam('emissionManager', 'EmissionManager address. ref: StakedTokenIncentivesController')
   .setAction(
-    async ({ verify }, localBRE) => {
+    async ({ verify, proxyAdmin, stakedToken, emissionManager }, localBRE) => {
       await localBRE.run('set-DRE');
 
       // setup deployer
@@ -26,7 +29,7 @@ task('deploy-incentives-impl', 'Incentives controller implementation deployment'
       console.log(`  - network name: ${networkName}`);
 
       const impl = await deployStakedTokenIncentivesController(
-        [getStakedTokenPerNetwork(networkName)],
+        [stakedToken || getStakedTokenPerNetwork(networkName)],
         verify
       );
       console.log(`  - Deployed implementation of ${eContractid.StakedTokenIncentivesController}`);
@@ -34,13 +37,13 @@ task('deploy-incentives-impl', 'Incentives controller implementation deployment'
       const proxy = await deployInitializableAdminUpgradeabilityProxy(verify);
       console.log(`  - Deployed proxy of ${eContractid.StakedTokenIncentivesController}`);
       const encodedParams = impl.interface.encodeFunctionData('initialize', [
-        getEmissionManagerPerNetwork(networkName)
+        emissionManager || getEmissionManagerPerNetwork(networkName)
       ]);
 
       await waitForTx(
         await proxy.functions['initialize(address,address,bytes)'](
           impl.address,
-          getProxyAdminPerNetwork(networkName),
+          proxyAdmin || getProxyAdminPerNetwork(networkName),
           encodedParams
         )
       );
