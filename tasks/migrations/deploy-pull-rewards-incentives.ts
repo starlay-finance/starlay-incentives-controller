@@ -11,10 +11,10 @@ task(
   `deploy-pull-rewards-incentives`,
   `Deploy and initializes the PullRewardsIncentivesController contract`
 )
-  .addFlag('verify')
-  .addParam('rewardToken')
-  .addParam('rewardsVault')
-  .addParam('emissionManager')
+  .addFlag('verify', 'Verify contracts deployed in this script at Etherscan.')
+  .addParam('rewardToken', 'RewardToken address. ref: PullRewardsIncentivesController')
+  .addParam('rewardsVault', 'RewardsVault address. ref: PullRewardsIncentivesController')
+  .addParam('emissionManager', 'EmissionManager address. ref: PullRewardsIncentivesController')
   .addParam('proxyAdmin', `The address to be added as an Admin role at the Transparent Proxy.`)
   .setAction(
     async ({ verify, rewardToken, rewardsVault, emissionManager, proxyAdmin }, localBRE) => {
