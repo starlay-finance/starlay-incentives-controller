@@ -46,7 +46,7 @@ export const getProxyAdminPerNetwork = (network: eNetwork): tEthereumAddress => 
   {
     [eAstarNetwork.astar]: ZERO_ADDRESS,
     [eAstarNetwork.shiden]: ZERO_ADDRESS,
-    [eAstarNetwork.shibuya]: ZERO_ADDRESS
+    [eAstarNetwork.shibuya]: '0x6543076E4315bd82129105890Bc49c18f496a528' // Dummy
   },
   network
 );
@@ -55,7 +55,7 @@ export const getStakedTokenPerNetwork = (network: eNetwork): tEthereumAddress =>
   {
     [eAstarNetwork.astar]: ZERO_ADDRESS,
     [eAstarNetwork.shiden]: ZERO_ADDRESS,
-    [eAstarNetwork.shibuya]: ZERO_ADDRESS
+    [eAstarNetwork.shibuya]: '0x3bA5A4b88331627236378000B50eAa186375c3FF' // StakedLay
   },
   network
 );
