@@ -64,7 +64,7 @@ export const getEmissionManagerPerNetwork = (network: eNetwork): tEthereumAddres
   {
     [eAstarNetwork.astar]: ZERO_ADDRESS,
     [eAstarNetwork.shiden]: ZERO_ADDRESS,
-    [eAstarNetwork.shibuya]: ZERO_ADDRESS
+    [eAstarNetwork.shibuya]: '0x6543076E4315bd82129105890Bc49c18f496a528' // Dummy
   },
   network
 );
