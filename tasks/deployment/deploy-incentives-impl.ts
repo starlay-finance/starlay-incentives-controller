@@ -10,9 +10,9 @@ const STAKED_STARLAY = '0x3bA5A4b88331627236378000B50eAa186375c3FF'; // StakedLa
 const STARLAY_SHORT_EXECUTOR = '0x6543076E4315bd82129105890Bc49c18f496a528'; // PoolAdmin
 
 task('deploy-incentives-impl', 'Incentives controller implementation deployment')
+  .addFlag('verify')
   .setAction(
-    async (_, localBRE) => {
-      _;
+    async ({ verify }, localBRE) => {
       await localBRE.run('set-DRE');
 
       // setup deployer
@@ -28,10 +28,10 @@ task('deploy-incentives-impl', 'Incentives controller implementation deployment'
       console.log(`[StakedTokenIncentivesController] Starting deployment:`);
       const impl = await deployStakedTokenIncentivesController(
         [STAKED_STARLAY],
-        false // TODO: select necessity to verify
+        verify
       );
       console.log(`  - Deployed implementation of ${eContractid.StakedTokenIncentivesController}`);
-      const proxy = await deployInitializableAdminUpgradeabilityProxy(false);  // TODO: select necessity to verify
+      const proxy = await deployInitializableAdminUpgradeabilityProxy(verify);
       console.log(`  - Deployed proxy of ${eContractid.StakedTokenIncentivesController}`);
       const encodedParams = impl.interface.encodeFunctionData('initialize', [
         STARLAY_SHORT_EXECUTOR
