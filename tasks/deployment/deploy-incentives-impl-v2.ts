@@ -27,23 +27,20 @@ task('deploy-incentives-impl-v2', 'Incentives controller implementation deployme
     console.log(`[StakedTokenIncentivesController] Starting deployment:`);
     const impl = await deployStakedTokenIncentivesController(
       [STAKED_STARLAY],
-      false, // TODO: revert
-      deployer
+      false // TODO: select necessity to verify
     );
     console.log(`  - Deployed implementation of ${eContractid.StakedTokenIncentivesController}`);
-    const proxy = await deployInitializableAdminUpgradeabilityProxy(false);
+    const proxy = await deployInitializableAdminUpgradeabilityProxy(false);  // TODO: select necessity to verify
     console.log(`  - Deployed proxy of ${eContractid.StakedTokenIncentivesController}`);
-
     const encodedParams = impl.interface.encodeFunctionData('initialize', [
-      STARLAY_SHORT_EXECUTOR,
+      STARLAY_SHORT_EXECUTOR
     ]);
 
     await waitForTx(
       await proxy.functions['initialize(address,address,bytes)'](
         impl.address,
         await deployer.getAddress(),
-        encodedParams,
-        { gasLimit: 8500000 }
+        encodedParams
       )
     );
     console.log(`  - Initialized ${eContractid.StakedTokenIncentivesController} Proxy`);
