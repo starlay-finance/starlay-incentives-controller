@@ -45,10 +45,10 @@
   },
   "homepage": "https://github.com/starlay-finance/starlay-incentives-controller#readme",
   "devDependencies": {
-    "@aave/protocol-v2": "^1.0.2-fat.3",
     "@nomiclabs/hardhat-ethers": "^2.0.0",
     "@nomiclabs/hardhat-waffle": "^2.0.0",
     "@openzeppelin/contracts": "3.1.0",
+    "@starlay-finance/starlay-protocol": "^0.0.1",
     "@tenderly/hardhat-tenderly": "^1.1.0-beta.5",
     "@typechain/ethers-v5": "^6.0.5",
     "@typechain/hardhat": "^1.0.1",
