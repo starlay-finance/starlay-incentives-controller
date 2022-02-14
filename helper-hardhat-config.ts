@@ -18,6 +18,9 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
   [eEthereumNetwork.kovan]: ALCHEMY_KEY
     ? `https://eth-kovan.alchemyapi.io/v2/${ALCHEMY_KEY}`
     : `https://kovan.infura.io/v3/${INFURA_KEY}`,
+  [eEthereumNetwork.rinkeby]: ALCHEMY_KEY
+    ? `https://eth-rinkeby.alchemyapi.io/v2/${ALCHEMY_KEY}`
+    : `https://rinkeby.infura.io/v3/${INFURA_KEY}`,
   [eEthereumNetwork.main]: ALCHEMY_KEY
     ? `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`
     : `https://mainnet.infura.io/v3/${INFURA_KEY}`,
@@ -38,6 +41,7 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
 
 export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
   [eEthereumNetwork.kovan]: 1 * GWEI,
+  [eEthereumNetwork.rinkeby]: 1 * GWEI,
   [eEthereumNetwork.main]: 180 * GWEI,
   [eEthereumNetwork.coverage]: 1 * GWEI,
   [eEthereumNetwork.hardhat]: 1 * GWEI,
