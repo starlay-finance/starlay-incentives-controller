@@ -29,6 +29,7 @@
     "console:fork": "MAINNET_FORK=true hardhat console",
     "prepublishOnly": "npm run compile",
     "deploy:incentives-controller-impl:main": "npm run hardhat:main -- deploy-incentives-impl",
+    "deploy:incentives-controller-impl:kovan": "npm run hardhat:kovan -- deploy-incentives-impl",
     "deploy:incentives-controller-impl:astar": "npm run hardhat:astar -- deploy-incentives-impl",
     "deploy:incentives-controller-impl:shiden": "npm run hardhat:shiden -- deploy-incentives-impl",
     "deploy:incentives-controller-impl:shibuya": "npm run hardhat:shibuya -- deploy-incentives-impl",

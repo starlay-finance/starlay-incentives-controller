@@ -49,7 +49,7 @@ task('deploy-incentives-impl', 'Deploy and Initialize the StakedTokenIncentivesC
       );
       console.log(`  - Initialized ${eContractid.StakedTokenIncentivesController} Proxy`);
 
-      console.log(`  - Finished PullRewardsIncentivesController deployment and initialization`);
+      console.log(`  - Finished ${eContractid.StakedTokenIncentivesController} deployment and initialization`);
       console.log(`    - Proxy: ${proxy.address}`);
       console.log(`    - Impl: ${impl.address}`);
 
