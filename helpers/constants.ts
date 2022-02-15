@@ -45,6 +45,7 @@ export const RANDOM_ADDRESSES = [
 export const getProxyAdminPerNetwork = (network: eNetwork): tEthereumAddress => getParamPerNetwork<tEthereumAddress>(
   {
     [eEthereumNetwork.kovan]: '0x6543076E4315bd82129105890Bc49c18f496a528', // Dummy
+    [eEthereumNetwork.rinkeby]: '0x6543076E4315bd82129105890Bc49c18f496a528', // Dummy
     [eAstarNetwork.astar]: ZERO_ADDRESS,
     [eAstarNetwork.shiden]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: '0x6543076E4315bd82129105890Bc49c18f496a528' // Dummy
@@ -54,7 +55,8 @@ export const getProxyAdminPerNetwork = (network: eNetwork): tEthereumAddress => 
 
 export const getStakedTokenPerNetwork = (network: eNetwork): tEthereumAddress => getParamPerNetwork<tEthereumAddress>(
   {
-    [eEthereumNetwork.kovan]: '0x82ab55Ff927d0E3C42A6Bc08C0B57D35A7896880', // StakedLay,
+    [eEthereumNetwork.kovan]: '0x82ab55Ff927d0E3C42A6Bc08C0B57D35A7896880', // StakedLay
+    [eEthereumNetwork.rinkeby]: '0x542d2690d8B4092F455188622dA51ee478cAD0E0', // StakedLay
     [eAstarNetwork.astar]: ZERO_ADDRESS,
     [eAstarNetwork.shiden]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: '0xD0286b992ae9EB8702457559dCA9565bEB20b0DC' // StakedLay
@@ -65,6 +67,7 @@ export const getStakedTokenPerNetwork = (network: eNetwork): tEthereumAddress =>
 export const getEmissionManagerPerNetwork = (network: eNetwork): tEthereumAddress => getParamPerNetwork<tEthereumAddress>(
   {
     [eEthereumNetwork.kovan]: '0x175d905470e85279899C37F89000b195f3d0c0C5',
+    [eEthereumNetwork.rinkeby]: '0x175d905470e85279899C37F89000b195f3d0c0C5',
     [eAstarNetwork.astar]: ZERO_ADDRESS,
     [eAstarNetwork.shiden]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: '0x175d905470e85279899C37F89000b195f3d0c0C5'
@@ -75,6 +78,7 @@ export const getEmissionManagerPerNetwork = (network: eNetwork): tEthereumAddres
 export const getRewardVaultPerNetwork = (network: eNetwork): tEthereumAddress => getParamPerNetwork<tEthereumAddress>(
   {
     [eEthereumNetwork.kovan]: ZERO_ADDRESS,
+    [eEthereumNetwork.rinkeby]: ZERO_ADDRESS,
     [eAstarNetwork.astar]: ZERO_ADDRESS,
     [eAstarNetwork.shiden]: ZERO_ADDRESS,
     [eAstarNetwork.shibuya]: ZERO_ADDRESS
