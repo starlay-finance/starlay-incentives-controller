@@ -15,11 +15,11 @@ const {
 
 task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to Starlay Governance')
   .addParam('proposalExecutionPayload')
-  .addParam('aTokens')
+  .addParam('lTokens')
   .addParam('variableDebtTokens')
   .addFlag('defender')
   .setAction(
-    async ({ defender, proposalExecutionPayload, aTokens, variableDebtTokens }, localBRE) => {
+    async ({ defender, proposalExecutionPayload, lTokens, variableDebtTokens }, localBRE) => {
       await localBRE.run('set-DRE');
       let proposer: Signer;
       [proposer] = await DRE.ethers.getSigners();
@@ -35,8 +35,8 @@ task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to St
         );
       }
 
-      if (aTokens.split(',').length !== 6) {
-        throw new Error('aTokens input param should have 6 elements');
+      if (lTokens.split(',').length !== 6) {
+        throw new Error('lTokens input param should have 6 elements');
       }
 
       if (variableDebtTokens.split(',').length !== 6) {
@@ -70,7 +70,7 @@ task('incentives-submit-proposal:mainnet', 'Submit the incentives proposal to St
       const proposalId = await gov.getProposalsCount();
       const proposalParams = {
         proposalExecutionPayload,
-        aTokens,
+        lTokens,
         variableDebtTokens,
         governance: GOVERNANCE_V2,
         shortExecutor: STARLAY_SHORT_EXECUTOR,

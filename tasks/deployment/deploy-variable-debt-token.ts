@@ -8,7 +8,7 @@ import {
   VariableDebtToken__factory,
 } from '../../types';
 
-task('deploy-var-debt-token', 'Deploy AToken using prior reserve config')
+task('deploy-var-debt-token', 'Deploy LToken using prior reserve config')
   .addParam('pool')
   .addParam('asset')
   .addParam('incentivesController')
@@ -57,13 +57,16 @@ task('deploy-var-debt-token', 'Deploy AToken using prior reserve config')
         ).symbol();
       }
 
-      const { address } = await new VariableDebtToken__factory(deployer).deploy(
-        pool,
-        asset,
-        tokenName,
-        tokenSymbol,
-        incentivesController
-      );
+      // const { address } = await new VariableDebtToken__factory(deployer).deploy(
+      //   pool,
+      //   asset,
+      //   tokenName,
+      //   tokenSymbol,
+      //   incentivesController
+      // );
+      // TODO: follow starlay-protocol's VariableDebtToken / maybe use proxy update
+      const { address } = await new VariableDebtToken__factory(deployer).deploy()
+
 
       return address;
     }

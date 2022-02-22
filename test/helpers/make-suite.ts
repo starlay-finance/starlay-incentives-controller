@@ -6,13 +6,13 @@ import { tEthereumAddress } from '../../helpers/types';
 import chai from 'chai';
 // @ts-ignore
 import bignumberChai from 'chai-bignumber';
-import { getATokenMock } from '../../helpers/contracts-accessors';
+import { getLTokenMock } from '../../helpers/contracts-accessors';
 import { MintableErc20 } from '../../types/MintableErc20';
-import { ATokenMock } from '../../types/ATokenMock';
+import { LTokenMock } from '../../types/LTokenMock';
 import {
   PullRewardsIncentivesController,
   PullRewardsIncentivesController__factory,
-  StakedAaveV3,
+  StakedLayV2,
   StakedTokenIncentivesController,
 } from '../../types';
 
@@ -34,11 +34,11 @@ export interface TestEnv {
   token: MintableErc20;
   incentivesController: StakedTokenIncentivesController;
   pullRewardsIncentivesController: PullRewardsIncentivesController;
-  stakedToken: StakedAaveV3;
-  aDaiMock: ATokenMock;
-  aWethMock: ATokenMock;
-  aDaiBaseMock: ATokenMock;
-  aWethBaseMock: ATokenMock;
+  stakedToken: StakedLayV2;
+  lDaiMock: LTokenMock;
+  lWethMock: LTokenMock;
+  lDaiBaseMock: LTokenMock;
+  lWethBaseMock: LTokenMock;
 }
 
 let buidlerevmSnapshotId: string = '0x1';
@@ -52,18 +52,18 @@ const testEnv: TestEnv = {
   deployer: {} as SignerWithAddress,
   users: [] as SignerWithAddress[],
   token: {} as MintableErc20,
-  stakedToken: {} as StakedAaveV3,
+  stakedToken: {} as StakedLayV2,
   incentivesController: {} as StakedTokenIncentivesController,
   pullRewardsIncentivesController: {} as PullRewardsIncentivesController,
-  aDaiMock: {} as ATokenMock,
-  aWethMock: {} as ATokenMock,
-  aDaiBaseMock: {} as ATokenMock,
-  aWethBaseMock: {} as ATokenMock,
+  lDaiMock: {} as LTokenMock,
+  lWethMock: {} as LTokenMock,
+  lDaiBaseMock: {} as LTokenMock,
+  lWethBaseMock: {} as LTokenMock,
 } as TestEnv;
 
 export async function initializeMakeSuite(
   starlayToken: MintableErc20,
-  starlayStake: StakedAaveV3,
+  starlayStake: StakedLayV2,
   incentivesController: StakedTokenIncentivesController,
   pullRewardsIncentivesController: PullRewardsIncentivesController
 ) {
@@ -90,10 +90,10 @@ export async function initializeMakeSuite(
   testEnv.incentivesController = incentivesController;
   testEnv.pullRewardsIncentivesController = pullRewardsIncentivesController;
   testEnv.token = starlayToken;
-  testEnv.aDaiMock = await getATokenMock({ slug: 'lDai' });
-  testEnv.aWethMock = await getATokenMock({ slug: 'lWeth' });
-  testEnv.aDaiBaseMock = await getATokenMock({ slug: 'lDaiBase' });
-  testEnv.aWethBaseMock = await getATokenMock({ slug: 'lWethBase' });
+  testEnv.lDaiMock = await getLTokenMock({ slug: 'lDai' });
+  testEnv.lWethMock = await getLTokenMock({ slug: 'lWeth' });
+  testEnv.lDaiBaseMock = await getLTokenMock({ slug: 'lDaiBase' });
+  testEnv.lWethBaseMock = await getLTokenMock({ slug: 'lWethBase' });
 }
 
 export function makeSuite(name: string, tests: (testEnv: TestEnv) => void) {

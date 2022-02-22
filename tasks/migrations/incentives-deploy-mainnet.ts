@@ -19,19 +19,13 @@ const INCENTIVES_PROXY = '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5';
 
 task(
   'incentives-deploy:mainnet',
-  'Deploy the payload contract, atokens and variable debt token implementations. Print the params for submitting proposal'
+  'Deploy the payload contract, ltokens and variable debt token implementations. Print the params for submitting proposal'
 )
   .addFlag('defender')
   .setAction(async ({ defender }, localBRE) => {
-    let aTokensImpl: tEthereumAddress[];
+    let lTokensImpl: tEthereumAddress[];
     let variableDebtTokensImpl: tEthereumAddress[];
     let proposalExecutionPayload: tEthereumAddress;
-    let symbols: {
-      [key: string]: {
-        aToken: { symbol: string; name: string };
-        variableDebtToken: { symbol: string; name: string };
-      };
-    } = {};
 
     await localBRE.run('set-DRE');
 
@@ -55,10 +49,10 @@ task(
       throw new Error('You have not set correctly the .env file, make sure to read the README.md');
     }
 
-    console.log('- Deploying aTokens and Variable Debt Tokens implementations');
+    console.log('- Deploying lTokens and Variable Debt Tokens implementations');
 
-    // Deploy aTokens and debt tokens
-    const { aTokens, variableDebtTokens } = await DRE.run('deploy-reserve-implementations', {
+    // Deploy lTokens and debt tokens
+    const { lTokens, variableDebtTokens } = await DRE.run('deploy-reserve-implementations', {
       provider: POOL_PROVIDER,
       assets: RESERVES,
       incentivesController: incentivesProxy,
@@ -66,7 +60,7 @@ task(
       defender: true,
     });
 
-    aTokensImpl = [...aTokens];
+    lTokensImpl = [...lTokens];
     variableDebtTokensImpl = [...variableDebtTokens];
 
     // Deploy Proposal Executor Payload
@@ -88,7 +82,7 @@ task(
     );
     const proposalParams = {
       proposalExecutionPayload,
-      aTokens: aTokensImpl.join(','),
+      lTokens: lTokensImpl.join(','),
       variableDebtTokens: variableDebtTokensImpl.join(','),
     };
     console.log(
@@ -100,8 +94,8 @@ task(
 
     await DRE.run('verify-proposal-etherscan', {
       assets: RESERVES,
-      aTokens: aTokensImpl.join(','),
-      variableDebtTokens: variableDebtTokensImpl.join(','),
+      lTokens: proposalParams.lTokens,
+      variableDebtTokens: proposalParams.variableDebtTokens,
       proposalPayloadAddress: proposalExecutionPayloadAddress,
     });
   });

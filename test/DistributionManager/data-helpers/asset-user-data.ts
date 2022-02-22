@@ -1,6 +1,5 @@
 import { BigNumber } from 'ethers';
 import { PullRewardsIncentivesController, StakedTokenIncentivesController } from '../../../types';
-import { AaveDistributionManager } from '../../../types/AaveDistributionManager';
 
 export type UserStakeInput = {
   underlyingAsset: string;
@@ -13,7 +12,6 @@ export type UserPositionUpdate = UserStakeInput & {
 };
 export async function getUserIndex(
   distributionManager:
-    | AaveDistributionManager
     | StakedTokenIncentivesController
     | PullRewardsIncentivesController,
   user: string,

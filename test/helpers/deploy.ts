@@ -8,7 +8,7 @@ import {
 import { getFirstSigner, insertContractAddressInDb } from '../../helpers/contracts-helpers';
 import { verifyContract } from '../../helpers/etherscan-verification';
 import { eContractid, tEthereumAddress } from '../../helpers/types';
-import { MintableErc20, StakedAaveV3__factory } from '../../types';
+import { MintableErc20, StakedLayV2__factory } from '../../types';
 
 export const COOLDOWN_SECONDS = '3600'; // 1 hour in seconds
 export const UNSTAKE_WINDOW = '1800'; // 30 min in second
@@ -24,7 +24,7 @@ export const testDeployIncentivesController = async (
   const stakeProxy = await deployInitializableAdminUpgradeabilityProxy();
   const incentivesProxy = await deployInitializableAdminUpgradeabilityProxy();
 
-  const stakeV3 = await deployStakedAaveV3([
+  const stakeV3 = await deployStakedLayV2([
     token.address,
     token.address,
     COOLDOWN_SECONDS,
@@ -36,24 +36,15 @@ export const testDeployIncentivesController = async (
 
   const incentivesImplementation = await deployStakedTokenIncentivesController([
     stakeProxy.address,
-    emissionManagerAddress,
   ]);
 
   // Initialize proxies
   const stakeInit = stakeV3.interface.encodeFunctionData(
     // @ts-ignore
-    'initialize(address,address,address,uint256,string,string,uint8)',
-    [
-      emissionManagerAddress,
-      emissionManagerAddress,
-      emissionManagerAddress,
-      '2000',
-      'Staked Lay',
-      'sLay',
-      '18',
-    ]
+    'initialize()',
+    []
   );
-  const incentivesInit = incentivesImplementation.interface.encodeFunctionData('initialize');
+  const incentivesInit = incentivesImplementation.interface.encodeFunctionData('initialize', [emissionManagerAddress]);
 
   await (
     await stakeProxy['initialize(address,address,bytes)'](
@@ -70,12 +61,12 @@ export const testDeployIncentivesController = async (
     )
   ).wait();
 
-  await insertContractAddressInDb(eContractid.AaveIncentivesController, incentivesProxy.address);
+  await insertContractAddressInDb(eContractid.StakedTokenIncentivesController, incentivesProxy.address);
 
   return { incentivesProxy, stakeProxy };
 };
 
-export const deployStakedAaveV3 = async (
+export const deployStakedLayV2 = async (
   [
     stakedToken,
     rewardsToken,
@@ -95,7 +86,7 @@ export const deployStakedAaveV3 = async (
   ],
   verify?: boolean
 ) => {
-  const id = eContractid.StakedAaveV3;
+  const id = eContractid.StakedLayV2;
   const args: string[] = [
     stakedToken,
     rewardsToken,
@@ -106,7 +97,7 @@ export const deployStakedAaveV3 = async (
     distributionDuration,
     ZERO_ADDRESS, // gov address
   ];
-  const instance = await new StakedAaveV3__factory(await getFirstSigner()).deploy(
+  const instance = await new StakedLayV2__factory(await getFirstSigner()).deploy(
     stakedToken,
     rewardsToken,
     cooldownSeconds,

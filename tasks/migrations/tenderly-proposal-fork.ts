@@ -64,12 +64,12 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
     let gov: IStarlayGovernanceV2;
     let pool: ILendingPool;
     let proposalId: BigNumber;
-    let aTokensImpl: tEthereumAddress[];
+    let lTokensImpl: tEthereumAddress[];
     let variableDebtTokensImpl: tEthereumAddress[];
     let proposalExecutionPayload: tEthereumAddress;
     let symbols: {
       [key: string]: {
-        aToken: { symbol: string; name: string };
+        lToken: { symbol: string; name: string };
         variableDebtToken: { symbol: string; name: string };
       };
     } = {};
@@ -86,15 +86,15 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
 
     incentivesProxy = INCENTIVES_PROXY;
 
-    // Deploy aTokens and debt tokens
-    const { aTokens, variableDebtTokens } = await DRE.run('deploy-reserve-implementations', {
+    // Deploy lTokens and debt tokens
+    const { lTokens, variableDebtTokens } = await DRE.run('deploy-reserve-implementations', {
       provider: POOL_PROVIDER,
       assets: RESERVES,
       incentivesController: incentivesProxy,
       treasury: TREASURY,
     });
 
-    aTokensImpl = [...aTokens];
+    lTokensImpl = [...lTokens];
     variableDebtTokensImpl = [...variableDebtTokens];
 
     // Deploy Proposal Executor Payload
@@ -135,19 +135,19 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
     // Transfer DAI to repay future DAI loan
     await (await dai.transfer(proposer.address, parseEther('100000'))).wait();
 
-    // Save aToken and debt token names
+    // Save lToken and debt token names
     const reserveConfigs = await getReserveConfigs(POOL_PROVIDER, RESERVES, proposer);
 
     for (let x = 0; x < reserveConfigs.length; x++) {
       const { tokenAddress, symbol } = reserveConfigs[x];
-      const { aTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
-      const aToken = IERC20Detailed__factory.connect(aTokenAddress, proposer);
+      const { lTokenAddress, variableDebtTokenAddress } = await pool.getReserveData(tokenAddress);
+      const lToken = IERC20Detailed__factory.connect(lTokenAddress, proposer);
       const varDebtToken = IERC20Detailed__factory.connect(variableDebtTokenAddress, proposer);
 
       symbols[symbol] = {
-        aToken: {
-          name: await aToken.name(),
-          symbol: await aToken.symbol(),
+        lToken: {
+          name: await lToken.name(),
+          symbol: await lToken.symbol(),
         },
         variableDebtToken: {
           name: await varDebtToken.name(),
@@ -176,7 +176,7 @@ task('incentives-proposal:tenderly', 'Spin a tenderly fork with incentives activ
 
     await DRE.run('propose-incentives', {
       proposalExecutionPayload,
-      aTokens: aTokensImpl.join(','),
+      lTokens: lTokensImpl.join(','),
       variableDebtTokens: variableDebtTokensImpl.join(','),
       governance: GOVERNANCE_V2,
       shortExecutor: STARLAY_SHORT_EXECUTOR,

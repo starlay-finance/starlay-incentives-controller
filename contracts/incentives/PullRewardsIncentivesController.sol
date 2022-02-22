@@ -2,8 +2,8 @@
 pragma solidity 0.7.5;
 pragma experimental ABIEncoderV2;
 
-import {IERC20} from '@aave/aave-stake/contracts/interfaces/IERC20.sol';
-import {SafeERC20} from '@aave/aave-stake/contracts/lib/SafeERC20.sol';
+import {IERC20} from '../stake-v1/contracts/interfaces/IERC20.sol';
+import {SafeERC20} from '../stake-v1/contracts/lib/SafeERC20.sol';
 
 import {BaseIncentivesController} from './base/BaseIncentivesController.sol';
 
@@ -21,16 +21,17 @@ contract PullRewardsIncentivesController is
 
   event RewardsVaultUpdated(address indexed vault);
   
-  constructor(IERC20 rewardToken, address emissionManager)
-    BaseIncentivesController(rewardToken, emissionManager)
+  constructor(IERC20 rewardToken)
+    BaseIncentivesController(rewardToken)
   {}
 
   /**
    * @dev Initialize BaseIncentivesController
    * @param rewardsVault rewards vault to pull ERC20 funds
    **/
-  function initialize(address rewardsVault) external initializer {
+  function initialize(address rewardsVault, address emissionManager) external initializer {
     _rewardsVault = rewardsVault;
+    _emissionManager = emissionManager;
     emit RewardsVaultUpdated(_rewardsVault);
   }
 

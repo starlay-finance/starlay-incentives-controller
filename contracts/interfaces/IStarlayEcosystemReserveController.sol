@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: agpl-3.0
 pragma solidity 0.7.5;
 
-interface IAaveEcosystemReserveController {
-  function AAVE_RESERVE_ECOSYSTEM() external view returns (address);
+interface IStarlayEcosystemReserveController {
+  function RESERVE_ECOSYSTEM() external view returns (address);
 
   function approve(
     address token,

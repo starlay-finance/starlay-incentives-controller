@@ -8,19 +8,19 @@ export type eNetwork = eEthereumNetwork | eAstarNetwork;
 
 export enum eContractid {
   DistributionManager = 'DistributionManager',
-  AaveIncentivesController = 'AaveIncentivesController',
   MintableErc20 = 'MintableErc20',
-  ATokenMock = 'ATokenMock',
+  LTokenMock = 'LTokenMock',
   IERC20Detailed = 'IERC20Detailed',
   StakedTokenIncentivesController = 'StakedTokenIncentivesController',
   MockSelfDestruct = 'MockSelfDestruct',
-  StakedAaveV3 = 'StakedAaveV3',
+  StakedLayV2 = 'StakedLayV2',
   PullRewardsIncentivesController = 'PullRewardsIncentivesController',
 }
 
 export enum eEthereumNetwork {
   buidlerevm = 'buidlerevm',
   kovan = 'kovan',
+  rinkeby = 'rinkeby',
   main = 'main',
   coverage = 'coverage',
   hardhat = 'hardhat',
@@ -47,6 +47,7 @@ export interface iEthereumParamsPerNetwork<T> {
   [eEthereumNetwork.coverage]: T;
   [eEthereumNetwork.buidlerevm]: T;
   [eEthereumNetwork.kovan]: T;
+  [eEthereumNetwork.rinkeby]: T;
   [eEthereumNetwork.main]: T;
   [eEthereumNetwork.hardhat]: T;
   [eEthereumNetwork.tenderlyMain]: T;

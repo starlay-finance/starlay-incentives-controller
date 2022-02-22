@@ -14,7 +14,7 @@ interface IStarlayGovernanceV2 {
    **/
   event ReserveInitialized(
     address indexed asset,
-    address indexed aToken,
+    address indexed lToken,
     address stableDebtToken,
     address variableDebtToken,
     address interestRateStrategyAddress

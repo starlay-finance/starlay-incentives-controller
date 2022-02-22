@@ -2,9 +2,9 @@ import { Signer } from 'ethers';
 import { task } from 'hardhat/config';
 import { ZERO_ADDRESS } from '../../helpers/constants';
 import { getDefenderRelaySigner } from '../../helpers/defender-utils';
-import { ILendingPoolData__factory, IERC20Detailed__factory, AToken__factory } from '../../types';
+import { ILendingPoolData__factory, IERC20Detailed__factory, LToken__factory } from '../../types';
 
-task('deploy-atoken', 'Deploy AToken using prior reserve config')
+task('deploy-ltoken', 'Deploy LToken using prior reserve config')
   .addParam('pool')
   .addParam('asset')
   .addParam('treasury')
@@ -27,17 +27,17 @@ task('deploy-atoken', 'Deploy AToken using prior reserve config')
         deployer = signer;
       }
 
-      const { aTokenAddress } = await ILendingPoolData__factory.connect(
+      const { lTokenAddress } = await ILendingPoolData__factory.connect(
         pool,
         deployer
       ).getReserveData(asset);
 
-      if (!tokenSymbol && aTokenAddress === ZERO_ADDRESS) {
+      if (!tokenSymbol && lTokenAddress === ZERO_ADDRESS) {
         throw new Error(
           "Reserve does not exists or not initialized. Pass 'tokenSymbol' as param to the task.'"
         );
       }
-      if (!tokenName && aTokenAddress === ZERO_ADDRESS) {
+      if (!tokenName && lTokenAddress === ZERO_ADDRESS) {
         throw new Error(
           "Reserve does not exists or not initialized. Pass 'tokenName' as param to the task.'"
         );
@@ -45,20 +45,22 @@ task('deploy-atoken', 'Deploy AToken using prior reserve config')
 
       // Grab same name and symbol from old implementation
       if (!tokenName) {
-        tokenName = await IERC20Detailed__factory.connect(aTokenAddress, deployer).name();
+        tokenName = await IERC20Detailed__factory.connect(lTokenAddress, deployer).name();
       }
       if (!tokenSymbol) {
-        tokenSymbol = await IERC20Detailed__factory.connect(aTokenAddress, deployer).symbol();
+        tokenSymbol = await IERC20Detailed__factory.connect(lTokenAddress, deployer).symbol();
       }
 
-      const { address } = await new AToken__factory(deployer).deploy(
-        pool,
-        asset,
-        treasury,
-        tokenName,
-        tokenSymbol,
-        incentivesController
-      );
+      // const { address } = await new LToken__factory(deployer).deploy(
+      //   pool,
+      //   asset,
+      //   treasury,
+      //   tokenName,
+      //   tokenSymbol,
+      //   incentivesController
+      // );
+      // TODO: follow starlay-protocol's LToken / maybe use proxy update
+      const { address } = await new LToken__factory(deployer).deploy()
 
       return address;
     }

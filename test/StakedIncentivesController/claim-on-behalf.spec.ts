@@ -15,11 +15,11 @@ makeSuite('IncentivesController - Claim rewards on behalf', (testEnv: TestEnv) =
     ).to.be.revertedWith('ONLY_EMISSION_MANAGER');
   });
   it('Should claimRewardsOnBehalf revert if called claimer is not authorized', async () => {
-    const { incentivesController, users, aDaiMock, stakedToken } = testEnv;
+    const { incentivesController, users, lDaiMock, stakedToken } = testEnv;
     const [userWithRewards, thirdClaimer] = users;
 
-    await waitForTx(await incentivesController.configureAssets([aDaiMock.address], ['2000']));
-    await waitForTx(await aDaiMock.setUserBalanceAndSupply('300000', '30000'));
+    await waitForTx(await incentivesController.configureAssets([lDaiMock.address], ['2000']));
+    await waitForTx(await lDaiMock.setUserBalanceAndSupply('300000', '30000'));
 
     // Claim from third party claimer
     const priorStkBalance = await stakedToken.balanceOf(thirdClaimer.address);
@@ -28,7 +28,7 @@ makeSuite('IncentivesController - Claim rewards on behalf', (testEnv: TestEnv) =
       incentivesController
         .connect(thirdClaimer.signer)
         .claimRewardsOnBehalf(
-          [aDaiMock.address],
+          [lDaiMock.address],
           MAX_UINT_AMOUNT,
           userWithRewards.address,
           thirdClaimer.address
@@ -55,11 +55,11 @@ makeSuite('IncentivesController - Claim rewards on behalf', (testEnv: TestEnv) =
     );
   });
   it('Should claimRewardsOnBehalf pass if called by the assigned claimer', async () => {
-    const { incentivesController, users, aDaiMock, stakedToken } = testEnv;
+    const { incentivesController, users, lDaiMock, stakedToken } = testEnv;
     const [userWithRewards, thirdClaimer] = users;
 
-    await waitForTx(await incentivesController.configureAssets([aDaiMock.address], ['2000']));
-    await waitForTx(await aDaiMock.setUserBalanceAndSupply('300000', '30000'));
+    await waitForTx(await incentivesController.configureAssets([lDaiMock.address], ['2000']));
+    await waitForTx(await lDaiMock.setUserBalanceAndSupply('300000', '30000'));
 
     // Claim from third party claimer
     const priorStkBalance = await stakedToken.balanceOf(thirdClaimer.address);
@@ -68,7 +68,7 @@ makeSuite('IncentivesController - Claim rewards on behalf', (testEnv: TestEnv) =
       incentivesController
         .connect(thirdClaimer.signer)
         .claimRewardsOnBehalf(
-          [aDaiMock.address],
+          [lDaiMock.address],
           MAX_UINT_AMOUNT,
           userWithRewards.address,
           thirdClaimer.address
@@ -81,17 +81,17 @@ makeSuite('IncentivesController - Claim rewards on behalf', (testEnv: TestEnv) =
   });
 
   it('Should claimRewardsOnBehalf revert if to argument address is ZERO_ADDRESS', async () => {
-    const { incentivesController, users, aDaiMock, stakedToken } = testEnv;
+    const { incentivesController, users, lDaiMock, stakedToken } = testEnv;
     const [userWithRewards, thirdClaimer] = users;
 
-    await waitForTx(await incentivesController.configureAssets([aDaiMock.address], ['2000']));
-    await waitForTx(await aDaiMock.setUserBalanceAndSupply('300000', '30000'));
+    await waitForTx(await incentivesController.configureAssets([lDaiMock.address], ['2000']));
+    await waitForTx(await lDaiMock.setUserBalanceAndSupply('300000', '30000'));
 
     await expect(
       incentivesController
         .connect(thirdClaimer.signer)
         .claimRewardsOnBehalf(
-          [aDaiMock.address],
+          [lDaiMock.address],
           MAX_UINT_AMOUNT,
           userWithRewards.address,
           ZERO_ADDRESS
@@ -100,13 +100,13 @@ makeSuite('IncentivesController - Claim rewards on behalf', (testEnv: TestEnv) =
   });
 
   it('Should claimRewardsOnBehalf revert if user argument is ZERO_ADDRESS', async () => {
-    const { incentivesController, users, aDaiMock, rewardsVault } = testEnv;
+    const { incentivesController, users, lDaiMock, rewardsVault } = testEnv;
     const [, thirdClaimer] = users;
 
     const emissionManager = rewardsVault;
 
-    await waitForTx(await incentivesController.configureAssets([aDaiMock.address], ['2000']));
-    await waitForTx(await aDaiMock.setUserBalanceAndSupply('300000', '30000'));
+    await waitForTx(await incentivesController.configureAssets([lDaiMock.address], ['2000']));
+    await waitForTx(await lDaiMock.setUserBalanceAndSupply('300000', '30000'));
 
     await expect(
       incentivesController
@@ -120,7 +120,7 @@ makeSuite('IncentivesController - Claim rewards on behalf', (testEnv: TestEnv) =
       incentivesController
         .connect(thirdClaimer.signer)
         .claimRewardsOnBehalf(
-          [aDaiMock.address],
+          [lDaiMock.address],
           MAX_UINT_AMOUNT,
           ZERO_ADDRESS,
           thirdClaimer.address

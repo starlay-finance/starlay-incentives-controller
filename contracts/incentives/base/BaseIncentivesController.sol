@@ -4,9 +4,9 @@ pragma experimental ABIEncoderV2;
 
 import {SafeMath} from '../../lib/SafeMath.sol';
 import {DistributionTypes} from '../../lib/DistributionTypes.sol';
-import {VersionedInitializable} from '@aave/aave-stake/contracts/utils/VersionedInitializable.sol';
+import {VersionedInitializable} from '../../stake-v1/contracts/utils/VersionedInitializable.sol';
 import {DistributionManager} from './DistributionManager.sol';
-import {IERC20} from '@aave/aave-stake/contracts/interfaces/IERC20.sol';
+import {IERC20} from '../../stake-v1/contracts/interfaces/IERC20.sol';
 import {IScaledBalanceToken} from '../../interfaces/IScaledBalanceToken.sol';
 import {IIncentivesController} from '../../interfaces/IIncentivesController.sol';
 
@@ -37,9 +37,7 @@ abstract contract BaseIncentivesController is
     _;
   }
 
-  constructor(IERC20 rewardToken, address emissionManager)
-    DistributionManager(emissionManager)
-  {
+  constructor(IERC20 rewardToken) {
     REWARD_TOKEN = address(rewardToken);
   }
 

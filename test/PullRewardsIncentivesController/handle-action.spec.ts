@@ -61,9 +61,9 @@ makeSuite('pullRewardsIncentivesController handleAction tests', (testEnv) => {
     it(caseName, async () => {
       await increaseTime(100);
 
-      const { pullRewardsIncentivesController, users, aDaiBaseMock } = testEnv;
+      const { pullRewardsIncentivesController, users, lDaiBaseMock } = testEnv;
       const userAddress = users[1].address;
-      const underlyingAsset = aDaiBaseMock.address;
+      const underlyingAsset = lDaiBaseMock.address;
 
       // update emissionPerSecond in advance to not affect user calculations
       if (emissionPerSecond) {
@@ -91,9 +91,9 @@ makeSuite('pullRewardsIncentivesController handleAction tests', (testEnv) => {
         await increaseTime(customTimeMovement);
       }
 
-      await waitForTx(await aDaiBaseMock.setUserBalanceAndSupply(userBalance, totalSupply));
+      await waitForTx(await lDaiBaseMock.setUserBalanceAndSupply(userBalance, totalSupply));
       const handleActionReceipt = await waitForTx(
-        await aDaiBaseMock.handleActionOnAic(userAddress, totalSupply, userBalance)
+        await lDaiBaseMock.handleActionOnAic(userAddress, totalSupply, userBalance)
       );
       const eventsEmitted = handleActionReceipt.events || [];
       const actionBlockTimestamp = await getBlockTimestamp(handleActionReceipt.blockNumber);

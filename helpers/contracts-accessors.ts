@@ -10,7 +10,7 @@ import { MintableErc20 } from '../types/MintableErc20';
 import { SelfdestructTransfer } from '../types/SelfdestructTransfer';
 import { IERC20Detailed } from '../types/IERC20Detailed';
 import { verifyContract } from './etherscan-verification';
-import { ATokenMock } from '../types/ATokenMock';
+import { LTokenMock } from '../types/LTokenMock';
 import {
   PullRewardsIncentivesController__factory,
   InitializableAdminUpgradeabilityProxy__factory,
@@ -21,14 +21,14 @@ import { DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { Signer } from 'ethers';
 
 export const deployStakedTokenIncentivesController = async (
-  [psm, emissionManager]: [tEthereumAddress, tEthereumAddress],
+  [psm]: [tEthereumAddress],
   verify?: boolean,
   signer?: Signer | DefenderRelaySigner
 ) => {
-  const args: [string, string] = [psm, emissionManager];
+  const args: [string] = [psm];
   const instance = await new StakedTokenIncentivesController__factory(
     signer || (await getFirstSigner())
-  ).deploy(...args);
+  ).deploy(args[0]);
   await instance.deployTransaction.wait();
   if (verify) {
     await verifyContract(instance.address, args);
@@ -37,14 +37,14 @@ export const deployStakedTokenIncentivesController = async (
 };
 
 export const deployPullRewardsIncentivesController = async (
-  [rewardToken, emissionManager]: [tEthereumAddress, tEthereumAddress],
+  [rewardToken]: [tEthereumAddress],
   verify?: boolean,
   signer?: Signer | DefenderRelaySigner
 ) => {
-  const args: [string, string] = [rewardToken, emissionManager];
+  const args: [string] = [rewardToken];
   const instance = await new PullRewardsIncentivesController__factory(
     signer || (await getFirstSigner())
-  ).deploy(...args);
+  ).deploy(args[0]);
   await instance.deployTransaction.wait();
   if (verify) {
     await verifyContract(instance.address, args);
@@ -67,9 +67,9 @@ export const deployInitializableAdminUpgradeabilityProxy = async (verify?: boole
 export const deployMintableErc20 = async ([name, symbol]: [string, string]) =>
   await deployContract<MintableErc20>(eContractid.MintableErc20, [name, symbol]);
 
-export const deployATokenMock = async (aicAddress: tEthereumAddress, slug: string) => {
-  const instance = await deployContract<ATokenMock>(eContractid.ATokenMock, [aicAddress]);
-  await registerContractInJsonDb(`${eContractid.ATokenMock}-${slug}`, instance);
+export const deployLTokenMock = async (aicAddress: tEthereumAddress, slug: string) => {
+  const instance = await deployContract<LTokenMock>(eContractid.LTokenMock, [aicAddress]);
+  await registerContractInJsonDb(`${eContractid.LTokenMock}-${slug}`, instance);
 };
 
 export const getMintableErc20 = getContractFactory<MintableErc20>(eContractid.MintableErc20);
@@ -86,7 +86,7 @@ export const getPullRewardsIncentivesController = async (address: tEthereumAddre
 
 export const getIErc20Detailed = getContractFactory<IERC20Detailed>(eContractid.IERC20Detailed);
 
-export const getATokenMock = getContractFactory<ATokenMock>(eContractid.ATokenMock);
+export const getLTokenMock = getContractFactory<LTokenMock>(eContractid.LTokenMock);
 
 export const getERC20Contract = (address: tEthereumAddress) =>
   getContract<MintableErc20>(eContractid.MintableErc20, address);
