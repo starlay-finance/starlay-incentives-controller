@@ -1,6 +1,15 @@
+import { testDeployIncentivesController } from './../test/helpers/deploy';
 import BigNumber from 'bignumber.js';
 import { getParamPerNetwork } from './contracts-helpers';
-import { eAstarNetwork, eEthereumNetwork, eNetwork, tEthereumAddress } from './types';
+import {
+  eAstarNetwork,
+  eEthereumNetwork,
+  eNetwork,
+  tEthereumAddress,
+  iParamsPerNetwork,
+  iAssetBase,
+  incentivesConfig,
+} from './types';
 
 // ----------------
 // MATH
@@ -42,46 +51,271 @@ export const RANDOM_ADDRESSES = [
 ];
 
 /* Addresses / Parameters for each network */
-export const getProxyAdminPerNetwork = (network: eNetwork): tEthereumAddress => getParamPerNetwork<tEthereumAddress>(
-  {
-    [eEthereumNetwork.kovan]: '0x6543076E4315bd82129105890Bc49c18f496a528', // Dummy
-    [eEthereumNetwork.rinkeby]: '0x6543076E4315bd82129105890Bc49c18f496a528', // Dummy
-    [eAstarNetwork.astar]: ZERO_ADDRESS,
-    [eAstarNetwork.shiden]: '0x6543076E4315bd82129105890Bc49c18f496a528', // Dummy
-    [eAstarNetwork.shibuya]: '0x6543076E4315bd82129105890Bc49c18f496a528' // Dummy
-  },
-  network
-);
+export const getProxyAdminPerNetwork = (network: eNetwork): tEthereumAddress =>
+  getParamPerNetwork<tEthereumAddress>(
+    {
+      [eEthereumNetwork.kovan]: '0x6543076E4315bd82129105890Bc49c18f496a528', // Dummy
+      [eEthereumNetwork.rinkeby]: '0x6543076E4315bd82129105890Bc49c18f496a528', // Dummy
+      [eAstarNetwork.astar]: ZERO_ADDRESS,
+      [eAstarNetwork.shiden]: '0x6543076E4315bd82129105890Bc49c18f496a528', // Dummy
+      [eAstarNetwork.shibuya]: '0x6543076E4315bd82129105890Bc49c18f496a528', // Dummy
+    },
+    network
+  );
 
-export const getStakedTokenPerNetwork = (network: eNetwork): tEthereumAddress => getParamPerNetwork<tEthereumAddress>(
-  {
-    [eEthereumNetwork.kovan]: '0x82ab55Ff927d0E3C42A6Bc08C0B57D35A7896880', // StakedLay
-    [eEthereumNetwork.rinkeby]: '0x542d2690d8B4092F455188622dA51ee478cAD0E0', // StakedLay
-    [eAstarNetwork.astar]: ZERO_ADDRESS,
-    [eAstarNetwork.shiden]: '0x4cFf3b5f6bA3d64083963DE201089f3267490C65', // StakedLay
-    [eAstarNetwork.shibuya]: '0xD0286b992ae9EB8702457559dCA9565bEB20b0DC' // StakedLay
-  },
-  network
-);
+export const getStakedTokenPerNetwork = (network: eNetwork): tEthereumAddress =>
+  getParamPerNetwork<tEthereumAddress>(
+    {
+      [eEthereumNetwork.kovan]: '0x82ab55Ff927d0E3C42A6Bc08C0B57D35A7896880', // StakedLay
+      [eEthereumNetwork.rinkeby]: '0x542d2690d8B4092F455188622dA51ee478cAD0E0', // StakedLay
+      [eAstarNetwork.astar]: ZERO_ADDRESS,
+      [eAstarNetwork.shiden]: '0x4cFf3b5f6bA3d64083963DE201089f3267490C65', // StakedLay
+      [eAstarNetwork.shibuya]: '0xD0286b992ae9EB8702457559dCA9565bEB20b0DC', // StakedLay
+    },
+    network
+  );
 
-export const getEmissionManagerPerNetwork = (network: eNetwork): tEthereumAddress => getParamPerNetwork<tEthereumAddress>(
-  {
-    [eEthereumNetwork.kovan]: '0x175d905470e85279899C37F89000b195f3d0c0C5',
-    [eEthereumNetwork.rinkeby]: '0x175d905470e85279899C37F89000b195f3d0c0C5',
-    [eAstarNetwork.astar]: ZERO_ADDRESS,
-    [eAstarNetwork.shiden]: '0x175d905470e85279899C37F89000b195f3d0c0C5',
-    [eAstarNetwork.shibuya]: '0x175d905470e85279899C37F89000b195f3d0c0C5'
-  },
-  network
-);
+export const getEmissionManagerPerNetwork = (network: eNetwork): tEthereumAddress =>
+  getParamPerNetwork<tEthereumAddress>(
+    {
+      [eEthereumNetwork.kovan]: '0x175d905470e85279899C37F89000b195f3d0c0C5',
+      [eEthereumNetwork.rinkeby]: '0x175d905470e85279899C37F89000b195f3d0c0C5',
+      [eAstarNetwork.astar]: ZERO_ADDRESS,
+      [eAstarNetwork.shiden]: '0x175d905470e85279899C37F89000b195f3d0c0C5',
+      [eAstarNetwork.shibuya]: '0x175d905470e85279899C37F89000b195f3d0c0C5',
+    },
+    network
+  );
 
-export const getRewardVaultPerNetwork = (network: eNetwork): tEthereumAddress => getParamPerNetwork<tEthereumAddress>(
-  {
-    [eEthereumNetwork.kovan]: ZERO_ADDRESS,
-    [eEthereumNetwork.rinkeby]: ZERO_ADDRESS,
-    [eAstarNetwork.astar]: ZERO_ADDRESS,
-    [eAstarNetwork.shiden]: '0x175d905470e85279899C37F89000b195f3d0c0C5',
-    [eAstarNetwork.shibuya]: ZERO_ADDRESS
-  },
-  network
-);
+export const getRewardVaultPerNetwork = (network: eNetwork): tEthereumAddress =>
+  getParamPerNetwork<tEthereumAddress>(
+    {
+      [eEthereumNetwork.kovan]: ZERO_ADDRESS,
+      [eEthereumNetwork.rinkeby]: ZERO_ADDRESS,
+      [eAstarNetwork.astar]: ZERO_ADDRESS,
+      [eAstarNetwork.shiden]: '0x175d905470e85279899C37F89000b195f3d0c0C5',
+      [eAstarNetwork.shibuya]: ZERO_ADDRESS,
+    },
+    network
+  );
+
+export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthereumAddress> =>
+  getParamPerNetwork<iAssetBase<tEthereumAddress>>(
+    {
+      [eEthereumNetwork.kovan]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+      [eEthereumNetwork.rinkeby]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+      [eAstarNetwork.astar]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+      [eAstarNetwork.shiden]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+      [eAstarNetwork.shibuya]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+    },
+    network
+  );
+export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthereumAddress> =>
+  getParamPerNetwork<iAssetBase<tEthereumAddress>>(
+    {
+      [eEthereumNetwork.kovan]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+      [eEthereumNetwork.rinkeby]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+      [eAstarNetwork.astar]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+      [eAstarNetwork.shiden]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+      [eAstarNetwork.shibuya]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+    },
+    network
+  );
+export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthereumAddress> =>
+  getParamPerNetwork<iAssetBase<tEthereumAddress>>(
+    {
+      [eEthereumNetwork.kovan]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+      [eEthereumNetwork.rinkeby]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+      [eAstarNetwork.astar]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+      [eAstarNetwork.shiden]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+      [eAstarNetwork.shibuya]: {
+        LAY: ZERO_ADDRESS,
+        USD: ZERO_ADDRESS,
+        USDC: ZERO_ADDRESS,
+        USDT: ZERO_ADDRESS,
+        WASTR: ZERO_ADDRESS,
+        WBTC: ZERO_ADDRESS,
+        WETH: ZERO_ADDRESS,
+        WSDN: ZERO_ADDRESS,
+      },
+    },
+    network
+  );
+
+export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConfig =>
+  getParamPerNetwork<incentivesConfig>(
+    {
+      [eEthereumNetwork.kovan]: {
+        addressProvider: ZERO_ADDRESS,
+        ecoReserve: ZERO_ADDRESS,
+        incentiveControllerImpl: ZERO_ADDRESS,
+        incentiveControllerProxy: ZERO_ADDRESS,
+        lendingPool: ZERO_ADDRESS,
+        poolConfigurator: ZERO_ADDRESS,
+        starlayToken: ZERO_ADDRESS,
+      },
+      [eEthereumNetwork.rinkeby]: {
+        addressProvider: ZERO_ADDRESS,
+        ecoReserve: ZERO_ADDRESS,
+        incentiveControllerImpl: ZERO_ADDRESS,
+        incentiveControllerProxy: ZERO_ADDRESS,
+        lendingPool: ZERO_ADDRESS,
+        poolConfigurator: ZERO_ADDRESS,
+        starlayToken: ZERO_ADDRESS,
+      },
+      [eAstarNetwork.astar]: {
+        addressProvider: ZERO_ADDRESS,
+        ecoReserve: ZERO_ADDRESS,
+        incentiveControllerImpl: ZERO_ADDRESS,
+        incentiveControllerProxy: ZERO_ADDRESS,
+        lendingPool: ZERO_ADDRESS,
+        poolConfigurator: ZERO_ADDRESS,
+        starlayToken: ZERO_ADDRESS,
+      },
+      [eAstarNetwork.shiden]: {
+        addressProvider: ZERO_ADDRESS,
+        ecoReserve: ZERO_ADDRESS,
+        incentiveControllerImpl: ZERO_ADDRESS,
+        incentiveControllerProxy: ZERO_ADDRESS,
+        lendingPool: ZERO_ADDRESS,
+        poolConfigurator: ZERO_ADDRESS,
+        starlayToken: ZERO_ADDRESS,
+      },
+      [eAstarNetwork.shibuya]: {
+        addressProvider: ZERO_ADDRESS,
+        ecoReserve: ZERO_ADDRESS,
+        incentiveControllerImpl: ZERO_ADDRESS,
+        incentiveControllerProxy: ZERO_ADDRESS,
+        lendingPool: ZERO_ADDRESS,
+        poolConfigurator: ZERO_ADDRESS,
+        starlayToken: ZERO_ADDRESS,
+      },
+    },
+    network
+  );

@@ -27,7 +27,6 @@ export enum eEthereumNetwork {
   tenderlyMain = 'tenderlyMain',
 }
 
-
 export enum eAstarNetwork {
   astar = 'astar',
   shiden = 'shiden',
@@ -39,9 +38,7 @@ export enum EthereumNetworkNames {
   main = 'main',
 }
 
-export type iParamsPerNetwork<T> =
-  | iEthereumParamsPerNetwork<T>
-  | iAstarParamsPerNetwork<T>;
+export type iParamsPerNetwork<T> = iEthereumParamsPerNetwork<T> | iAstarParamsPerNetwork<T>;
 
 export interface iEthereumParamsPerNetwork<T> {
   [eEthereumNetwork.coverage]: T;
@@ -57,6 +54,26 @@ export interface iAstarParamsPerNetwork<T> {
   [eAstarNetwork.astar]: T;
   [eAstarNetwork.shiden]: T;
   [eAstarNetwork.shibuya]: T;
+}
+export interface iAssetBase<T> {
+  WETH: T;
+  USDC: T;
+  USDT: T;
+  LAY: T;
+  WBTC: T;
+  USD: T;
+  WASTR: T;
+  WSDN: T;
+}
+
+export interface incentivesConfig {
+  starlayToken: tEthereumAddress;
+  poolConfigurator: tEthereumAddress;
+  addressProvider: tEthereumAddress;
+  lendingPool: tEthereumAddress;
+  ecoReserve: tEthereumAddress;
+  incentiveControllerProxy: tEthereumAddress;
+  incentiveControllerImpl: tEthereumAddress;
 }
 
 export type tEthereumAddress = string;
