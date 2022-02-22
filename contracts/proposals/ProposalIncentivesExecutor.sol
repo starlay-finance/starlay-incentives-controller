@@ -31,7 +31,7 @@ contract ProposalIncentivesExecutor is IProposalIncentivesExecutor {
   uint256 constant DISTRIBUTION_AMOUNT = 32600420000000000000000000; // 32600420 LAY during 30 days
 
   function execute(
-    address[8] memory aTokenImplementations,
+    address[8] memory lTokenImplementations,
     address[8] memory variableDebtImplementations
   ) external override {
     uint256 tokensCounter;
