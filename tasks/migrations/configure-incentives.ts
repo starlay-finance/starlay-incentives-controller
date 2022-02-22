@@ -13,7 +13,6 @@ import { eNetwork } from '../../helpers/types';
 task('configure-incentives', 'Configure incentives for next 30 days')
   .addFlag('defender')
   .addParam('executor')
-  .addParam('incentivesContoller')
   .setAction(async ({ defender, executor }, localBRE) => {
     await localBRE.run('set-DRE');
     let executorOwner: Signer;

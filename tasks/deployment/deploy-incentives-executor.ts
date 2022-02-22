@@ -9,7 +9,7 @@ import { deployIncentivesExecutor } from '../../helpers/contracts-accessors';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bs58 = require('bs58');
 config();
-task('deploy-incentives-executor', 'Deploy incentives')
+task('deploy-incentives-executor', 'Deploy incentives executor')
   .addFlag('defender')
   .setAction(async ({ defender }, localBRE) => {
     await localBRE.run('set-DRE');
