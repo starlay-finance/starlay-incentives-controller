@@ -6,7 +6,7 @@ import {IERC20} from '../stake-v1/contracts/interfaces/IERC20.sol';
 import {ILendingPoolAddressesProvider} from '../interfaces/ILendingPoolAddressesProvider.sol';
 import {ILendingPoolConfigurator} from '../interfaces/ILendingPoolConfigurator.sol';
 import {IIncentivesController} from '../interfaces/IIncentivesController.sol';
-import {IStarlayEcosystemReserveController} from '../interfaces/IStarlayEcosystemReserveController.sol';
+import {IStarlayRewardsVault} from '../interfaces/IStarlayRewardsVault.sol';
 import {IIncentivesExecutor} from '../interfaces/IIncentivesExecutor.sol';
 import {DistributionTypes} from '../lib/DistributionTypes.sol';
 import {DataTypes} from '../utils/DataTypes.sol';
@@ -23,7 +23,7 @@ contract IncentivesExecutor is IIncentivesExecutor {
   address public immutable POOL_CONFIGURATOR;
   address public immutable ADDRESSES_PROVIDER;
   address public immutable LENDING_POOL;
-  address public immutable ECO_RESERVE_ADDRESS;
+  address public immutable REWARDS_VAULT;
   address public immutable INCENTIVES_CONTROLLER_PROXY_ADDRESS;
   address public immutable INCENTIVES_CONTROLLER_IMPL_ADDRESS;
 
@@ -34,7 +34,7 @@ contract IncentivesExecutor is IIncentivesExecutor {
   address poolConfigurator,
   address addressProvider,
   address lendingPool,
-  address ecoReserve,
+  address rewardsVault,
   address incentiveControllerProxy,
   address incentiveControllerImpl)
   {
@@ -42,22 +42,23 @@ contract IncentivesExecutor is IIncentivesExecutor {
     POOL_CONFIGURATOR = poolConfigurator;
     ADDRESSES_PROVIDER = addressProvider;
     LENDING_POOL = lendingPool;
-    ECO_RESERVE_ADDRESS = ecoReserve;
+    REWARDS_VAULT = rewardsVault;
     INCENTIVES_CONTROLLER_PROXY_ADDRESS = incentiveControllerProxy;
     INCENTIVES_CONTROLLER_IMPL_ADDRESS = incentiveControllerImpl;
   }
 
   function execute(
-    address[8] memory lTokenImplementations,
-    address[8] memory variableDebtImplementations,
-    address[8] memory reserves
+    address[6] memory lTokenImplementations,
+    address[6] memory variableDebtImplementations,
+    address[6] memory reserves
   ) external override {
     uint256 tokensCounter;
 
-    address[] memory assets = new address[](16);
+    address[] memory assets = new address[](12);
 
-    uint256[] memory emissions = new uint256[](16);
+    uint256[] memory emissions = new uint256[](12);
 
+    // Reserves Order: ASTR/USDC/USDT/WETH/WBTC/WSDN
     emissions[0] = 808542052469135802; //lASTR
     emissions[1] = 1886598379629629629; //vdASTR
     emissions[2] = 808542052469135802; //lUSDC
@@ -70,15 +71,11 @@ contract IncentivesExecutor is IIncentivesExecutor {
     emissions[9] = 1886598379629629629; //vdWBTC
     emissions[10] = 269513888888888888; //lWSDN
     emissions[11] = 628866126543209876; //vdWSDN
-    emissions[12] = 0; //lARSW
-    emissions[13] = 0; //vdARSW
-    emissions[14] = 0; //lLAY
-    emissions[15] = 0; //vdLAY
     ILendingPoolConfigurator poolConfigurator = ILendingPoolConfigurator(POOL_CONFIGURATOR);
     IIncentivesController incentivesController =
       IIncentivesController(INCENTIVES_CONTROLLER_PROXY_ADDRESS);
-    IStarlayEcosystemReserveController ecosystemReserveController =
-      IStarlayEcosystemReserveController(ECO_RESERVE_ADDRESS);
+    IStarlayRewardsVault ecosystemReserveController =
+      IStarlayRewardsVault(REWARDS_VAULT);
 
     ILendingPoolAddressesProvider provider = ILendingPoolAddressesProvider(ADDRESSES_PROVIDER);
 
@@ -122,10 +119,10 @@ contract IncentivesExecutor is IIncentivesExecutor {
       // Configure variable debt token at incentives controller
       assets[tokensCounter++] = reserveData.variableDebtTokenAddress;
     }
+    ecosystemReserveController.setIncentiveController(INCENTIVES_CONTROLLER_PROXY_ADDRESS);
     // Transfer Starlay funds to the Incentives Controller
     ecosystemReserveController.transfer(
       STARLAY_TOKEN,
-      INCENTIVES_CONTROLLER_PROXY_ADDRESS,
       DISTRIBUTION_AMOUNT
     );
 

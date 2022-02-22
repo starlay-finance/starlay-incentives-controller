@@ -61,7 +61,6 @@ export interface iAssetBase<T> {
   USDT: T;
   LAY: T;
   WBTC: T;
-  USD: T;
   WASTR: T;
   WSDN: T;
 }
@@ -71,7 +70,7 @@ export interface incentivesConfig {
   poolConfigurator: tEthereumAddress;
   addressProvider: tEthereumAddress;
   lendingPool: tEthereumAddress;
-  ecoReserve: tEthereumAddress;
+  rewardsVault: tEthereumAddress;
   incentiveControllerProxy: tEthereumAddress;
   incentiveControllerImpl: tEthereumAddress;
 }

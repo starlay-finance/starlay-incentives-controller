@@ -17,6 +17,7 @@ import {
   StakedTokenIncentivesController,
   StakedTokenIncentivesController__factory,
 } from '../types';
+import { IncentivesExecutor__factory } from '../types/factories/IncentivesExecutor__factory';
 import { DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { Signer } from 'ethers';
 
@@ -29,6 +30,46 @@ export const deployStakedTokenIncentivesController = async (
   const instance = await new StakedTokenIncentivesController__factory(
     signer || (await getFirstSigner())
   ).deploy(args[0]);
+  await instance.deployTransaction.wait();
+  if (verify) {
+    await verifyContract(instance.address, args);
+  }
+  return instance;
+};
+
+export const deployIncentivesExecutor = async (
+  [
+    starlayToken,
+    poolConfigurator,
+    addressProvider,
+    lendingPool,
+    rewardsVault,
+    incentiveControllerProxy,
+    incentiveControllerImpl,
+  ]: [
+    tEthereumAddress,
+    tEthereumAddress,
+    tEthereumAddress,
+    tEthereumAddress,
+    tEthereumAddress,
+    tEthereumAddress,
+    tEthereumAddress
+  ],
+  verify?: boolean,
+  signer?: Signer | DefenderRelaySigner
+) => {
+  const args: [string, string, string, string, string, string, string] = [
+    starlayToken,
+    poolConfigurator,
+    addressProvider,
+    lendingPool,
+    rewardsVault,
+    incentiveControllerProxy,
+    incentiveControllerImpl,
+  ];
+  const instance = await new IncentivesExecutor__factory(signer || (await getFirstSigner())).deploy(
+    ...args
+  );
   await instance.deployTransaction.wait();
   if (verify) {
     await verifyContract(instance.address, args);

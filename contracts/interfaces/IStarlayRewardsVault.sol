@@ -1,22 +1,14 @@
 // SPDX-License-Identifier: agpl-3.0
 pragma solidity 0.7.5;
 
-interface IStarlayEcosystemReserveController {
-  function RESERVE_ECOSYSTEM() external view returns (address);
-
-  function approve(
-    address token,
-    address recipient,
-    uint256 amount
-  ) external;
+interface IStarlayRewardsVault {
 
   function owner() external view returns (address);
-
+  function setIncentiveController(address _incentiveController) external;
   function renounceOwnership() external;
 
   function transfer(
     address token,
-    address recipient,
     uint256 amount
   ) external;
 

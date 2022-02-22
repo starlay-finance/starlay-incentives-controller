@@ -104,7 +104,6 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
     {
       [eEthereumNetwork.kovan]: {
         LAY: ZERO_ADDRESS,
-        USD: ZERO_ADDRESS,
         USDC: ZERO_ADDRESS,
         USDT: ZERO_ADDRESS,
         WASTR: ZERO_ADDRESS,
@@ -114,7 +113,6 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
       },
       [eEthereumNetwork.rinkeby]: {
         LAY: ZERO_ADDRESS,
-        USD: ZERO_ADDRESS,
         USDC: ZERO_ADDRESS,
         USDT: ZERO_ADDRESS,
         WASTR: ZERO_ADDRESS,
@@ -124,7 +122,6 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
       },
       [eAstarNetwork.astar]: {
         LAY: ZERO_ADDRESS,
-        USD: ZERO_ADDRESS,
         USDC: ZERO_ADDRESS,
         USDT: ZERO_ADDRESS,
         WASTR: ZERO_ADDRESS,
@@ -134,7 +131,6 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
       },
       [eAstarNetwork.shiden]: {
         LAY: '0xD5031cE3461690962ba8b9271458CD03FdF48874',
-        USD: ZERO_ADDRESS,
         USDC: '0x45e4cC25715eabf3b2c6d94FdF8cf10bD9dB6856',
         USDT: '0x7f4b5a8aEDed6cC219BE5e28837606788f61471d',
         WASTR: '0xdc5D0c415d5680dD18e4f58403CB457Af552d493',
@@ -144,7 +140,6 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
       },
       [eAstarNetwork.shibuya]: {
         LAY: ZERO_ADDRESS,
-        USD: ZERO_ADDRESS,
         USDC: ZERO_ADDRESS,
         USDT: ZERO_ADDRESS,
         WASTR: ZERO_ADDRESS,
@@ -160,7 +155,6 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
     {
       [eEthereumNetwork.kovan]: {
         LAY: ZERO_ADDRESS,
-        USD: ZERO_ADDRESS,
         USDC: ZERO_ADDRESS,
         USDT: ZERO_ADDRESS,
         WASTR: ZERO_ADDRESS,
@@ -170,7 +164,6 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
       },
       [eEthereumNetwork.rinkeby]: {
         LAY: ZERO_ADDRESS,
-        USD: ZERO_ADDRESS,
         USDC: ZERO_ADDRESS,
         USDT: ZERO_ADDRESS,
         WASTR: ZERO_ADDRESS,
@@ -180,7 +173,6 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
       },
       [eAstarNetwork.astar]: {
         LAY: ZERO_ADDRESS,
-        USD: ZERO_ADDRESS,
         USDC: ZERO_ADDRESS,
         USDT: ZERO_ADDRESS,
         WASTR: ZERO_ADDRESS,
@@ -190,7 +182,6 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
       },
       [eAstarNetwork.shiden]: {
         LAY: '0x2791393188C47C09Bd4109f58e6C71101F44ACbD',
-        USD: ZERO_ADDRESS,
         USDC: '0x8F0831E64844F60da61d5a6de858797a7E5d2319',
         USDT: '0xD4056cD2aBdf5425561dcac1a43DFcDee82C1e4f',
         WASTR: '0xe44Cb21e72f2243af971fe43b2558f84457E2afA',
@@ -200,7 +191,6 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
       },
       [eAstarNetwork.shibuya]: {
         LAY: ZERO_ADDRESS,
-        USD: ZERO_ADDRESS,
         USDC: ZERO_ADDRESS,
         USDT: ZERO_ADDRESS,
         WASTR: ZERO_ADDRESS,
@@ -216,7 +206,6 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
     {
       [eEthereumNetwork.kovan]: {
         LAY: ZERO_ADDRESS,
-        USD: ZERO_ADDRESS,
         USDC: ZERO_ADDRESS,
         USDT: ZERO_ADDRESS,
         WASTR: ZERO_ADDRESS,
@@ -226,7 +215,6 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
       },
       [eEthereumNetwork.rinkeby]: {
         LAY: ZERO_ADDRESS,
-        USD: ZERO_ADDRESS,
         USDC: ZERO_ADDRESS,
         USDT: ZERO_ADDRESS,
         WASTR: ZERO_ADDRESS,
@@ -236,7 +224,6 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
       },
       [eAstarNetwork.astar]: {
         LAY: ZERO_ADDRESS,
-        USD: ZERO_ADDRESS,
         USDC: ZERO_ADDRESS,
         USDT: ZERO_ADDRESS,
         WASTR: ZERO_ADDRESS,
@@ -246,7 +233,6 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
       },
       [eAstarNetwork.shiden]: {
         LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
-        USD: ZERO_ADDRESS,
         USDC: '0x458db3bEf6ffC5212f9359bbDAeD0D5A58129397',
         USDT: '0xdB25FDCCe3E63B376D308dC2D46234632d9959d8',
         WASTR: '0x44a26AE046a01d99eBAbecc24B4d61B388656871',
@@ -256,7 +242,6 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
       },
       [eAstarNetwork.shibuya]: {
         LAY: ZERO_ADDRESS,
-        USD: ZERO_ADDRESS,
         USDC: ZERO_ADDRESS,
         USDT: ZERO_ADDRESS,
         WASTR: ZERO_ADDRESS,
@@ -273,7 +258,7 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
     {
       [eEthereumNetwork.kovan]: {
         addressProvider: ZERO_ADDRESS,
-        ecoReserve: ZERO_ADDRESS,
+        rewardsVault: ZERO_ADDRESS,
         incentiveControllerImpl: ZERO_ADDRESS,
         incentiveControllerProxy: ZERO_ADDRESS,
         lendingPool: ZERO_ADDRESS,
@@ -282,7 +267,7 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
       },
       [eEthereumNetwork.rinkeby]: {
         addressProvider: ZERO_ADDRESS,
-        ecoReserve: ZERO_ADDRESS,
+        rewardsVault: ZERO_ADDRESS,
         incentiveControllerImpl: ZERO_ADDRESS,
         incentiveControllerProxy: ZERO_ADDRESS,
         lendingPool: ZERO_ADDRESS,
@@ -291,7 +276,7 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
       },
       [eAstarNetwork.astar]: {
         addressProvider: ZERO_ADDRESS,
-        ecoReserve: ZERO_ADDRESS,
+        rewardsVault: ZERO_ADDRESS,
         incentiveControllerImpl: ZERO_ADDRESS,
         incentiveControllerProxy: ZERO_ADDRESS,
         lendingPool: ZERO_ADDRESS,
@@ -300,7 +285,7 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
       },
       [eAstarNetwork.shiden]: {
         addressProvider: '0xD7d6a1e58579d3a71f8cF95ABF957c3148cCd051',
-        ecoReserve: ZERO_ADDRESS,
+        rewardsVault: ZERO_ADDRESS,
         incentiveControllerImpl: '0x7A57bFbCAbBf7180138D09A74535aF57417bf6b2',
         incentiveControllerProxy: '0x51e27157845bf1B72A5493F539680203B1727438',
         lendingPool: '0x05De09054438FEf452525b3728D688e2DcE33c89',
@@ -309,7 +294,7 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
       },
       [eAstarNetwork.shibuya]: {
         addressProvider: ZERO_ADDRESS,
-        ecoReserve: ZERO_ADDRESS,
+        rewardsVault: ZERO_ADDRESS,
         incentiveControllerImpl: ZERO_ADDRESS,
         incentiveControllerProxy: ZERO_ADDRESS,
         lendingPool: ZERO_ADDRESS,

@@ -3,8 +3,8 @@ pragma solidity 0.7.5;
 
 interface IIncentivesExecutor {
   function execute(
-    address[8] memory lTokenImplementations,
-    address[8] memory variableDebtImplementation,
-    address[8] memory reserves
+    address[6] memory lTokenImplementations,
+    address[6] memory variableDebtImplementations,
+    address[6] memory reserves
   ) external;
 }
