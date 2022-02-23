@@ -68,7 +68,7 @@ export const getStakedTokenPerNetwork = (network: eNetwork): tEthereumAddress =>
     {
       [eEthereumNetwork.kovan]: '0x82ab55Ff927d0E3C42A6Bc08C0B57D35A7896880', // StakedLay
       [eEthereumNetwork.rinkeby]: '0x542d2690d8B4092F455188622dA51ee478cAD0E0', // StakedLay
-      [eAstarNetwork.astar]: '0x75AC15EbCA4e93D61bCc878ded9Ba338FD23E761', // Proxy-StakedTokenV2Rev3
+      [eAstarNetwork.astar]: '0xE2aca8Aeb4422B0dd0BD227bacfa18300E6c9ee2', // Proxy-StakedTokenV2Rev3
       [eAstarNetwork.shiden]: '0x4cFf3b5f6bA3d64083963DE201089f3267490C65', // StakedLay
       [eAstarNetwork.shibuya]: '0xD0286b992ae9EB8702457559dCA9565bEB20b0DC', // StakedLay
     },
@@ -92,7 +92,7 @@ export const getRewardVaultPerNetwork = (network: eNetwork): tEthereumAddress =>
     {
       [eEthereumNetwork.kovan]: ZERO_ADDRESS,
       [eEthereumNetwork.rinkeby]: ZERO_ADDRESS,
-      [eAstarNetwork.astar]: '0xE762Cf0990D1e35fA95A9E99093aB5203e8dD573',
+      [eAstarNetwork.astar]: '0x06aBB8782C91EEB459862e09262E8cEbcA98E568',
       [eAstarNetwork.shiden]: '0x175d905470e85279899C37F89000b195f3d0c0C5',
       [eAstarNetwork.shibuya]: ZERO_ADDRESS,
     },
