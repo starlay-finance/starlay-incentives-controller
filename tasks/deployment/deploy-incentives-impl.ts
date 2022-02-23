@@ -4,6 +4,7 @@ import { getDefenderRelaySigner } from '../../helpers/defender-utils';
 import { waitForTx } from '../../helpers/misc-utils';
 import { eContractid, eNetwork } from '../../helpers/types';
 import { getEmissionManagerPerNetwork, getProxyAdminPerNetwork, getStakedTokenPerNetwork } from '../../helpers/constants';
+import { getFirstSigner } from '../../helpers/contracts-helpers';
 
 task('deploy-incentives-impl', 'Deploy and Initialize the StakedTokenIncentivesController contract')
   .addFlag('verify', 'Verify contracts deployed in this script at Etherscan.')
@@ -24,6 +25,9 @@ task('deploy-incentives-impl', 'Deploy and Initialize the StakedTokenIncentivesC
         deployer = signer;
       }
 
+      const deployerAddress = await deployer.getAddress()
+      console.log(`deployerAddress ... ${deployerAddress}`)
+
       const networkName = localBRE.network.name as eNetwork
       console.log(`[StakedTokenIncentivesController] Starting deployment:`);
       console.log(`  - Network name: ${networkName}`);
@@ -32,10 +36,10 @@ task('deploy-incentives-impl', 'Deploy and Initialize the StakedTokenIncentivesC
         [stakedToken || getStakedTokenPerNetwork(networkName)],
         verify
       );
-      console.log(`  - Deployed implementation of ${eContractid.StakedTokenIncentivesController}`);
+      console.log(`  - Deployed implementation of ${eContractid.StakedTokenIncentivesController}: address - ${impl.address}`);
 
       const proxy = await deployInitializableAdminUpgradeabilityProxy(verify);
-      console.log(`  - Deployed proxy of ${eContractid.StakedTokenIncentivesController}`);
+      console.log(`  - Deployed proxy of ${eContractid.StakedTokenIncentivesController}: address - ${proxy.address}`);
       const encodedParams = impl.interface.encodeFunctionData('initialize', [
         emissionManager || getEmissionManagerPerNetwork(networkName)
       ]);
@@ -43,7 +47,7 @@ task('deploy-incentives-impl', 'Deploy and Initialize the StakedTokenIncentivesC
       await waitForTx(
         await proxy.functions['initialize(address,address,bytes)'](
           impl.address,
-          proxyAdmin || getProxyAdminPerNetwork(networkName),
+          deployerAddress, // await (await getFirstSigner()).address, // proxyAdmin || getProxyAdminPerNetwork(networkName),
           encodedParams
         )
       );
