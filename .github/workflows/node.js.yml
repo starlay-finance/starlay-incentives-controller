@@ -15,10 +15,24 @@ jobs:
         node-version: [14.x]
 
     steps:
-      - uses: actions/checkout@v2
+      - name: clone main repository
+        uses: actions/checkout@v2
+      - name: clone submodule (stake)
+        uses: actions/checkout@v2
         with:
-          submodules: recursive
-          token: ${{ secrets.ACCESS_TOKEN }}
+          repository: starlay-finance/starlay-stake
+          path: starlay-stake
+          ref: v2
+          ssh-key: ${{ secrets.SSH_KEY_SUBMODULE_STAKE }}
+          persist-credentials: false
+      - name: clone submodule (stake)
+        uses: actions/checkout@v2
+        with:
+          repository: starlay-finance/starlay-protocol
+          path: starlay-protocol
+          ref: v2
+          ssh-key: ${{ secrets.SSH_KEY_SUBMODULE_PROTOCOL }}
+          persist-credentials: false
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
