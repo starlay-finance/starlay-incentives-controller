@@ -26,7 +26,7 @@ task('deploy-incentives-impl-old', 'Incentives controller implementation deploym
     }
 
     const incentives = await deployStakedTokenIncentivesController(
-      [STAKED_STARLAY], // TODO: reflect STARLAY_SHORT_EXECUTOR
+      [STAKED_STARLAY, STARLAY_SHORT_EXECUTOR], // TODO: reflect STARLAY_SHORT_EXECUTOR
       false, // TODO: revert
       deployer
     );
