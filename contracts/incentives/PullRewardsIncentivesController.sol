@@ -21,17 +21,16 @@ contract PullRewardsIncentivesController is
 
   event RewardsVaultUpdated(address indexed vault);
   
-  constructor(IERC20 rewardToken)
-    BaseIncentivesController(rewardToken)
+  constructor(IERC20 rewardToken, address emissionManager)
+    BaseIncentivesController(rewardToken, emissionManager)
   {}
 
   /**
    * @dev Initialize BaseIncentivesController
    * @param rewardsVault rewards vault to pull ERC20 funds
    **/
-  function initialize(address rewardsVault, address emissionManager) external initializer {
+  function initialize(address rewardsVault) external initializer {
     _rewardsVault = rewardsVault;
-    _emissionManager = emissionManager;
     emit RewardsVaultUpdated(_rewardsVault);
   }
 

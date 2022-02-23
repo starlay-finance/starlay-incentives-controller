@@ -32,34 +32,12 @@ task('deploy-incentives-impl', 'Deploy and Initialize the StakedTokenIncentivesC
       console.log(`[StakedTokenIncentivesController] Starting deployment:`);
       console.log(`  - Network name: ${networkName}`);
 
-      const impl = await deployStakedTokenIncentivesController(
-        [stakedToken || getStakedTokenPerNetwork(networkName)],
+      const incentives = await deployStakedTokenIncentivesController(
+        [getStakedTokenPerNetwork(networkName), getEmissionManagerPerNetwork(networkName)],
         verify
       );
-      console.log(`  - Deployed implementation of ${eContractid.StakedTokenIncentivesController}: address - ${impl.address}`);
+      console.log(`- Incentives implementation address ${incentives.address}`);
 
-      const proxy = await deployInitializableAdminUpgradeabilityProxy(verify);
-      console.log(`  - Deployed proxy of ${eContractid.StakedTokenIncentivesController}: address - ${proxy.address}`);
-      const encodedParams = impl.interface.encodeFunctionData('initialize', [
-        emissionManager || getEmissionManagerPerNetwork(networkName)
-      ]);
-
-      await waitForTx(
-        await proxy.functions['initialize(address,address,bytes)'](
-          impl.address,
-          deployerAddress, // await (await getFirstSigner()).address, // proxyAdmin || getProxyAdminPerNetwork(networkName),
-          encodedParams
-        )
-      );
-      console.log(`  - Initialized ${eContractid.StakedTokenIncentivesController} Proxy`);
-
-      console.log(`  - Finished ${eContractid.StakedTokenIncentivesController} deployment and initialization`);
-      console.log(`    - Proxy: ${proxy.address}`);
-      console.log(`    - Impl: ${impl.address}`);
-
-      return {
-        proxy: proxy.address,
-        implementation: impl.address
-      };
+      return incentives.address;
     }
   );

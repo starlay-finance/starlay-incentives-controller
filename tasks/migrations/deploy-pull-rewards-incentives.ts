@@ -43,7 +43,7 @@ task(
       console.log(`  - Network name: ${networkName}`);
 
       const incentivesControllerImpl = await deployPullRewardsIncentivesController(
-        [rewardToken],
+        [rewardToken, emissionManager],
         verify
       );
       console.log(`  - Deployed implementation of PullRewardsIncentivesController`);
@@ -53,7 +53,6 @@ task(
 
       const encodedParams = incentivesControllerImpl.interface.encodeFunctionData('initialize', [
         rewardsVault,
-        emissionManager,
       ]);
 
       await waitForTx(

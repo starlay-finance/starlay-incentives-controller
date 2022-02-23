@@ -3,54 +3,22 @@ import { timeLatest, waitForTx } from '../../helpers/misc-utils';
 import { expect } from 'chai';
 
 import { makeSuite } from '../helpers/make-suite';
-import { deployInitializableAdminUpgradeabilityProxy, deployPullRewardsIncentivesController } from '../../helpers/contracts-accessors';
+import { deployPullRewardsIncentivesController } from '../../helpers/contracts-accessors';
 import { MAX_UINT_AMOUNT, RANDOM_ADDRESSES, ZERO_ADDRESS } from '../../helpers/constants';
-import { PullRewardsIncentivesController__factory } from '../../types';
 
-makeSuite('PullRewardsIncentivesController misc tests', (testEnv) => {
+makeSuite('pullRewardsIncentivesController misc tests', (testEnv) => {
   it('constructor should assign correct params', async () => {
+    const peiEmissionManager = RANDOM_ADDRESSES[1];
     const fakeToken = RANDOM_ADDRESSES[5];
 
     const pullRewardsIncentivesController = await deployPullRewardsIncentivesController([
       fakeToken,
+      peiEmissionManager,
     ]);
     await expect(await pullRewardsIncentivesController.REWARD_TOKEN()).to.be.equal(fakeToken);
     await expect((await pullRewardsIncentivesController.EMISSION_MANAGER()).toString()).to.be.equal(
-      ZERO_ADDRESS
+      peiEmissionManager
     );
-  });
-
-  it('initializer should assign correct params', async () => {
-    const { users } = testEnv;
-    const emissionManager = users[0];
-    const fakeToken = RANDOM_ADDRESSES[0];
-    const fakeRewardsVault = RANDOM_ADDRESSES[1];
-    const proxyAdmin = RANDOM_ADDRESSES[2];
-
-    const proxy = await deployInitializableAdminUpgradeabilityProxy();
-    const impl = await deployPullRewardsIncentivesController([
-      fakeToken
-    ]);
-    const encodedParams = impl.interface.encodeFunctionData('initialize', [
-      fakeRewardsVault,
-      emissionManager.address,
-    ]);
-    await (
-      await proxy.functions['initialize(address,address,bytes)'](
-        impl.address,
-        proxyAdmin,
-        encodedParams
-      )
-    ).wait();
-    const connectedImpl = PullRewardsIncentivesController__factory.connect(
-      proxy.address,
-      emissionManager.signer
-    );
-
-    await expect((await connectedImpl.getRewardsVault()).toString())
-      .to.be.equal(fakeRewardsVault);
-    await expect((await connectedImpl.EMISSION_MANAGER()).toString())
-      .to.be.equal(emissionManager.address);
   });
 
   it('Should return same index while multiple asset index updates', async () => {

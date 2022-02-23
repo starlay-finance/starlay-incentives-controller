@@ -43,9 +43,4 @@ interface IDistributionManager {
    * @return The asset index, the emission per second and the last updated timestamp
    **/
    function getAssetData(address asset) external view returns (uint256, uint256, uint256);
-
-  /**
-  * @return The EmissionManager
-  **/
-  function EMISSION_MANAGER() external view returns(address);
 }

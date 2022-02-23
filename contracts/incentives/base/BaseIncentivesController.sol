@@ -37,7 +37,9 @@ abstract contract BaseIncentivesController is
     _;
   }
 
-  constructor(IERC20 rewardToken) {
+  constructor(IERC20 rewardToken, address emissionManager)
+    DistributionManager(emissionManager)
+  {
     REWARD_TOKEN = address(rewardToken);
   }
 

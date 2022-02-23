@@ -36,6 +36,7 @@ export const testDeployIncentivesController = async (
 
   const incentivesImplementation = await deployStakedTokenIncentivesController([
     stakeProxy.address,
+    emissionManagerAddress,
   ]);
 
   // Initialize proxies
@@ -44,7 +45,7 @@ export const testDeployIncentivesController = async (
     'initialize()',
     []
   );
-  const incentivesInit = incentivesImplementation.interface.encodeFunctionData('initialize', [emissionManagerAddress]);
+  const incentivesInit = incentivesImplementation.interface.encodeFunctionData('initialize');
 
   await (
     await stakeProxy['initialize(address,address,bytes)'](
@@ -66,7 +67,7 @@ export const testDeployIncentivesController = async (
   return { incentivesProxy, stakeProxy };
 };
 
-export const deployStakedLayV2 = async (
+const deployStakedLayV2 = async (
   [
     stakedToken,
     rewardsToken,

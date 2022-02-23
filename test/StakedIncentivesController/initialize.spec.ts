@@ -7,7 +7,7 @@ makeSuite('IncentivesController initialize', (testEnv: TestEnv) => {
   // TODO: useless or not?
   it('Tries to call initialize second time, should be reverted', async () => {
     const { incentivesController } = testEnv;
-    await expect(incentivesController.initialize(ZERO_ADDRESS)).to.be.reverted;
+    await expect(incentivesController.initialize()).to.be.reverted;
   });
   it('allowance on lay token should be granted to psm contract for pei', async () => {
     const { incentivesController, stakedToken, token } = testEnv;

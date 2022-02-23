@@ -7,6 +7,6 @@ makeSuite('pullRewardsIncentivesController initialize', (testEnv: TestEnv) => {
   // TODO: useless or not?
   it('Tries to call initialize second time, should be reverted', async () => {
     const { pullRewardsIncentivesController } = testEnv;
-    await expect(pullRewardsIncentivesController.initialize(ZERO_ADDRESS, ZERO_ADDRESS)).to.be.reverted;
+    await expect(pullRewardsIncentivesController.initialize(ZERO_ADDRESS)).to.be.reverted;
   });
 });
