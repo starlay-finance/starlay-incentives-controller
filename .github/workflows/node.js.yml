@@ -27,11 +27,11 @@ jobs:
           echo -e "$SUBMODULE_STAKE_TOKEN" > $HOME/.ssh/id_rsa
           sudo chmod 600 $HOME/.ssh/id_rsa
           export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/id_rsa"
-          git submodule update --init submodule_stake
+          git submodule update --init submodule-stake
           echo -e "$SUBMODULE_PROTOCOL_TOKEN" > $HOME/.ssh/id_rsa
           sudo chmod 600 $HOME/.ssh/id_rsa
           export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/id_rsa"
-          git submodule update --init submodule_protocol
+          git submodule update --init submodule-protocol
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
