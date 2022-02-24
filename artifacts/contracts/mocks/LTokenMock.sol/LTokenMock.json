@@ -1,0 +1,225 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "LTokenMock",
+  "sourceName": "contracts/mocks/LTokenMock.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "contract IIncentivesController",
+          "name": "ic",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "emission",
+          "type": "uint256"
+        }
+      ],
+      "name": "AssetConfigUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "AssetIndexUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "RewardsAccrued",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "UserIndexUpdated",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "_ic",
+      "outputs": [
+        {
+          "internalType": "contract IIncentivesController",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "cleanUserState",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalSupply",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "userBalance",
+          "type": "uint256"
+        }
+      ],
+      "name": "doubleHandleActionOnAic",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getScaledUserBalanceAndSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalSupply",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "userBalance",
+          "type": "uint256"
+        }
+      ],
+      "name": "handleActionOnAic",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "scaledTotalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "userBalance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalSupply",
+          "type": "uint256"
+        }
+      ],
+      "name": "setUserBalanceAndSupply",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b506040516103f83803806103f883398101604081905261002f91610054565b600080546001600160a01b0319166001600160a01b0392909216919091179055610082565b600060208284031215610065578081fd5b81516001600160a01b038116811461007b578182fd5b9392505050565b610367806100916000396000f3fe608060405234801561001057600080fd5b506004361061007d5760003560e01c80638d2792941161005b5780638d279294146100d6578063b1bf962d146100e9578063b39944ba146100fe578063f794ca51146101065761007d565b80630afbcdc9146100825780632d101373146100ac57806334743e7c146100c1575b600080fd5b610095610090366004610271565b610119565b6040516100a3929190610323565b60405180910390f35b6100b4610124565b6040516100a39190610306565b6100d46100cf366004610292565b610133565b005b6100d46100e4366004610292565b61019e565b6100f1610238565b6040516100a3919061031a565b6100d461023e565b6100d46101143660046102c4565b61024a565b600154600254915091565b6000546001600160a01b031681565b6000546040516318c39f1760e11b81526001600160a01b03909116906331873e2e90610167908690869086906004016102e5565b600060405180830381600087803b15801561018157600080fd5b505af1158015610195573d6000803e3d6000fd5b50505050505050565b6000546040516318c39f1760e11b81526001600160a01b03909116906331873e2e906101d2908690869086906004016102e5565b600060405180830381600087803b1580156101ec57600080fd5b505af1158015610200573d6000803e3d6000fd5b50506000546040516318c39f1760e11b81526001600160a01b0390911692506331873e2e9150610167908690869086906004016102e5565b60025490565b60006001819055600255565b600191909155600255565b80356001600160a01b038116811461026c57600080fd5b919050565b600060208284031215610282578081fd5b61028b82610255565b9392505050565b6000806000606084860312156102a6578182fd5b6102af84610255565b95602085013595506040909401359392505050565b600080604083850312156102d6578182fd5b50508035926020909101359150565b6001600160a01b039390931683526020830191909152604082015260600190565b6001600160a01b0391909116815260200190565b90815260200190565b91825260208201526040019056fea264697066735822122088158428d432a2ee46e43948dd6ddc341ec5d5cd2e451ffbaeb06bbd4bb1d83764736f6c63430007050033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061007d5760003560e01c80638d2792941161005b5780638d279294146100d6578063b1bf962d146100e9578063b39944ba146100fe578063f794ca51146101065761007d565b80630afbcdc9146100825780632d101373146100ac57806334743e7c146100c1575b600080fd5b610095610090366004610271565b610119565b6040516100a3929190610323565b60405180910390f35b6100b4610124565b6040516100a39190610306565b6100d46100cf366004610292565b610133565b005b6100d46100e4366004610292565b61019e565b6100f1610238565b6040516100a3919061031a565b6100d461023e565b6100d46101143660046102c4565b61024a565b600154600254915091565b6000546001600160a01b031681565b6000546040516318c39f1760e11b81526001600160a01b03909116906331873e2e90610167908690869086906004016102e5565b600060405180830381600087803b15801561018157600080fd5b505af1158015610195573d6000803e3d6000fd5b50505050505050565b6000546040516318c39f1760e11b81526001600160a01b03909116906331873e2e906101d2908690869086906004016102e5565b600060405180830381600087803b1580156101ec57600080fd5b505af1158015610200573d6000803e3d6000fd5b50506000546040516318c39f1760e11b81526001600160a01b0390911692506331873e2e9150610167908690869086906004016102e5565b60025490565b60006001819055600255565b600191909155600255565b80356001600160a01b038116811461026c57600080fd5b919050565b600060208284031215610282578081fd5b61028b82610255565b9392505050565b6000806000606084860312156102a6578182fd5b6102af84610255565b95602085013595506040909401359392505050565b600080604083850312156102d6578182fd5b50508035926020909101359150565b6001600160a01b039390931683526020830191909152604082015260600190565b6001600160a01b0391909116815260200190565b90815260200190565b91825260208201526040019056fea264697066735822122088158428d432a2ee46e43948dd6ddc341ec5d5cd2e451ffbaeb06bbd4bb1d83764736f6c63430007050033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
