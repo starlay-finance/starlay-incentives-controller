@@ -1,8 +1,3 @@
-// SPDX-License-Identifier: agpl-3.0
-pragma solidity 0.7.5;
+pragma solidity ^0.6.12;
 
-interface ILendingPoolConfigurator {
-  function updateLToken(address reserve, address implementation) external;
-
-  function updateVariableDebtToken(address reserve, address implementation) external;
-}
+import '../../submodule-protocol/contracts/interfaces/ILendingPoolConfigurator.sol';
