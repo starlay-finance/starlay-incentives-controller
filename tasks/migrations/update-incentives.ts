@@ -1,9 +1,5 @@
-import { spendList } from './../../test-fork/helpers';
-import { IIncentivesController__factory } from '../../types/factories/IIncentivesController__factory';
 import { task } from 'hardhat/config';
 import { DRE } from '../../helpers/misc-utils';
-import { getDefenderRelaySigner } from '../../helpers/defender-utils';
-import { Signer } from '@ethersproject/abstract-signer';
 import {
   getlTokenAddressPerNetwork,
   getVdTokenAddressPerNetwork,
