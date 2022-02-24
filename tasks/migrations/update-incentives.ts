@@ -56,7 +56,7 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     console.log('set incentives controller');
     await vaultInstance.setIncentiveController(incentiveControllerProxy);
     console.log('transfer LAY from vault to incentives controller');
-    vaultInstance.transfer(lay, parseEther('17325200'));
+    await vaultInstance.transfer(lay, parseEther('17325200'));
     await incentivesControllerInstance.configureAssets(
       Object.keys(emmissionsPerAssets),
       Object.values(emmissionsPerAssets)
