@@ -187,7 +187,7 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
         WASTR: '0xB1c55156ae0Df899689f9D27c6e05E971D93cA02',
         WBTC: '0xb0F5dfA3101De45936D967FaE8237b36a21B3579',
         WETH: '0x0766ac74dc8fc91971cd613c36461df4EB75c904',
-        WSDN: '0x8283Bf4030Aea5270361267a6B1A63f885daF2B4',
+        WSDN: '0x9b6Ac1783C0F7ae581Bbd337aE008Eb9D5C9d7d7',
       },
       [eAstarNetwork.shibuya]: {
         LAY: ZERO_ADDRESS,
@@ -284,12 +284,12 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
         starlayToken: '0x026734Fb820F072a0FbA1D49A60E4f545F9804a1',
       },
       [eAstarNetwork.shiden]: {
-        addressProvider: '0xD7d6a1e58579d3a71f8cF95ABF957c3148cCd051',
+        addressProvider: '0x21cB8301FFDE9138C018D09DC2811117348EbEe0',
         rewardsVault: ZERO_ADDRESS,
         incentiveControllerImpl: '0x7A57bFbCAbBf7180138D09A74535aF57417bf6b2',
         incentiveControllerProxy: '0x51e27157845bf1B72A5493F539680203B1727438',
         lendingPool: '0x05De09054438FEf452525b3728D688e2DcE33c89',
-        poolConfigurator: '0x202f0cFeC6dc424346712b1aEc1C7cea8f49C34d',
+        poolConfigurator: '0xec97a2E3DEa2b0C58006964dcEB379b3B94Bd2c0',
         starlayToken: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
       },
       [eAstarNetwork.shibuya]: {
