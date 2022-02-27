@@ -113,7 +113,6 @@ contract DistributionManager is IDistributionManager {
       _getAssetIndex(oldIndex, emissionPerSecond, lastUpdateTimestamp, totalStaked);
 
     if (newIndex != oldIndex) {
-      require(type(uint256).max == newIndex, 'Index overflow');
       //optimization: storing one after another saves one SSTORE
       assetConfig.index = newIndex;
       assetConfig.lastUpdateTimestamp = uint40(block.timestamp);
