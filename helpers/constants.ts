@@ -69,7 +69,7 @@ export const getStakedTokenPerNetwork = (network: eNetwork): tEthereumAddress =>
       [eEthereumNetwork.kovan]: '0x82ab55Ff927d0E3C42A6Bc08C0B57D35A7896880', // StakedLay
       [eEthereumNetwork.rinkeby]: '0x542d2690d8B4092F455188622dA51ee478cAD0E0', // StakedLay
       [eAstarNetwork.astar]: '0xE2aca8Aeb4422B0dd0BD227bacfa18300E6c9ee2', // Proxy-StakedTokenV2Rev3
-      [eAstarNetwork.shiden]: '0x4cFf3b5f6bA3d64083963DE201089f3267490C65', // StakedLay
+      [eAstarNetwork.shiden]: '0x775c51Cb780782ae10Ed20A7672F442D3c893ae3', // Proxy-StakedTokenV2Rev3
       [eAstarNetwork.shibuya]: '0xD0286b992ae9EB8702457559dCA9565bEB20b0DC', // StakedLay
     },
     network
@@ -130,13 +130,13 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
         WSDN: '0xaF532e8D13f41B06202B868dBb22d900FaD5A060',
       },
       [eAstarNetwork.shiden]: {
-        LAY: '0x46d77a1C7f607864ebED14189d4b931D06baC49D',
-        USDC: '0x8E595bA1301A145E63C4610f008c526D1AfF1eD5',
-        USDT: '0x4Ee9e7C4aB01170b94B471D31dD355f76DC6B8F6',
-        WASTR: '0x3604644F3b019cBDb9FdaFcf28A5a350f451dd27',
-        WBTC: '0x9dD32A60056C3953a921eB30920B7870757f6585',
-        WETH: '0xbEf7f122de36888EF1F0D9f5eB1219cEb7733348',
-        WSDN: '0xE7d48abe6c780e0F9B6a64564eF03E0F1254c9f0',
+        LAY: '0x6cB67bC355b8f3cB5318bF25b09d7c49D1f3fd71',
+        USDC: '0x4e0056232909aa10D91D8F6949472A145e78928b',
+        USDT: '0x2BCd0E0315a9Fe6d82632f42bCd186B8403B06ab',
+        WASTR: '0x0ae9f66D4C6a8cF4C1b27F91a91C4360c9a77677',
+        WBTC: '0x70F2fE1aFA14F4091657a2EaaBBfC5990CaA899b',
+        WETH: '0xFAB0463d81Dfe662191899dD82eDD28a101fb33F',
+        WSDN: '0x18698220c210De8C86FEcA2398676638CbBF0844',
       },
       [eAstarNetwork.shibuya]: {
         LAY: ZERO_ADDRESS,
@@ -181,13 +181,13 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
         WSDN: '0x48eBc5c7cd831fc2a1Eb058DbC91f21ED183DDdb',
       },
       [eAstarNetwork.shiden]: {
-        LAY: '0x8283Bf4030Aea5270361267a6B1A63f885daF2B4',
-        USDC: '0x49C415b8c47503813660b8C488E3072F5C0019CD',
-        USDT: '0x5B7f545F50E813dc71c67270eB9e5C2e274952Aa',
-        WASTR: '0xB1c55156ae0Df899689f9D27c6e05E971D93cA02',
-        WBTC: '0xb0F5dfA3101De45936D967FaE8237b36a21B3579',
-        WETH: '0x0766ac74dc8fc91971cd613c36461df4EB75c904',
-        WSDN: '0x9b6Ac1783C0F7ae581Bbd337aE008Eb9D5C9d7d7',
+        LAY: '0x3384B17Ac05376D53c49023258505b3531037d74',
+        USDC: '0x29FFC790fBb4989b109E552cDE0c31639f7412E2',
+        USDT: '0x2986480C06518059e616e8452222FaAFd7c1F6Ec',
+        WASTR: '0x303A991fB00915fe90fde551164e5940362E16c4',
+        WBTC: '0xB396839D422a2B907443B79D68BBdc27A26D1bBB',
+        WETH: '0xbd2efe07F0EB8af477DE3e514ae6Da4F55001123',
+        WSDN: '0xc35b7d9756e9447f64c0D3c5588769aB2cC9EB4a',
       },
       [eAstarNetwork.shibuya]: {
         LAY: ZERO_ADDRESS,
@@ -284,12 +284,12 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
         starlayToken: '0x026734Fb820F072a0FbA1D49A60E4f545F9804a1',
       },
       [eAstarNetwork.shiden]: {
-        addressProvider: '0x21cB8301FFDE9138C018D09DC2811117348EbEe0',
+        addressProvider: '0x8cB4F3EEE04BB847B5176366ACB7AE92AF80e51e',
         rewardsVault: ZERO_ADDRESS,
-        incentiveControllerImpl: '0x7A57bFbCAbBf7180138D09A74535aF57417bf6b2',
-        incentiveControllerProxy: '0x51e27157845bf1B72A5493F539680203B1727438',
-        lendingPool: '0x05De09054438FEf452525b3728D688e2DcE33c89',
-        poolConfigurator: '0xec97a2E3DEa2b0C58006964dcEB379b3B94Bd2c0',
+        incentiveControllerImpl: '0xab5cC5EaA2CE77f89d56A2f6B1df1c42ECb13004',
+        incentiveControllerProxy: '0x3983E51e775A98fFAb20D6ed034086ab900CFBBF',
+        lendingPool: '0xdC44E14CBb5949E8F8530D47f0e531B529b45714',
+        poolConfigurator: '0x498B1C69d6A76ea92a9E882aE22b71fdAF2f2775',
         starlayToken: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
       },
       [eAstarNetwork.shibuya]: {
