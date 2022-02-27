@@ -30,7 +30,7 @@ task('print-configs', 'print configuration about incentives').setAction(
   async ({}, localBRE) => {
     await localBRE.run('set-DRE')
     const signers = await DRE.ethers.getSigners();
-    const account = signers[0] // if emissionManager, change this index of signers array
+    const account = signers[1] // if emissionManager, change this index of signers array
     const network = localBRE.network.name as eNetwork
     const { incentiveControllerProxy } = getIncentivesConfigPerNetwork(network)
 
@@ -39,8 +39,11 @@ task('print-configs', 'print configuration about incentives').setAction(
       account
     )
 
+    console.log(`--- Start Task ---`)
     const emissionManager = await incentiveControllerInstance.EMISSION_MANAGER()
     console.log(`# EmissionManager ... ${emissionManager}`)
+    const distributionEnd = await incentiveControllerInstance.DISTRIBUTION_END()
+    console.log(`# DistributionEnd ... ${distributionEnd.toString()}`)
 
     console.log(`# Check configurations`)
     console.log("## LTokens")
@@ -54,6 +57,6 @@ task('print-configs', 'print configuration about incentives').setAction(
       instance: incentiveControllerInstance
     })
 
-    console.log(`Finished Task`)
+    console.log(`--- Finished Task ---`)
   }
 )
