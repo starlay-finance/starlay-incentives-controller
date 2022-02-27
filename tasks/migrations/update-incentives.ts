@@ -28,17 +28,17 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     const { rewardsVault, incentiveControllerProxy } = getIncentivesConfigPerNetwork(network);
 
     const emmissionsPerAssets = {
-      [lTokens.WASTR]: '808542052469135802',
-      [variableDebtTokens.WASTR]: '1886598379629629629',
-      [lTokens.USDC]: '808542052469135802',
+      [lTokens.WASTR]: '269514054232804232',
+      [variableDebtTokens.WASTR]: '628866126543209876',
+      [lTokens.USDC]: '808542162698412698',
       [variableDebtTokens.USDC]: '1886598379629629629',
-      [lTokens.USDT]: '808542052469135802',
+      [lTokens.USDT]: '808542162698412698',
       [variableDebtTokens.USDT]: '1886598379629629629',
-      [lTokens.WETH]: '539028163580246913',
-      [variableDebtTokens.WETH]: '1886598379629629629',
-      [lTokens.WBTC]: '539028163580246913',
-      [variableDebtTokens.WBTC]: '1886598379629629629',
-      [lTokens.WSDN]: '269513888888888888',
+      [lTokens.WETH]: '539028108465608465',
+      [variableDebtTokens.WETH]: '1257732253086419753',
+      [lTokens.WBTC]: '539028108465608465',
+      [variableDebtTokens.WBTC]: '1257732253086419753',
+      [lTokens.WSDN]: '269514054232804232',
       [variableDebtTokens.WSDN]: '628866126543209876',
     };
     const lay = getTokenAddressPerNetwork(network).LAY;
