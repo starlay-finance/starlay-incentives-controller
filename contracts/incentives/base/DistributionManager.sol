@@ -15,8 +15,8 @@ contract DistributionManager is IDistributionManager {
   using SafeMath for uint256;
 
   struct AssetData {
+    uint256 index;
     uint104 emissionPerSecond;
-    uint104 index;
     uint40 lastUpdateTimestamp;
     mapping(address => uint256) users;
   }
@@ -113,9 +113,8 @@ contract DistributionManager is IDistributionManager {
       _getAssetIndex(oldIndex, emissionPerSecond, lastUpdateTimestamp, totalStaked);
 
     if (newIndex != oldIndex) {
-      require(uint104(newIndex) == newIndex, 'Index overflow');
       //optimization: storing one after another saves one SSTORE
-      assetConfig.index = uint104(newIndex);
+      assetConfig.index = newIndex;
       assetConfig.lastUpdateTimestamp = uint40(block.timestamp);
       emit AssetIndexUpdated(asset, newIndex);
     } else {
