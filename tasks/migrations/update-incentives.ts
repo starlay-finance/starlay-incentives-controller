@@ -19,7 +19,7 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     await localBRE.run('set-DRE');
     const signers = await DRE.ethers.getSigners();
     const vaultOwner = signers[0];
-    const emissionManager = signers[9];
+    const emissionManager = signers[9]; // Please check before use this script
 
     const network = localBRE.network.name as eNetwork;
     const lTokens = getlTokenAddressPerNetwork(network);
