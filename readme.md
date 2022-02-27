@@ -46,5 +46,16 @@ npm run compile
 docker-compose up
 # --- other terminal ---
 docker-compose exec contracts-env bash
-npm run deploy:incentives-controller-impl:shibuya
+npm run deploy:incentives-controller-impl:shiden
+```
+
+#### Set configurations
+
+```bash
+# Update configurations
+# [Prerequisite] update token addresses in helpers/constants.ts & emission manager address
+docker-compose exec contracts-env bash
+npm run update:incentives:shiden
+# Check configurations
+npm run print-configs:shiden
 ```
