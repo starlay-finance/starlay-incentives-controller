@@ -11,28 +11,32 @@ import {
   IStarlayRewardsVault__factory,
   PullRewardsIncentivesController__factory,
 } from '../../types';
-import { getBlockTimestamp } from '../../helpers/contracts-helpers';
+import { getBlockTimestamp, getEthersSigners } from '../../helpers/contracts-helpers';
 import { parseEther } from 'ethers/lib/utils';
 import { Wallet } from 'ethers';
+import { ethers } from 'hardhat';
+import { JsonRpcProvider } from '@ethersproject/providers';
 require('dotenv').config();
 
 task('update-incentives', 'Configure incentives for next 30 days').setAction(
   async ({}, localBRE) => {
+    // TODO: rpc url by environments
     await localBRE.run('set-DRE');
     const EMISSION_MANAGER_PRIVATE_KEY = process.env.EMISSION_MANAGER_PRIVATE_KEY || '';
     const VAULT_OWNER_PRIVATE_KEY = process.env.VAULT_OWNER_PRIVATE_KEY || '';
-    if (EMISSION_MANAGER_PRIVATE_KEY) {
+    if (!EMISSION_MANAGER_PRIVATE_KEY) {
       throw new Error('emission manager private key is empty');
     }
-    if (VAULT_OWNER_PRIVATE_KEY) {
+    if (!VAULT_OWNER_PRIVATE_KEY) {
       throw new Error('vault private key is empty');
     }
-    const emissionManager = new Wallet(EMISSION_MANAGER_PRIVATE_KEY);
-    const vaultOwner = new Wallet(VAULT_OWNER_PRIVATE_KEY);
+    const provider = new JsonRpcProvider('https://rpc.astar.network:8545');
+
+    const emissionManager = new Wallet(EMISSION_MANAGER_PRIVATE_KEY, provider);
+    const vaultOwner = new Wallet(VAULT_OWNER_PRIVATE_KEY, provider);
     const network = localBRE.network.name as eNetwork;
     const lTokens = getlTokenAddressPerNetwork(network);
     const variableDebtTokens = getVdTokenAddressPerNetwork(network);
-
     const { rewardsVault, incentiveControllerProxy } = getIncentivesConfigPerNetwork(network);
     const emissionTotal = parseEther('32600420');
     const emmissionsPerAssets = {
@@ -56,11 +60,13 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
       emissionManager
     );
     const vaultInstance = IStarlayRewardsVault__factory.connect(rewardsVault, vaultOwner);
-
-    console.log('set incentives controller');
+    console.log('vault owner', await vaultInstance.owner(), await emissionManager.getAddress());
+    console.log('set incentives controller', incentiveControllerProxy);
     await vaultInstance.setIncentiveController(incentiveControllerProxy);
     console.log('transfer LAY from vault to incentives controller');
     await vaultInstance.transfer(lay, emissionTotal);
+    console.log('configure assets');
+
     await incentivesControllerInstance.configureAssets(
       Object.keys(emmissionsPerAssets),
       Object.values(emmissionsPerAssets)
