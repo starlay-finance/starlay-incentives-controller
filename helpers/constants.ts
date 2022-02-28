@@ -68,7 +68,7 @@ export const getStakedTokenPerNetwork = (network: eNetwork): tEthereumAddress =>
     {
       [eEthereumNetwork.kovan]: '0x82ab55Ff927d0E3C42A6Bc08C0B57D35A7896880', // StakedLay
       [eEthereumNetwork.rinkeby]: '0x542d2690d8B4092F455188622dA51ee478cAD0E0', // StakedLay
-      [eAstarNetwork.astar]: '', // TODO: Proxy-StakedTokenV2Rev3
+      [eAstarNetwork.astar]: '0x6FD65f71B3FB5Aa9d794f010AFc65F174012994F', // Proxy-StakedTokenV2Rev3
       [eAstarNetwork.shiden]: '0x87DCF20F2bf4A772a70BdDA142288820bd3Bdf5A', // Proxy-StakedTokenV2Rev3
       [eAstarNetwork.shibuya]: '0xD0286b992ae9EB8702457559dCA9565bEB20b0DC', // StakedLay
     },
