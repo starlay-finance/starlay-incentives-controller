@@ -13,33 +13,41 @@ import {
 } from '../../types';
 import { getBlockTimestamp } from '../../helpers/contracts-helpers';
 import { parseEther } from 'ethers/lib/utils';
+import { Wallet } from 'ethers';
+require('dotenv').config();
 
 task('update-incentives', 'Configure incentives for next 30 days').setAction(
   async ({}, localBRE) => {
     await localBRE.run('set-DRE');
-    const signers = await DRE.ethers.getSigners();
-    const vaultOwner = signers[0];
-    const emissionManager = signers[9]; // Please check before use this script
-
+    const EMISSION_MANAGER_PRIVATE_KEY = process.env.EMISSION_MANAGER_PRIVATE_KEY || '';
+    const VAULT_OWNER_PRIVATE_KEY = process.env.VAULT_OWNER_PRIVATE_KEY || '';
+    if (EMISSION_MANAGER_PRIVATE_KEY) {
+      throw new Error('emission manager private key is empty');
+    }
+    if (VAULT_OWNER_PRIVATE_KEY) {
+      throw new Error('vault private key is empty');
+    }
+    const emissionManager = new Wallet(EMISSION_MANAGER_PRIVATE_KEY);
+    const vaultOwner = new Wallet(VAULT_OWNER_PRIVATE_KEY);
     const network = localBRE.network.name as eNetwork;
     const lTokens = getlTokenAddressPerNetwork(network);
     const variableDebtTokens = getVdTokenAddressPerNetwork(network);
 
     const { rewardsVault, incentiveControllerProxy } = getIncentivesConfigPerNetwork(network);
-
+    const emissionTotal = parseEther('32600420');
     const emmissionsPerAssets = {
-      [lTokens.WASTR]: '269514054232804232',
-      [variableDebtTokens.WASTR]: '628866126543209876',
-      [lTokens.USDC]: '808542162698412698',
-      [variableDebtTokens.USDC]: '1886598379629629629',
-      [lTokens.USDT]: '808542162698412698',
-      [variableDebtTokens.USDT]: '1886598379629629629',
-      [lTokens.WETH]: '539028108465608465',
-      [variableDebtTokens.WETH]: '1257732253086419753',
-      [lTokens.WBTC]: '539028108465608465',
-      [variableDebtTokens.WBTC]: '1257732253086419753',
-      [lTokens.WSDN]: '269514054232804232',
-      [variableDebtTokens.WSDN]: '628866126543209876',
+      [lTokens.WASTR]: '943299189814814814',
+      [variableDebtTokens.WASTR]: '104811021090534979',
+      [lTokens.USDC]: '1886598379629629629',
+      [variableDebtTokens.USDC]: '209622042181069958',
+      [lTokens.USDT]: '1886598379629629629',
+      [variableDebtTokens.USDT]: '209622042181069958',
+      [lTokens.WETH]: '4716495949074074074',
+      [variableDebtTokens.WETH]: '524055105452674897',
+      [lTokens.WBTC]: '943299189814814814',
+      [variableDebtTokens.WBTC]: '104811021090534979',
+      [lTokens.WSDN]: '943299189814814814',
+      [variableDebtTokens.WSDN]: '104811021090534979',
     };
     const lay = getTokenAddressPerNetwork(network).LAY;
 
@@ -52,12 +60,14 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     console.log('set incentives controller');
     await vaultInstance.setIncentiveController(incentiveControllerProxy);
     console.log('transfer LAY from vault to incentives controller');
-    await vaultInstance.transfer(lay, parseEther('17325200'));
+    await vaultInstance.transfer(lay, emissionTotal);
     await incentivesControllerInstance.configureAssets(
       Object.keys(emmissionsPerAssets),
       Object.values(emmissionsPerAssets)
     );
     console.log('set distribution end');
-    await incentivesControllerInstance.setDistributionEnd((await getBlockTimestamp()) + 2592000); //current + seconds per month
+    await incentivesControllerInstance.setDistributionEnd(
+      (await getBlockTimestamp()) + 60 * 60 * 24 * 30
+    ); //current + seconds per month
   }
 );
