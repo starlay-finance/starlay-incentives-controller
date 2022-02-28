@@ -3,11 +3,7 @@ import fs from 'fs';
 import { HardhatUserConfig } from 'hardhat/types';
 // @ts-ignore
 import { accounts } from './test-wallets';
-import {
-  eEthereumNetwork,
-  eNetwork,
-  eAstarNetwork
-} from './helpers/types';
+import { eEthereumNetwork, eNetwork, eAstarNetwork } from './helpers/types';
 import { BUIDLEREVM_CHAINID, COVERAGE_CHAINID } from './helpers/constants';
 import { NETWORKS_RPC_URL, NETWORKS_DEFAULT_GAS } from './helper-hardhat-config';
 
@@ -33,7 +29,7 @@ const MAINNET_FORK = process.env.MAINNET_FORK === 'true';
 
 // Prevent to load scripts before compilation and typechain
 if (!SKIP_LOAD) {
-  ['misc', /*'payloads',*/ 'migrations', 'deployment'].forEach((folder) => {
+  ['misc', /*'payloads',*/ 'migrations', 'deployment', 'tools'].forEach((folder) => {
     const tasksPath = path.join(__dirname, 'tasks', folder);
     fs.readdirSync(tasksPath)
       .filter((pth) => pth.includes('.ts'))
