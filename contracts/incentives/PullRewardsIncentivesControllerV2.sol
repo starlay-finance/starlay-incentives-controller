@@ -57,4 +57,11 @@ contract PullRewardsIncentivesControllerV2 is
   function _transferRewards(address to, uint256 amount) internal override {
     IERC20(REWARD_TOKEN).safeTransferFrom(_rewardsVault, to, amount);
   }
+
+  /**
+   * @dev migrate LAY token to new vault
+   **/
+  function migrate() external onlyEmissionManager {
+    IERC20(REWARD_TOKEN).transfer(_rewardsVault, IERC20(REWARD_TOKEN).balanceOf(address(this)));
+  }
 }

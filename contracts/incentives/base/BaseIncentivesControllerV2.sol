@@ -41,14 +41,6 @@ abstract contract BaseIncentivesControllerV2 is
     REWARD_TOKEN = address(rewardToken);
   }
 
-  /**
-   * @dev migrate LAY token to new vault
-   * @param vault Vault address
-   **/
-  function migrate(address vault) external onlyEmissionManager {
-    IERC20(REWARD_TOKEN).transfer(vault, IERC20(REWARD_TOKEN).balanceOf(address(this)));
-  }
-
   /// @inheritdoc IIncentivesController
   function configureAssets(address[] calldata assets, uint256[] calldata emissionsPerSecond)
     external
