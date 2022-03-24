@@ -1,14 +1,9 @@
-import { PullRewardsIncentivesControllerV2 } from './../../types/PullRewardsIncentivesControllerV2.d';
-import { InitializableUpgradeabilityProxy__factory } from './../../types/factories/InitializableUpgradeabilityProxy__factory';
 import { expect } from 'chai';
 import { parseEther } from 'ethers/lib/utils';
-import { MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../../helpers/constants';
-import { waitForTx } from '../../helpers/misc-utils';
 
 import { makeSuite, TestEnv } from '../helpers/make-suite';
 import { getEthersSigners } from '../../helpers/contracts-helpers';
 import {
-  InitializableAdminUpgradeabilityProxy,
   InitializableAdminUpgradeabilityProxy__factory,
   PullRewardsIncentivesControllerV2__factory,
 } from '../../types';
@@ -16,7 +11,7 @@ import { BigNumber } from 'ethers';
 
 makeSuite('PullRewardsIncentivesController - migrate', (testEnv: TestEnv) => {
   it('Upgradability', async () => {
-    const { pullRewardsIncentivesController, users, lDaiBaseMock, token, rewardsVault } = testEnv;
+    const { pullRewardsIncentivesController, lDaiBaseMock, token, rewardsVault } = testEnv;
     const emissionPerSecond = parseEther('1');
 
     // configured on v1
@@ -66,7 +61,7 @@ makeSuite('PullRewardsIncentivesController - migrate', (testEnv: TestEnv) => {
       newAdmin
     );
     const vaultAmountBefore = await token.balanceOf(rewardsVault.address);
-    await v2Instance.connect(emissionManager).migrate(rewardsVault.address);
+    await v2Instance.connect(emissionManager).migrate();
     const vaultAmountAfter = await token.balanceOf(rewardsVault.address);
     expect(await token.balanceOf(pullRewardsIncentivesController.address)).to.be.eq(0);
     expect(vaultAmountAfter).to.be.eq(vaultAmountBefore.add(layAmountOnIncentivesController));

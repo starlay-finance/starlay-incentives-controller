@@ -11,8 +11,6 @@ task('migrate-incentives-to-new-vault', 'Migrate incentives to new vault').setAc
     // TODO: rpc url by environments
     await localBRE.run('set-DRE');
     const EMISSION_MANAGER_PRIVATE_KEY = process.env.EMISSION_MANAGER_PRIVATE_KEY || '';
-    const INCENTIVES_CONTROLLER_ADMIN_PRIVATE_KEY =
-      process.env.INCENTIVES_CONTROLLER_ADMIN_PRIVATE_KEY || '';
     if (!EMISSION_MANAGER_PRIVATE_KEY) {
       throw new Error('emission manager private key is empty');
     }
@@ -26,7 +24,6 @@ task('migrate-incentives-to-new-vault', 'Migrate incentives to new vault').setAc
       incentiveControllerProxy,
       emissionManager
     );
-    const newVault = getRewardVaultPerNetwork(network);
-    await incentivesController.migrate(newVault);
+    await incentivesController.migrate();
   }
 );
