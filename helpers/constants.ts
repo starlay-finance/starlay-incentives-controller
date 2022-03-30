@@ -144,8 +144,8 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
         WBTC: '0x93E008010B17a48A140EEA4283040adD92eAC576',
         WETH: '0x61f5df7076D2BA75323129CC2724db3abDdC3073',
         WSDN: '0x2308De041865503B3b24F5da4D1ab7308c4ff756',
-        BUSD: '0x4bf769b05e832fcdc9053fffbc78ca889acb5e1e',
-        DAI: '0x6De33698e9e9b787e09d3Bd7771ef63557E148bb',
+        BUSD: '0xb7aB962c42A8Bb443e0362f58a5A43814c573FFb',
+        DAI: '0x4dd9c468A44F3FEF662c35c1E9a6108B70415C2c',
       },
       [eAstarNetwork.shiden]: {
         LAY: '0x5E580CFfd8948DdDFfd42F36655b28ea3C6eD5ae',
@@ -205,8 +205,8 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
         WBTC: '0x8c2e483aCF644190123BC46719c6D611466F9835',
         WETH: '0x3D1e61a9c47b67FD990583d07Fe0c6C54AaFF42b',
         WSDN: '0xd4Eabc34bD5F8837B378d6bf8f8A2F645200DC21',
-        BUSD: 'TODO',
-        DAI: 'TODO',
+        BUSD: '0xB3D6A83491E251bE0e9c21C8D84F88e15F6D9B15',
+        DAI: '0x05F3Ca23EB9A2B9142Fb10CDaB1750B4D2162aC2',
       },
       [eAstarNetwork.shiden]: {
         LAY: '0x460cB4C2087ebe58ae4687cD788385840aC39cF2',
@@ -266,8 +266,8 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
         WBTC: '0xad543f18cFf85c77E140E3E5E3c3392f6Ba9d5CA',
         WETH: '0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c',
         WSDN: '0x75364D4F779d0Bd0facD9a218c67f87dD9Aff3b4',
-        BUSD: '0x0156412a53C6cc607135C7D6374913C5DDF8E55E',
-        DAI: '0x257f1a047948f73158DaDd03eB84b34498bCDc60',
+        BUSD: '0x4bf769b05e832fcdc9053fffbc78ca889acb5e1e',
+        DAI: '0x6De33698e9e9b787e09d3Bd7771ef63557E148bb',
       },
       [eAstarNetwork.shiden]: {
         LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',

@@ -1,9 +1,5 @@
 // @ts-ignore
-import {
-  eAstarNetwork,
-  eEthereumNetwork,
-  iParamsPerNetwork,
-} from './helpers/types';
+import { eAstarNetwork, eEthereumNetwork, iParamsPerNetwork } from './helpers/types';
 
 require('dotenv').config();
 
@@ -33,10 +29,10 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
     : 'https://rpc.astar.network:8545',
   [eAstarNetwork.shiden]: BWARE_LABS_KEY
     ? `https://shiden-api.bwarelabs.com/${BWARE_LABS_KEY}`
-    : 'https://rpc.shiden.astar.network:8545',
+    : 'https://evm.shiden.astar.network',
   [eAstarNetwork.shibuya]: BWARE_LABS_KEY
     ? `https://shibuya-api.bwarelabs.com/${BWARE_LABS_KEY}`
-    : 'https://rpc.shibuya.astar.network:8545'
+    : 'https://rpc.shibuya.astar.network:8545',
 };
 
 export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
