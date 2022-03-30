@@ -63,6 +63,8 @@ export interface iAssetBase<T> {
   WBTC: T;
   WASTR: T;
   WSDN: T;
+  DAI: T;
+  BUSD: T;
 }
 
 export interface incentivesConfig {

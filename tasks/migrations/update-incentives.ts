@@ -13,9 +13,10 @@ import {
 } from '../../types';
 import { getBlockTimestamp, getEthersSigners } from '../../helpers/contracts-helpers';
 import { parseEther } from 'ethers/lib/utils';
-import { Wallet } from 'ethers';
+import { BigNumber, Wallet } from 'ethers';
 import { ethers } from 'hardhat';
 import { JsonRpcProvider } from '@ethersproject/providers';
+import { arrayContainsArray } from 'ethjs-util';
 require('dotenv').config();
 
 task('update-incentives', 'Configure incentives for next 30 days').setAction(
@@ -38,20 +39,25 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     const lTokens = getlTokenAddressPerNetwork(network);
     const variableDebtTokens = getVdTokenAddressPerNetwork(network);
     const { rewardsVault, incentiveControllerProxy } = getIncentivesConfigPerNetwork(network);
-    const emissionTotal = parseEther('32600420');
+    const emissionTotal = parseEther('29340378');
+
     const emmissionsPerAssets = {
-      [lTokens.WASTR]: '943299189814814814',
-      [variableDebtTokens.WASTR]: '104811021090534979',
-      [lTokens.USDC]: '1886598379629629629',
-      [variableDebtTokens.USDC]: '209622042181069958',
-      [lTokens.USDT]: '1886598379629629629',
-      [variableDebtTokens.USDT]: '209622042181069958',
-      [lTokens.WETH]: '4716495949074074074',
-      [variableDebtTokens.WETH]: '524055105452674897',
-      [lTokens.WBTC]: '943299189814814814',
-      [variableDebtTokens.WBTC]: '104811021090534979',
-      [lTokens.WSDN]: '943299189814814814',
-      [variableDebtTokens.WSDN]: '104811021090534979',
+      [lTokens.WASTR]: '636726953125000000',
+      [variableDebtTokens.WASTR]: '70747439236111111',
+      [lTokens.USDC]: '1273453906250000000',
+      [variableDebtTokens.USDC]: '141494878472222222',
+      [lTokens.USDT]: '1273453906250000000',
+      [variableDebtTokens.USDT]: '141494878472222222',
+      [lTokens.WETH]: '3183634765625000000',
+      [variableDebtTokens.WETH]: '353737196180555555',
+      [lTokens.WBTC]: '636726953125000000',
+      [variableDebtTokens.WBTC]: '70747439236111111',
+      [lTokens.WSDN]: '636726953125000000',
+      [variableDebtTokens.WSDN]: '70747439236111111',
+      [lTokens.DAI]: '1273453906250000000',
+      [variableDebtTokens.DAI]: '141494878472222222',
+      [lTokens.BUSD]: '1273453906250000000',
+      [variableDebtTokens.BUSD]: '141494878472222222',
     };
     const lay = getTokenAddressPerNetwork(network).LAY;
 
@@ -59,6 +65,7 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
       incentiveControllerProxy,
       emissionManager
     );
+    console.log(await (await incentivesControllerInstance.DISTRIBUTION_END()).toNumber());
     const vaultInstance = IStarlayRewardsVault__factory.connect(rewardsVault, vaultOwner);
     console.log('vault owner', await vaultInstance.owner(), await emissionManager.getAddress());
     console.log('set incentives controller', incentiveControllerProxy);
