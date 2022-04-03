@@ -11,7 +11,7 @@ import {
   deployPullRewardsIncentivesController,
   deployInitializableAdminUpgradeabilityProxy,
 } from '../../helpers/contracts-accessors';
-import { waitForTx } from '../../helpers/misc-utils';
+import { notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
 import { eNetwork } from '../../helpers/types';
 
 task(
@@ -35,19 +35,19 @@ task(
 
       const networkName = localBRE.network.name as eNetwork;
       if (!proxyAdmin) proxyAdmin = getProxyAdminPerNetwork(networkName);
-      if (!isAddress(proxyAdmin) || rewardToken == ZERO_ADDRESS) {
+      if (!notFalsyOrZeroAddress(proxyAdmin)) {
         throw Error('Missing or incorrect admin param');
       }
       if (!rewardToken) rewardToken = getStakedTokenPerNetwork(networkName);
-      if (!isAddress(rewardToken) || rewardToken == ZERO_ADDRESS) {
+      if (!notFalsyOrZeroAddress(rewardToken)) {
         throw Error('Missing or incorrect rewardToken param');
       }
       if (!rewardsVault) rewardsVault = getRewardVaultPerNetwork(networkName);
-      if (!isAddress(rewardsVault) || rewardToken == ZERO_ADDRESS) {
+      if (!notFalsyOrZeroAddress(rewardsVault)) {
         throw Error('Missing or incorrect rewardsVault param');
       }
       if (!emissionManager) emissionManager = getEmissionManagerPerNetwork(networkName);
-      if (!isAddress(emissionManager) || rewardToken == ZERO_ADDRESS) {
+      if (!notFalsyOrZeroAddress(emissionManager)) {
         throw Error('Missing or incorrect emissionManager param');
       }
 
