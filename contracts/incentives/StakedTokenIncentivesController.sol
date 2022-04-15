@@ -29,6 +29,7 @@ contract StakedTokenIncentivesController is BaseIncentivesController {
    * @dev Initialize IStakedTokenIncentivesController
    **/
   function initialize(address emissionManager) external initializer {
+    require(emissionManager != address(0), "INVALID_EMISSION_MANAGER");
     //approves the safety module to allow staking
     IERC20(STAKE_TOKEN.STAKED_TOKEN()).safeApprove(address(STAKE_TOKEN), type(uint256).max);
     _emissionManager = emissionManager;
