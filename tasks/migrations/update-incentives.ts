@@ -11,7 +11,11 @@ import {
   IStarlayRewardsVault__factory,
   PullRewardsIncentivesController__factory,
 } from '../../types';
-import { getBlockTimestamp, getEthersSigners } from '../../helpers/contracts-helpers';
+import {
+  getBlockTimestamp,
+  getEthersSigners,
+  getFirstSigner,
+} from '../../helpers/contracts-helpers';
 import { parseEther } from 'ethers/lib/utils';
 import { BigNumber, Wallet } from 'ethers';
 import { ethers } from 'hardhat';
@@ -32,7 +36,6 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
       throw new Error('vault private key is empty');
     }
     const provider = new JsonRpcProvider('https://rpc.astar.network:8545');
-
     const emissionManager = new Wallet(EMISSION_MANAGER_PRIVATE_KEY, provider);
     const vaultOwner = new Wallet(VAULT_OWNER_PRIVATE_KEY, provider);
     const network = localBRE.network.name as eNetwork;
@@ -65,14 +68,21 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
       incentiveControllerProxy,
       emissionManager
     );
-    console.log(await (await incentivesControllerInstance.DISTRIBUTION_END()).toNumber());
+    console.log('dist end');
+    console.log(
+      await (
+        await incentivesControllerInstance.connect(emissionManager).DISTRIBUTION_END()
+      ).toNumber()
+    );
     const vaultInstance = IStarlayRewardsVault__factory.connect(rewardsVault, vaultOwner);
     console.log('vault owner', await vaultInstance.owner(), await emissionManager.getAddress());
     console.log('set incentives controller', incentiveControllerProxy);
-    await vaultInstance.setIncentiveController(incentiveControllerProxy);
+    //await vaultInstance.setIncentiveController(incentiveControllerProxy);
     console.log('transfer LAY from vault to incentives controller');
     await vaultInstance.transfer(lay, emissionTotal);
     console.log('configure assets');
+    console.log('em');
+    console.log('em:', await incentivesControllerInstance.EMISSION_MANAGER());
 
     await incentivesControllerInstance.configureAssets(
       Object.keys(emmissionsPerAssets),
