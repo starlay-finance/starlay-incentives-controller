@@ -20,6 +20,7 @@ import { parseEther } from 'ethers/lib/utils';
 import { BigNumber, Wallet } from 'ethers';
 import { ethers } from 'hardhat';
 import { JsonRpcProvider } from '@ethersproject/providers';
+import { arrayContainsArray } from 'ethjs-util';
 require('dotenv').config();
 
 task('update-incentives', 'Configure incentives for next 30 days').setAction(
