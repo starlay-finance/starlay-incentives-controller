@@ -29,7 +29,7 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
     : 'https://rpc.astar.network:8545',
   [eAstarNetwork.shiden]: BWARE_LABS_KEY
     ? `https://shiden-api.bwarelabs.com/${BWARE_LABS_KEY}`
-    : 'https://evm.shiden.astar.network',
+    : 'https://shiden.api.onfinality.io/public',
   [eAstarNetwork.shibuya]: BWARE_LABS_KEY
     ? `https://shibuya-api.bwarelabs.com/${BWARE_LABS_KEY}`
     : 'https://rpc.shibuya.astar.network:8545',
