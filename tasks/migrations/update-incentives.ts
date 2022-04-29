@@ -1,5 +1,5 @@
 import { task } from 'hardhat/config';
-import { DRE } from '../../helpers/misc-utils';
+import { DRE, waitForTx } from '../../helpers/misc-utils';
 import {
   getlTokenAddressPerNetwork,
   getVdTokenAddressPerNetwork,
@@ -35,7 +35,7 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     if (!VAULT_OWNER_PRIVATE_KEY) {
       throw new Error('vault private key is empty');
     }
-    const provider = new JsonRpcProvider('https://rpc.astar.network:8545');
+    const provider = new JsonRpcProvider('https://astar.api.onfinality.io/public');
     const emissionManager = new Wallet(EMISSION_MANAGER_PRIVATE_KEY, provider);
     //const [, emissionManager] = await getEthersSigners();
     const network = localBRE.network.name as eNetwork;
@@ -79,25 +79,20 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     );
     console.log('em:', await incentivesControllerInstance.EMISSION_MANAGER());
 
-    await incentivesControllerInstance.configureAssets(
-      Object.keys(emmissionsPerAssets),
-      Object.values(emmissionsPerAssets)
+    const configurationTx = await waitForTx(
+      await incentivesControllerInstance.configureAssets(
+        Object.keys(emmissionsPerAssets),
+        Object.values(emmissionsPerAssets)
+      )
     );
+    console.log(configurationTx);
+
     console.log('set distribution end');
-    await incentivesControllerInstance.setDistributionEnd(
-      (await getBlockTimestamp()) + 60 * 60 * 24 * 30
+    const distEndTx = await waitForTx(
+      await incentivesControllerInstance.setDistributionEnd(
+        (await getBlockTimestamp()) + 60 * 60 * 24 * 30
+      )
     ); //current + seconds per month
-    console.log(lTokens.BNB);
-    console.log(lTokens.MATIC);
-    console.log(variableDebtTokens.BNB);
-    console.log(variableDebtTokens.MATIC);
-    console.log((await incentivesControllerInstance.getAssetData(lTokens.BNB))[1].toString());
-    console.log(
-      (await incentivesControllerInstance.getAssetData(variableDebtTokens.BNB))[1].toString()
-    );
-    console.log((await incentivesControllerInstance.getAssetData(lTokens.MATIC))[1].toString());
-    console.log(
-      (await incentivesControllerInstance.getAssetData(variableDebtTokens.MATIC))[1].toString()
-    );
+    console.log(distEndTx);
   }
 );
