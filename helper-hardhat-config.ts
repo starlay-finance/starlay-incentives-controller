@@ -29,7 +29,7 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
     : 'https://rpc.astar.network:8545',
   [eAstarNetwork.shiden]: BWARE_LABS_KEY
     ? `https://shiden-api.bwarelabs.com/${BWARE_LABS_KEY}`
-    : 'https://evm.shiden.astar.network',
+    : 'https://shiden.api.onfinality.io/public',
   [eAstarNetwork.shibuya]: BWARE_LABS_KEY
     ? `https://shibuya-api.bwarelabs.com/${BWARE_LABS_KEY}`
     : 'https://rpc.shibuya.astar.network:8545',
@@ -43,7 +43,7 @@ export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
   [eEthereumNetwork.hardhat]: 1 * GWEI,
   [eEthereumNetwork.buidlerevm]: 1 * GWEI,
   [eEthereumNetwork.tenderlyMain]: 1 * GWEI,
-  [eAstarNetwork.astar]: 1 * GWEI,
+  [eAstarNetwork.astar]: 5 * GWEI,
   [eAstarNetwork.shiden]: 1 * GWEI,
   [eAstarNetwork.shibuya]: 1 * GWEI,
 };
