@@ -38,6 +38,7 @@ abstract contract BaseIncentivesController is
   }
 
   constructor(IERC20 rewardToken) {
+    require(address(rewardToken) != address(0), 'INVALID_REWARD_ADDRESS');
     REWARD_TOKEN = address(rewardToken);
   }
 

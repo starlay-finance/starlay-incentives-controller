@@ -75,6 +75,18 @@ export const getStakedTokenPerNetwork = (network: eNetwork): tEthereumAddress =>
     network
   );
 
+export const getLayTokenPerNetwork = (network: eNetwork): tEthereumAddress =>
+  getParamPerNetwork<tEthereumAddress>(
+    {
+      [eEthereumNetwork.kovan]: '',
+      [eEthereumNetwork.rinkeby]: '',
+      [eAstarNetwork.astar]: '',
+      [eAstarNetwork.shiden]: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
+      [eAstarNetwork.shibuya]: '',
+    },
+    network
+  );
+
 export const getEmissionManagerPerNetwork = (network: eNetwork): tEthereumAddress =>
   getParamPerNetwork<tEthereumAddress>(
     {
@@ -93,7 +105,7 @@ export const getRewardVaultPerNetwork = (network: eNetwork): tEthereumAddress =>
       [eEthereumNetwork.kovan]: ZERO_ADDRESS,
       [eEthereumNetwork.rinkeby]: ZERO_ADDRESS,
       [eAstarNetwork.astar]: '0x4C9d9C197880810724b8eCC3b47b279C9763EC2B',
-      [eAstarNetwork.shiden]: '0x175d905470e85279899C37F89000b195f3d0c0C5',
+      [eAstarNetwork.shiden]: '0x6c08Fa7210c69Cc258729E8d864dE05bd1A2E7BD',
       [eAstarNetwork.shibuya]: ZERO_ADDRESS,
     },
     network
@@ -110,6 +122,10 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
         WBTC: ZERO_ADDRESS,
         WETH: ZERO_ADDRESS,
         WSDN: ZERO_ADDRESS,
+        DAI: ZERO_ADDRESS,
+        BUSD: ZERO_ADDRESS,
+        MATIC: ZERO_ADDRESS,
+        BNB: ZERO_ADDRESS,
       },
       [eEthereumNetwork.rinkeby]: {
         LAY: ZERO_ADDRESS,
@@ -119,6 +135,10 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
         WBTC: ZERO_ADDRESS,
         WETH: ZERO_ADDRESS,
         WSDN: ZERO_ADDRESS,
+        DAI: ZERO_ADDRESS,
+        BUSD: ZERO_ADDRESS,
+        MATIC: ZERO_ADDRESS,
+        BNB: ZERO_ADDRESS,
       },
       [eAstarNetwork.astar]: {
         LAY: '0x70A91e490Fd089fC8b2a3432858800AFB6Ceb539',
@@ -128,6 +148,10 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
         WBTC: '0x93E008010B17a48A140EEA4283040adD92eAC576',
         WETH: '0x61f5df7076D2BA75323129CC2724db3abDdC3073',
         WSDN: '0x2308De041865503B3b24F5da4D1ab7308c4ff756',
+        BUSD: '0xb7aB962c42A8Bb443e0362f58a5A43814c573FFb',
+        DAI: '0x4dd9c468A44F3FEF662c35c1E9a6108B70415C2c',
+        MATIC: '0xF49Ab32B1B13A50eEe2022347A31a69524E83671',
+        BNB: '0xd37991C23242439B0549c8328df5d83897D645AA',
       },
       [eAstarNetwork.shiden]: {
         LAY: '0x5E580CFfd8948DdDFfd42F36655b28ea3C6eD5ae',
@@ -137,6 +161,10 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
         WBTC: '0xeEF36e87e130Eed43B5a3F81be4702F2f7A0c205',
         WETH: '0xaE6AA78668bC2A1fE5800dcDdd87345C0cE801b9',
         WSDN: '0xeAEaEfDfB40205EfEb18FD2e85D1d1173c53448A',
+        BUSD: '0xB8447E00be2281e4744fCeC1Aa5BB9216be70d3d',
+        DAI: '0x59448269aa5Cb875F27268368bB1913bF60580aD',
+        MATIC: '0x61641f8Db169E26809f4CE542327caBCfD9BA8A2',
+        BNB: '0x9AcE7af4A5Ec0df8e9D3da8218D064ce92D67097',
       },
       [eAstarNetwork.shibuya]: {
         LAY: ZERO_ADDRESS,
@@ -146,6 +174,10 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
         WBTC: ZERO_ADDRESS,
         WETH: ZERO_ADDRESS,
         WSDN: ZERO_ADDRESS,
+        DAI: ZERO_ADDRESS,
+        BUSD: ZERO_ADDRESS,
+        MATIC: ZERO_ADDRESS,
+        BNB: ZERO_ADDRESS,
       },
     },
     network
@@ -161,6 +193,10 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
         WBTC: ZERO_ADDRESS,
         WETH: ZERO_ADDRESS,
         WSDN: ZERO_ADDRESS,
+        DAI: ZERO_ADDRESS,
+        BUSD: ZERO_ADDRESS,
+        MATIC: ZERO_ADDRESS,
+        BNB: ZERO_ADDRESS,
       },
       [eEthereumNetwork.rinkeby]: {
         LAY: ZERO_ADDRESS,
@@ -170,6 +206,10 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
         WBTC: ZERO_ADDRESS,
         WETH: ZERO_ADDRESS,
         WSDN: ZERO_ADDRESS,
+        DAI: ZERO_ADDRESS,
+        BUSD: ZERO_ADDRESS,
+        MATIC: ZERO_ADDRESS,
+        BNB: ZERO_ADDRESS,
       },
       [eAstarNetwork.astar]: {
         LAY: '0xf75e34F38A4c610644F6Fae57b9Eb80B209Cb497',
@@ -179,6 +219,10 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
         WBTC: '0x8c2e483aCF644190123BC46719c6D611466F9835',
         WETH: '0x3D1e61a9c47b67FD990583d07Fe0c6C54AaFF42b',
         WSDN: '0xd4Eabc34bD5F8837B378d6bf8f8A2F645200DC21',
+        BUSD: '0xB3D6A83491E251bE0e9c21C8D84F88e15F6D9B15',
+        DAI: '0x05F3Ca23EB9A2B9142Fb10CDaB1750B4D2162aC2',
+        MATIC: '0xaED1B0Bf69f04177EDDe9B367a9AF85b1026701B',
+        BNB: '0xAaf6b0D4adBEEb476Be5665F60E64bD2977DA393',
       },
       [eAstarNetwork.shiden]: {
         LAY: '0x460cB4C2087ebe58ae4687cD788385840aC39cF2',
@@ -188,6 +232,10 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
         WBTC: '0x4930A4A701034714Bc4758718945C59f8eaE8e32',
         WETH: '0x598D933DEdd22588461B4C2caa3cc85E3B8B0B97',
         WSDN: '0xC27cD77dF7F7920cb12091A2896F6Ec72de064C1',
+        BUSD: '0x7aD6b84C73BbA1e5553B123e8e22CEBA8BD2705e',
+        DAI: '0x55DC4F4A2e633E6249c36cc93C97b537DC9B1CFb',
+        MATIC: '0x0159f0Ee7C4c5eE95eD173ea23EC89694c851201',
+        BNB: '0x4dde6818CB50e329CDda1d5c68606f574637cB31',
       },
       [eAstarNetwork.shibuya]: {
         LAY: ZERO_ADDRESS,
@@ -197,6 +245,10 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
         WBTC: ZERO_ADDRESS,
         WETH: ZERO_ADDRESS,
         WSDN: ZERO_ADDRESS,
+        DAI: ZERO_ADDRESS,
+        BUSD: ZERO_ADDRESS,
+        MATIC: ZERO_ADDRESS,
+        BNB: ZERO_ADDRESS,
       },
     },
     network
@@ -212,6 +264,10 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
         WBTC: ZERO_ADDRESS,
         WETH: ZERO_ADDRESS,
         WSDN: ZERO_ADDRESS,
+        DAI: ZERO_ADDRESS,
+        BUSD: ZERO_ADDRESS,
+        MATIC: ZERO_ADDRESS,
+        BNB: ZERO_ADDRESS,
       },
       [eEthereumNetwork.rinkeby]: {
         LAY: ZERO_ADDRESS,
@@ -221,6 +277,10 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
         WBTC: ZERO_ADDRESS,
         WETH: ZERO_ADDRESS,
         WSDN: ZERO_ADDRESS,
+        DAI: ZERO_ADDRESS,
+        BUSD: ZERO_ADDRESS,
+        MATIC: ZERO_ADDRESS,
+        BNB: ZERO_ADDRESS,
       },
       [eAstarNetwork.astar]: {
         LAY: '0xc4335B1b76fA6d52877b3046ECA68F6E708a27dd',
@@ -230,6 +290,10 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
         WBTC: '0xad543f18cFf85c77E140E3E5E3c3392f6Ba9d5CA',
         WETH: '0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c',
         WSDN: '0x75364D4F779d0Bd0facD9a218c67f87dD9Aff3b4',
+        BUSD: '0x4bf769b05e832fcdc9053fffbc78ca889acb5e1e',
+        DAI: '0x6De33698e9e9b787e09d3Bd7771ef63557E148bb',
+        MATIC: '0xdd90E5E87A2081Dcf0391920868eBc2FFB81a1aF',
+        BNB: '0x7f27352D5F83Db87a5A3E00f4B07Cc2138D8ee52',
       },
       [eAstarNetwork.shiden]: {
         LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
@@ -239,6 +303,10 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
         WBTC: '0xEdAA9f408ac11339766a4E5e0d4653BDee52fcA1',
         WETH: '0x72fE832eB0452285e91CA9F46B85229A5107CeE8',
         WSDN: '0x7cA69766F4be8Ec93dD01E1d571e64b867455e58',
+        DAI: '0x257f1a047948f73158DaDd03eB84b34498bCDc60',
+        BUSD: '0x0156412a53C6cc607135C7D6374913C5DDF8E55E',
+        MATIC: '0xb0107B84C41eD7bda37495D318116FC42826a423',
+        BNB: '0x9AcE7af4A5Ec0df8e9D3da8218D064ce92D67097',
       },
       [eAstarNetwork.shibuya]: {
         LAY: ZERO_ADDRESS,
@@ -248,6 +316,10 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
         WBTC: ZERO_ADDRESS,
         WETH: ZERO_ADDRESS,
         WSDN: ZERO_ADDRESS,
+        DAI: ZERO_ADDRESS,
+        BUSD: ZERO_ADDRESS,
+        MATIC: ZERO_ADDRESS,
+        BNB: ZERO_ADDRESS,
       },
     },
     network
@@ -285,7 +357,7 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
       },
       [eAstarNetwork.shiden]: {
         addressProvider: '0xa70fFbaFE4B048798bBCBDdfB995fcCec2D1f2CA',
-        rewardsVault: ZERO_ADDRESS,
+        rewardsVault: '0x6c08Fa7210c69Cc258729E8d864dE05bd1A2E7BD',
         incentiveControllerImpl: '0x5CfD4e63d07D10E9571Def6F26265bCa9B25130f',
         incentiveControllerProxy: '0xD9F3bbC743b7AF7E1108653Cd90E483C03D6D699',
         lendingPool: '0x8022327a333eAeFaD46A723CDcA1aeFdA12afA53',

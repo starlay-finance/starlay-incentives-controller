@@ -30,6 +30,7 @@ contract PullRewardsIncentivesController is
    * @param rewardsVault rewards vault to pull ERC20 funds
    **/
   function initialize(address rewardsVault, address emissionManager) external initializer {
+    require(emissionManager != address(0), "INVALID_EMISSION_MANAGER");
     _rewardsVault = rewardsVault;
     _emissionManager = emissionManager;
     emit RewardsVaultUpdated(_rewardsVault);
