@@ -16,6 +16,7 @@ import {
   InitializableAdminUpgradeabilityProxy__factory,
   StakedTokenIncentivesController,
   StakedTokenIncentivesController__factory,
+  PullRewardsIncentivesControllerV2__factory,
 } from '../types';
 import { DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { Signer } from 'ethers';
@@ -43,6 +44,22 @@ export const deployPullRewardsIncentivesController = async (
 ) => {
   const args: [string] = [rewardToken];
   const instance = await new PullRewardsIncentivesController__factory(
+    signer || (await getFirstSigner())
+  ).deploy(args[0]);
+  await instance.deployTransaction.wait();
+  if (verify) {
+    await verifyContract(instance.address, args);
+  }
+  return instance;
+};
+
+export const deployPullRewardsIncentivesControllerV2 = async (
+  [rewardToken]: [tEthereumAddress],
+  verify?: boolean,
+  signer?: Signer | DefenderRelaySigner
+) => {
+  const args: [string] = [rewardToken];
+  const instance = await new PullRewardsIncentivesControllerV2__factory(
     signer || (await getFirstSigner())
   ).deploy(args[0]);
   await instance.deployTransaction.wait();
