@@ -42,29 +42,28 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     const lTokens = getlTokenAddressPerNetwork(network);
     const variableDebtTokens = getVdTokenAddressPerNetwork(network);
     const { incentiveControllerProxy } = getIncentivesConfigPerNetwork(network);
-    const emissionTotal = parseEther('26406340');
 
     const emmissionsPerAssets = {
-      [lTokens.WASTR]: '191018084490740000',
-      [variableDebtTokens.WASTR]: '445708863811728000',
-      [lTokens.USDC]: '382036168981481000',
-      [variableDebtTokens.USDC]: '891417727623456000',
-      [lTokens.USDT]: '382036168981481000',
-      [variableDebtTokens.USDT]: '891417727623456000',
-      [lTokens.WETH]: '573054253472222000',
-      [variableDebtTokens.WETH]: '1337126591435180000',
-      [lTokens.WBTC]: '191018084490740000',
-      [variableDebtTokens.WBTC]: '445708863811728000',
-      [lTokens.WSDN]: '191018084490740000',
-      [variableDebtTokens.WSDN]: '445708863811728000',
-      [lTokens.DAI]: '382036168981481000',
-      [variableDebtTokens.DAI]: '891417727623456000',
-      [lTokens.BUSD]: '382036168981481000',
-      [variableDebtTokens.BUSD]: '891417727623456000',
-      [lTokens.MATIC]: '191018084490740000',
-      [variableDebtTokens.MATIC]: '445708863811728000',
-      [lTokens.BNB]: '191018084490740000',
-      [variableDebtTokens.BNB]: '445708863811728000',
+      [lTokens.WASTR]: '171916276041666666',
+      [variableDebtTokens.WASTR]: '401137977430555555',
+      [lTokens.USDC]: '343832552083333333',
+      [variableDebtTokens.USDC]: '802275954861111111',
+      [lTokens.USDT]: '343832552083333333',
+      [variableDebtTokens.USDT]: '802275954861111111',
+      [lTokens.WETH]: '515748828125000000',
+      [variableDebtTokens.WETH]: '1203413932291666666',
+      [lTokens.WBTC]: '171916276041666666',
+      [variableDebtTokens.WBTC]: '401137977430555555',
+      [lTokens.WSDN]: '171916276041666666',
+      [variableDebtTokens.WSDN]: '401137977430555555',
+      [lTokens.DAI]: '343832552083333333',
+      [variableDebtTokens.DAI]: '802275954861111111',
+      [lTokens.BUSD]: '343832552083333333',
+      [variableDebtTokens.BUSD]: '802275954861111111',
+      [lTokens.MATIC]: '171916276041666666',
+      [variableDebtTokens.MATIC]: '401137977430555555',
+      [lTokens.BNB]: '171916276041666666',
+      [variableDebtTokens.BNB]: '401137977430555555',
     };
 
     const incentivesControllerInstance = PullRewardsIncentivesController__factory.connect(
@@ -90,9 +89,9 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     console.log('set distribution end');
     const distEndTx = await waitForTx(
       await incentivesControllerInstance.setDistributionEnd(
-        (await getBlockTimestamp()) + 60 * 60 * 24 * 30
+        (await getBlockTimestamp()) + 60 * 60 * 24 * 7
       )
-    ); //current + seconds per month
+    ); //current + seconds per week
     console.log(distEndTx);
   }
 );
