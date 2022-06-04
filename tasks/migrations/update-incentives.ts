@@ -92,11 +92,17 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     console.log('set distribution end');
     const distEndTx = await waitForTx(
       await incentivesControllerInstance.setDistributionEnd(
-        // 28/6/2022 18:00:00
+        // 28/6/2022 8:00:00
         1656403200,
         { gasPrice: 1000 * 1000 * 1000 * 100 }
       )
     ); //current + seconds per month
     console.log(distEndTx);
+    console.log(
+      'new distribution end:',
+      await (
+        await incentivesControllerInstance.connect(emissionManager).DISTRIBUTION_END()
+      ).toNumber()
+    );
   }
 );
