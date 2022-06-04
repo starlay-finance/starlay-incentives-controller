@@ -96,7 +96,7 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
         1656403200,
         { gasPrice: 1000 * 1000 * 1000 * 100 }
       )
-    ); //current + seconds per week
+    ); //current + seconds per month
     console.log(distEndTx);
   }
 );
