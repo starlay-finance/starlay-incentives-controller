@@ -35,36 +35,36 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     if (!VAULT_OWNER_PRIVATE_KEY) {
       throw new Error('vault private key is empty');
     }
-    const provider = new JsonRpcProvider('https://astar.api.onfinality.io/public');
+    const provider = new JsonRpcProvider('https://evm.astar.network');
     const emissionManager = new Wallet(EMISSION_MANAGER_PRIVATE_KEY, provider);
-    //const [, emissionManager] = await getEthersSigners();
     const network = localBRE.network.name as eNetwork;
     const lTokens = getlTokenAddressPerNetwork(network);
     const variableDebtTokens = getVdTokenAddressPerNetwork(network);
     const { incentiveControllerProxy } = getIncentivesConfigPerNetwork(network);
-    const emissionTotal = parseEther('26406340');
 
     const emmissionsPerAssets = {
-      [lTokens.WASTR]: '191018084490740000',
-      [variableDebtTokens.WASTR]: '445708863811728000',
-      [lTokens.USDC]: '382036168981481000',
-      [variableDebtTokens.USDC]: '891417727623456000',
-      [lTokens.USDT]: '382036168981481000',
-      [variableDebtTokens.USDT]: '891417727623456000',
-      [lTokens.WETH]: '573054253472222000',
-      [variableDebtTokens.WETH]: '1337126591435180000',
-      [lTokens.WBTC]: '191018084490740000',
-      [variableDebtTokens.WBTC]: '445708863811728000',
-      [lTokens.WSDN]: '191018084490740000',
-      [variableDebtTokens.WSDN]: '445708863811728000',
-      [lTokens.DAI]: '382036168981481000',
-      [variableDebtTokens.DAI]: '891417727623456000',
-      [lTokens.BUSD]: '382036168981481000',
-      [variableDebtTokens.BUSD]: '891417727623456000',
-      [lTokens.MATIC]: '191018084490740000',
-      [variableDebtTokens.MATIC]: '445708863811728000',
-      [lTokens.BNB]: '191018084490740000',
-      [variableDebtTokens.BNB]: '445708863811728000',
+      [lTokens.WASTR]: '211589262820512820',
+      [variableDebtTokens.WASTR]: '493708279914529914',
+      [lTokens.USDC]: '211589262820512820',
+      [variableDebtTokens.USDC]: '493708279914529914',
+      [lTokens.USDT]: '211589262820512820',
+      [variableDebtTokens.USDT]: '493708279914529914',
+      [lTokens.WETH]: '211589262820512820',
+      [variableDebtTokens.WETH]: '493708279914529914',
+      [lTokens.WBTC]: '105794631410256410',
+      [variableDebtTokens.WBTC]: '246854139957264957',
+      [lTokens.WSDN]: '105794631410256410',
+      [variableDebtTokens.WSDN]: '246854139957264957',
+      [lTokens.DAI]: '211589262820512820',
+      [variableDebtTokens.DAI]: '493708279914529914',
+      [lTokens.BUSD]: '211589262820512820',
+      [variableDebtTokens.BUSD]: '493708279914529914',
+      [lTokens.MATIC]: '105794631410256410',
+      [variableDebtTokens.MATIC]: '246854139957264957',
+      [lTokens.BNB]: '105794631410256410',
+      [variableDebtTokens.BNB]: '246854139957264957',
+      [lTokens.DOT]: '1057946314102564102',
+      [variableDebtTokens.DOT]: '2468541399572649572',
     };
 
     const incentivesControllerInstance = PullRewardsIncentivesController__factory.connect(
@@ -78,21 +78,31 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
       ).toNumber()
     );
     console.log('em:', await incentivesControllerInstance.EMISSION_MANAGER());
-
-    const configurationTx = await waitForTx(
-      await incentivesControllerInstance.configureAssets(
-        Object.keys(emmissionsPerAssets),
-        Object.values(emmissionsPerAssets)
-      )
+    const tx = await incentivesControllerInstance.configureAssets(
+      Object.keys(emmissionsPerAssets),
+      Object.values(emmissionsPerAssets),
+      {
+        gasPrice: 1000 * 1000 * 1000 * 100,
+      }
     );
-    console.log(configurationTx);
+    console.log(tx);
+
+    await waitForTx(tx);
 
     console.log('set distribution end');
     const distEndTx = await waitForTx(
       await incentivesControllerInstance.setDistributionEnd(
-        (await getBlockTimestamp()) + 60 * 60 * 24 * 30
+        // 28/6/2022 8:00:00
+        1656403200,
+        { gasPrice: 1000 * 1000 * 1000 * 100 }
       )
     ); //current + seconds per month
     console.log(distEndTx);
+    console.log(
+      'new distribution end:',
+      await (
+        await incentivesControllerInstance.connect(emissionManager).DISTRIBUTION_END()
+      ).toNumber()
+    );
   }
 );

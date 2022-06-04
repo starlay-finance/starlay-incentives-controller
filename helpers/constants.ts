@@ -126,6 +126,7 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
         BUSD: ZERO_ADDRESS,
         MATIC: ZERO_ADDRESS,
         BNB: ZERO_ADDRESS,
+        DOT: ZERO_ADDRESS,
       },
       [eEthereumNetwork.rinkeby]: {
         LAY: ZERO_ADDRESS,
@@ -139,6 +140,7 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
         BUSD: ZERO_ADDRESS,
         MATIC: ZERO_ADDRESS,
         BNB: ZERO_ADDRESS,
+        DOT: ZERO_ADDRESS,
       },
       [eAstarNetwork.astar]: {
         LAY: '0x70A91e490Fd089fC8b2a3432858800AFB6Ceb539',
@@ -152,6 +154,7 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
         DAI: '0x4dd9c468A44F3FEF662c35c1E9a6108B70415C2c',
         MATIC: '0xF49Ab32B1B13A50eEe2022347A31a69524E83671',
         BNB: '0xd37991C23242439B0549c8328df5d83897D645AA',
+        DOT: '0x86EADed1F56ad656657b90D60483e1d0a5f7C20b',
       },
       [eAstarNetwork.shiden]: {
         LAY: '0x5E580CFfd8948DdDFfd42F36655b28ea3C6eD5ae',
@@ -165,6 +168,7 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
         DAI: '0x59448269aa5Cb875F27268368bB1913bF60580aD',
         MATIC: '0x61641f8Db169E26809f4CE542327caBCfD9BA8A2',
         BNB: '0x9AcE7af4A5Ec0df8e9D3da8218D064ce92D67097',
+        DOT: '0xbA331ffB7179FC4ec5c5bb54fe0A936F50ed964D',
       },
       [eAstarNetwork.shibuya]: {
         LAY: ZERO_ADDRESS,
@@ -178,6 +182,7 @@ export const getlTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEther
         BUSD: ZERO_ADDRESS,
         MATIC: ZERO_ADDRESS,
         BNB: ZERO_ADDRESS,
+        DOT: ZERO_ADDRESS,
       },
     },
     network
@@ -197,6 +202,7 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
         BUSD: ZERO_ADDRESS,
         MATIC: ZERO_ADDRESS,
         BNB: ZERO_ADDRESS,
+        DOT: ZERO_ADDRESS,
       },
       [eEthereumNetwork.rinkeby]: {
         LAY: ZERO_ADDRESS,
@@ -210,6 +216,7 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
         BUSD: ZERO_ADDRESS,
         MATIC: ZERO_ADDRESS,
         BNB: ZERO_ADDRESS,
+        DOT: ZERO_ADDRESS,
       },
       [eAstarNetwork.astar]: {
         LAY: '0xf75e34F38A4c610644F6Fae57b9Eb80B209Cb497',
@@ -223,6 +230,7 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
         DAI: '0x05F3Ca23EB9A2B9142Fb10CDaB1750B4D2162aC2',
         MATIC: '0xaED1B0Bf69f04177EDDe9B367a9AF85b1026701B',
         BNB: '0xAaf6b0D4adBEEb476Be5665F60E64bD2977DA393',
+        DOT: '0xD97C854a9a2BFeF5C74E327f7eCCb5e259CEFaf0',
       },
       [eAstarNetwork.shiden]: {
         LAY: '0x460cB4C2087ebe58ae4687cD788385840aC39cF2',
@@ -236,6 +244,7 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
         DAI: '0x55DC4F4A2e633E6249c36cc93C97b537DC9B1CFb',
         MATIC: '0x0159f0Ee7C4c5eE95eD173ea23EC89694c851201',
         BNB: '0x4dde6818CB50e329CDda1d5c68606f574637cB31',
+        DOT: '0x3Fb0F5f9670809eeD814391d33Cd82b0A4488C6D',
       },
       [eAstarNetwork.shibuya]: {
         LAY: ZERO_ADDRESS,
@@ -249,6 +258,7 @@ export const getVdTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthe
         BUSD: ZERO_ADDRESS,
         MATIC: ZERO_ADDRESS,
         BNB: ZERO_ADDRESS,
+        DOT: ZERO_ADDRESS,
       },
     },
     network
@@ -268,6 +278,7 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
         BUSD: ZERO_ADDRESS,
         MATIC: ZERO_ADDRESS,
         BNB: ZERO_ADDRESS,
+        DOT: ZERO_ADDRESS,
       },
       [eEthereumNetwork.rinkeby]: {
         LAY: ZERO_ADDRESS,
@@ -281,6 +292,7 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
         BUSD: ZERO_ADDRESS,
         MATIC: ZERO_ADDRESS,
         BNB: ZERO_ADDRESS,
+        DOT: ZERO_ADDRESS,
       },
       [eAstarNetwork.astar]: {
         LAY: '0xc4335B1b76fA6d52877b3046ECA68F6E708a27dd',
@@ -294,6 +306,7 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
         DAI: '0x6De33698e9e9b787e09d3Bd7771ef63557E148bb',
         MATIC: '0xdd90E5E87A2081Dcf0391920868eBc2FFB81a1aF',
         BNB: '0x7f27352D5F83Db87a5A3E00f4B07Cc2138D8ee52',
+        DOT: '0xffffffffffffffffffffffffffffffffffffffff',
       },
       [eAstarNetwork.shiden]: {
         LAY: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
@@ -307,6 +320,7 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
         BUSD: '0x0156412a53C6cc607135C7D6374913C5DDF8E55E',
         MATIC: '0xb0107B84C41eD7bda37495D318116FC42826a423',
         BNB: '0x9AcE7af4A5Ec0df8e9D3da8218D064ce92D67097',
+        DOT: '0x1135874985e7F1342bCa07201B102eFc1292b6d9',
       },
       [eAstarNetwork.shibuya]: {
         LAY: ZERO_ADDRESS,
@@ -320,6 +334,7 @@ export const getTokenAddressPerNetwork = (network: eNetwork): iAssetBase<tEthere
         BUSD: ZERO_ADDRESS,
         MATIC: ZERO_ADDRESS,
         BNB: ZERO_ADDRESS,
+        DOT: ZERO_ADDRESS,
       },
     },
     network
