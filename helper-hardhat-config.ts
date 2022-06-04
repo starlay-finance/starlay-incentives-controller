@@ -43,7 +43,7 @@ export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
   [eEthereumNetwork.hardhat]: 1 * GWEI,
   [eEthereumNetwork.buidlerevm]: 1 * GWEI,
   [eEthereumNetwork.tenderlyMain]: 1 * GWEI,
-  [eAstarNetwork.astar]: 5 * GWEI,
+  [eAstarNetwork.astar]: 10 * GWEI,
   [eAstarNetwork.shiden]: 1 * GWEI,
   [eAstarNetwork.shibuya]: 1 * GWEI,
 };

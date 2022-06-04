@@ -67,6 +67,7 @@ export interface iAssetBase<T> {
   BUSD: T;
   MATIC: T;
   BNB: T;
+  DOT: T;
 }
 
 export interface incentivesConfig {
