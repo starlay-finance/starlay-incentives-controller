@@ -11,11 +11,11 @@ import {IScaledBalanceToken} from '../../interfaces/IScaledBalanceToken.sol';
 import {IIncentivesController} from '../../interfaces/IIncentivesController.sol';
 
 /**
- * @title BaseIncentivesControllerV2
+ * @title BaseIncentivesControllerV3
  * @notice Abstract contract template to build Distributors contracts for ERC20 rewards to protocol participants
  * @author Starlay
  **/
-abstract contract BaseIncentivesControllerV2 is
+abstract contract BaseIncentivesControllerV3 is
   IIncentivesController,
   VersionedInitializable,
   DistributionManager
@@ -35,10 +35,7 @@ abstract contract BaseIncentivesControllerV2 is
   mapping(address => bool) internal _whitelistedClaimers;
 
   modifier onlyAuthorizedClaimers(address claimer, address user) {
-    if (_whitelistedClaimers[claimer]) {
-      return;
-    }
-    require(_authorizedClaimers[user] == claimer, 'CLAIMER_UNAUTHORIZED');
+    require((_authorizedClaimers[user] == claimer || _whitelistedClaimers[claimer]), 'CLAIMER_UNAUTHORIZED');
     _;
   }
 
@@ -46,11 +43,11 @@ abstract contract BaseIncentivesControllerV2 is
     REWARD_TOKEN = address(rewardToken);
   }
 
-  function addWhitelistedClaimer(address claimer) onlyEmissionManager {
+  function addWhitelistedClaimer(address claimer) public onlyEmissionManager {
     _whitelistedClaimers[claimer] = true;
   }
 
-  function removeWhitelistedClaimer(address claimer) onlyEmissionManager {
+  function removeWhitelistedClaimer(address claimer) public onlyEmissionManager {
     _whitelistedClaimers[claimer] = false;
   }
 
