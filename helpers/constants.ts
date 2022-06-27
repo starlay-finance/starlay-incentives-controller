@@ -80,7 +80,7 @@ export const getLayTokenPerNetwork = (network: eNetwork): tEthereumAddress =>
     {
       [eEthereumNetwork.kovan]: '',
       [eEthereumNetwork.rinkeby]: '',
-      [eAstarNetwork.astar]: '',
+      [eAstarNetwork.astar]: '0xc4335B1b76fA6d52877b3046ECA68F6E708a27dd',
       [eAstarNetwork.shiden]: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
       [eAstarNetwork.shibuya]: '',
     },
@@ -363,7 +363,7 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
       },
       [eAstarNetwork.astar]: {
         addressProvider: '0x4c37A76Bf49c01f91E275d5257a228dad1b74EF9',
-        rewardsVault: '0x4C9d9C197880810724b8eCC3b47b279C9763EC2B',
+        rewardsVault: '0x43822E69852Ca59211bBC1Bd429feAb6A62A9f44',
         incentiveControllerImpl: '0x83e98264Cd6f39D41501e5ef86a8b924BCC82D1e',
         incentiveControllerProxy: '0x97Ab79B80E8904214413D8219E8B04373D1030AD',
         lendingPool: '0x90384334333f3356eFDD5b20016350843b90f182',

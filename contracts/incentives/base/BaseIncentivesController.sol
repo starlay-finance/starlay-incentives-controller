@@ -117,6 +117,7 @@ abstract contract BaseIncentivesController is
     return _claimRewards(assets, amount, msg.sender, user, to);
   }
 
+
   /// @inheritdoc IIncentivesController
   function claimRewardsToSelf(address[] calldata assets, uint256 amount)
     external
