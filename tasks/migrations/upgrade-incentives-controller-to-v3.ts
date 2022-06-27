@@ -37,7 +37,7 @@ task(
   const admin = new Wallet(INCENTIVES_CONTROLLER_ADMIN_PRIVATE_KEY, provider);
   const network = localBRE.network.name as eNetwork;
   const { rewardsVault, incentiveControllerProxy } = getIncentivesConfigPerNetwork(network);
-  console.log(`[PullRewardsIncentivesControllerV2] Starting deployment:`);
+  console.log(`[PullRewardsIncentivesControllerV3] Starting deployment:`);
   console.log(`  - Network name: ${networkName}`);
   const incentivesControllerV3Impl = await deployPullRewardsIncentivesControllerV3([rewardToken]);
   console.log(
