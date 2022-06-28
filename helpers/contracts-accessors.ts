@@ -17,6 +17,7 @@ import {
   StakedTokenIncentivesController,
   StakedTokenIncentivesController__factory,
   PullRewardsIncentivesControllerV2__factory,
+  PullRewardsIncentivesControllerV3__factory,
 } from '../types';
 import { DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { Signer } from 'ethers';
@@ -69,6 +70,22 @@ export const deployPullRewardsIncentivesControllerV2 = async (
   return instance;
 };
 
+export const deployPullRewardsIncentivesControllerV3 = async (
+  [rewardToken]: [tEthereumAddress],
+  verify?: boolean,
+  signer?: Signer | DefenderRelaySigner
+) => {
+  const args: [string] = [rewardToken];
+  const instance = await new PullRewardsIncentivesControllerV3__factory(
+    signer || (await getFirstSigner())
+  ).deploy(args[0]);
+  await instance.deployTransaction.wait();
+  if (verify) {
+    await verifyContract(instance.address, args);
+  }
+  return instance;
+};
+
 export const deployInitializableAdminUpgradeabilityProxy = async (verify?: boolean) => {
   const args: string[] = [];
   const instance = await new InitializableAdminUpgradeabilityProxy__factory(
@@ -91,9 +108,8 @@ export const deployLTokenMock = async (aicAddress: tEthereumAddress, slug: strin
 
 export const getMintableErc20 = getContractFactory<MintableErc20>(eContractid.MintableErc20);
 
-export const getStakedTokenIncentivesController = getContractFactory<StakedTokenIncentivesController>(
-  eContractid.StakedTokenIncentivesController
-);
+export const getStakedTokenIncentivesController =
+  getContractFactory<StakedTokenIncentivesController>(eContractid.StakedTokenIncentivesController);
 
 export const getIncentivesController = async (address: tEthereumAddress) =>
   StakedTokenIncentivesController__factory.connect(address, await getFirstSigner());

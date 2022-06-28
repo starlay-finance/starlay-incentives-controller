@@ -11,18 +11,18 @@ import {IScaledBalanceToken} from '../../interfaces/IScaledBalanceToken.sol';
 import {IIncentivesController} from '../../interfaces/IIncentivesController.sol';
 
 /**
- * @title BaseIncentivesController
+ * @title BaseIncentivesControllerV3
  * @notice Abstract contract template to build Distributors contracts for ERC20 rewards to protocol participants
  * @author Starlay
  **/
-abstract contract BaseIncentivesController is
+abstract contract BaseIncentivesControllerV3 is
   IIncentivesController,
   VersionedInitializable,
   DistributionManager
 {
   using SafeMath for uint256;
 
-  uint256 public constant REVISION = 1;
+  uint256 public constant REVISION = 3;
 
   address public immutable override REWARD_TOKEN;
 
@@ -32,14 +32,23 @@ abstract contract BaseIncentivesController is
   // useful for contracts that hold tokens to be rewarded but don't have any native logic to claim Liquidity Mining rewards
   mapping(address => address) internal _authorizedClaimers;
 
+  mapping(address => bool) internal _whitelistedClaimers;
+
   modifier onlyAuthorizedClaimers(address claimer, address user) {
-    require(_authorizedClaimers[user] == claimer, 'CLAIMER_UNAUTHORIZED');
+    require((_authorizedClaimers[user] == claimer || _whitelistedClaimers[claimer]), 'CLAIMER_UNAUTHORIZED');
     _;
   }
 
   constructor(IERC20 rewardToken) {
-    require(address(rewardToken) != address(0), 'INVALID_REWARD_ADDRESS');
     REWARD_TOKEN = address(rewardToken);
+  }
+
+  function addWhitelistedClaimer(address claimer) public onlyEmissionManager {
+    _whitelistedClaimers[claimer] = true;
+  }
+
+  function removeWhitelistedClaimer(address claimer) public onlyEmissionManager {
+    _whitelistedClaimers[claimer] = false;
   }
 
   /// @inheritdoc IIncentivesController
@@ -50,11 +59,14 @@ abstract contract BaseIncentivesController is
   {
     require(assets.length == emissionsPerSecond.length, 'INVALID_CONFIGURATION');
 
-    DistributionTypes.AssetConfigInput[] memory assetsConfig =
-      new DistributionTypes.AssetConfigInput[](assets.length);
+    DistributionTypes.AssetConfigInput[]
+      memory assetsConfig = new DistributionTypes.AssetConfigInput[](assets.length);
 
     for (uint256 i = 0; i < assets.length; i++) {
-      require(uint104(emissionsPerSecond[i]) == emissionsPerSecond[i], 'Index overflow at emissionsPerSecond');
+      require(
+        uint104(emissionsPerSecond[i]) == emissionsPerSecond[i],
+        'Index overflow at emissionsPerSecond'
+      );
       assetsConfig[i].underlyingAsset = assets[i];
       assetsConfig[i].emissionPerSecond = uint104(emissionsPerSecond[i]);
       assetsConfig[i].totalStaked = IScaledBalanceToken(assets[i]).scaledTotalSupply();
@@ -84,8 +96,9 @@ abstract contract BaseIncentivesController is
   {
     uint256 unclaimedRewards = _usersUnclaimedRewards[user];
 
-    DistributionTypes.UserStakeInput[] memory userState =
-      new DistributionTypes.UserStakeInput[](assets.length);
+    DistributionTypes.UserStakeInput[] memory userState = new DistributionTypes.UserStakeInput[](
+      assets.length
+    );
     for (uint256 i = 0; i < assets.length; i++) {
       userState[i].underlyingAsset = assets[i];
       (userState[i].stakedByUser, userState[i].totalStaked) = IScaledBalanceToken(assets[i])
@@ -116,7 +129,6 @@ abstract contract BaseIncentivesController is
     require(to != address(0), 'INVALID_TO_ADDRESS');
     return _claimRewards(assets, amount, msg.sender, user, to);
   }
-
 
   /// @inheritdoc IIncentivesController
   function claimRewardsToSelf(address[] calldata assets, uint256 amount)
@@ -170,8 +182,9 @@ abstract contract BaseIncentivesController is
     uint256 unclaimedRewards = _usersUnclaimedRewards[user];
 
     if (amount > unclaimedRewards) {
-      DistributionTypes.UserStakeInput[] memory userState =
-        new DistributionTypes.UserStakeInput[](assets.length);
+      DistributionTypes.UserStakeInput[] memory userState = new DistributionTypes.UserStakeInput[](
+        assets.length
+      );
       for (uint256 i = 0; i < assets.length; i++) {
         userState[i].underlyingAsset = assets[i];
         (userState[i].stakedByUser, userState[i].totalStaked) = IScaledBalanceToken(assets[i])
