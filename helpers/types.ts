@@ -15,6 +15,8 @@ export enum eContractid {
   MockSelfDestruct = 'MockSelfDestruct',
   StakedLayV2 = 'StakedLayV2',
   PullRewardsIncentivesController = 'PullRewardsIncentivesController',
+  LendingPoolMock = 'LendingPoolMock',
+  VoterMock = 'VoterMock',
 }
 
 export enum eEthereumNetwork {

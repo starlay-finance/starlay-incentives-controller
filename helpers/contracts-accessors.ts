@@ -21,6 +21,9 @@ import {
 } from '../types';
 import { DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { Signer } from 'ethers';
+import { LendingPoolMock } from '../types';
+import { VoterMock } from '../types';
+import { PullRewardsIncentivesControllerV4__factory } from '../types';
 
 export const deployStakedTokenIncentivesController = async (
   [psm]: [tEthereumAddress],
@@ -85,6 +88,20 @@ export const deployPullRewardsIncentivesControllerV3 = async (
   }
   return instance;
 };
+export const deployPullRewardsIncentivesControllerV4 = async (
+  rewardToken: tEthereumAddress,
+  verify?: boolean,
+  signer?: Signer | DefenderRelaySigner
+) => {
+  const instance = await new PullRewardsIncentivesControllerV4__factory(
+    signer || (await getFirstSigner())
+  ).deploy(rewardToken);
+  await instance.deployTransaction.wait();
+  if (verify) {
+    await verifyContract(instance.address, [rewardToken]);
+  }
+  return instance;
+};
 
 export const deployInitializableAdminUpgradeabilityProxy = async (verify?: boolean) => {
   const args: string[] = [];
@@ -104,6 +121,19 @@ export const deployMintableErc20 = async ([name, symbol]: [string, string]) =>
 export const deployLTokenMock = async (aicAddress: tEthereumAddress, slug: string) => {
   const instance = await deployContract<LTokenMock>(eContractid.LTokenMock, [aicAddress]);
   await registerContractInJsonDb(`${eContractid.LTokenMock}-${slug}`, instance);
+  return instance
+};
+
+export const deployLendingPoolMock = async () => {
+  const instance = await deployContract<LendingPoolMock>(eContractid.LendingPoolMock, []);
+  await registerContractInJsonDb(`${eContractid.LendingPoolMock}`, instance);
+  return instance;
+};
+
+export const deployVoterMock = async () => {
+  const instance = await deployContract<VoterMock>(eContractid.VoterMock, []);
+  await registerContractInJsonDb(`${eContractid.VoterMock}`, instance);
+  return instance;
 };
 
 export const getMintableErc20 = getContractFactory<MintableErc20>(eContractid.MintableErc20);
