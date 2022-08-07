@@ -18,7 +18,6 @@ import {
   StakedTokenIncentivesController__factory,
   PullRewardsIncentivesControllerV2__factory,
   PullRewardsIncentivesControllerV3__factory,
-  ScaledBalanceTokenMock,
 } from '../types';
 import { DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { Signer } from 'ethers';
