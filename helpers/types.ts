@@ -80,6 +80,7 @@ export interface incentivesConfig {
   rewardsVault: tEthereumAddress;
   incentiveControllerProxy: tEthereumAddress;
   incentiveControllerImpl: tEthereumAddress;
+  voter: tEthereumAddress;
 }
 
 export type tEthereumAddress = string;
