@@ -26,7 +26,7 @@ contract PullRewardsIncentivesControllerV4 is BaseIncentivesControllerV3 {
   // [deposit, borrow]
   uint256[2] public depositBorrowWeights = [1, 1];
 
-  mapping(uint256 => uint256) public emissionPerSecondsByTerm;
+  uint256 public emissionIn30Days;
 
   address internal _rewardsVault;
 
@@ -118,26 +118,28 @@ contract PullRewardsIncentivesControllerV4 is BaseIncentivesControllerV3 {
     uint256 borrowWeight = depositBorrowWeights[1];
     uint256 totalDepositBorrowWeight = depositWeight + borrowWeight;
     // get total emission per seconds of term
-    uint256 emissionPerSecond = emissionPerSecondsByTerm[term];
+    uint256 depositTotalEmission = (emissionIn30Days * depositWeight) / totalDepositBorrowWeight;
+    uint256 borrowTotalEmission = (emissionIn30Days * borrowWeight) / totalDepositBorrowWeight;
 
     // calc each emission per second
     DistributionTypes.AssetConfigInput[]
       memory assetsConfig = new DistributionTypes.AssetConfigInput[](reserves.length * 2);
     for (uint256 i = 0; i < reserves.length; i++) {
-      uint256 reserveEmissionPerSecond = totalWeight == 0
-        ? 0
-        : (emissionPerSecond * weights[i]) / totalWeight;
       uint256 lTokenIndex = i * 2;
       assetsConfig[lTokenIndex].underlyingAsset = lTokens[i];
       assetsConfig[lTokenIndex].emissionPerSecond = uint104(
-        (reserveEmissionPerSecond * depositWeight) / totalDepositBorrowWeight
+        totalWeight == 0
+        ? 0
+        : weights[i] * depositTotalEmission / totalWeight / 30 days
       );
       assetsConfig[lTokenIndex].totalStaked = IScaledBalanceToken(lTokens[i]).scaledTotalSupply();
 
       uint256 vdTokenIndex = lTokenIndex + 1;
       assetsConfig[vdTokenIndex].underlyingAsset = vdTokens[i];
       assetsConfig[vdTokenIndex].emissionPerSecond = uint104(
-        (reserveEmissionPerSecond * borrowWeight) / totalDepositBorrowWeight
+        totalWeight == 0
+        ? 0
+        :  weights[i] * borrowTotalEmission / totalWeight / 30 days
       );
       assetsConfig[vdTokenIndex].totalStaked = IScaledBalanceToken(vdTokens[i]).scaledTotalSupply();
     }
@@ -153,12 +155,10 @@ contract PullRewardsIncentivesControllerV4 is BaseIncentivesControllerV3 {
     depositBorrowWeights[1] = borrowWeight;
   }
 
-  function setEmissionPerSeconds(uint256[] memory terms, uint256[] memory emissionPerSeconds)
+  function setEmissionIn30Days(uint256 _emissionIn30Days)
     external
     onlyEmissionManager
   {
-    for (uint256 i = 0; i < terms.length; i++) {
-      emissionPerSecondsByTerm[terms[i]] = emissionPerSeconds[i];
-    }
+      emissionIn30Days = _emissionIn30Days;
   }
 }
