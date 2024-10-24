@@ -85,6 +85,16 @@ contract PullRewardsIncentivesControllerV4 is BaseIncentivesControllerV3 {
   }
 
   function configureAssetsWithVoter() external {
+    uint256 term = IVoter(_voter).currentTermTimestamp();
+    // revert if already applied
+    require(term > lastAppliedTerm, 'Already Applied');
+    
+    _configureAssets(calculateConfigFromVote(term));
+    // save applied term
+    lastAppliedTerm = term;
+  }
+
+  function calculateConfigFromVote(uint256 term) public view returns (DistributionTypes.AssetConfigInput[] memory) {
     // get assets
     address[] memory reserves = ILendingPool(_pool).getReservesList();
     require(reserves.length > 0, 'No Reserves Found');
@@ -97,9 +107,6 @@ contract PullRewardsIncentivesControllerV4 is BaseIncentivesControllerV3 {
     }
 
     // get vote results
-    uint256 term = IVoter(_voter).currentTermTimestamp();
-    // revert if already applied
-    require(term > lastAppliedTerm, 'Already Applied');
     uint256 totalWeight = IVoter(_voter).totalWeight(term);
     uint256[] memory weights = new uint256[](reserves.length);
     for (uint256 i = 0; i < lTokens.length; i++) {
@@ -134,10 +141,8 @@ contract PullRewardsIncentivesControllerV4 is BaseIncentivesControllerV3 {
       );
       assetsConfig[vdTokenIndex].totalStaked = IScaledBalanceToken(vdTokens[i]).scaledTotalSupply();
     }
-    _configureAssets(assetsConfig);
-
-    // save applied term
-    lastAppliedTerm = term;
+    
+    return assetsConfig;
   }
 
   function setDepositBorrowWeight(uint256 depositWeight, uint256 borrowWeight)
