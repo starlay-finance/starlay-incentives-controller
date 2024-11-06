@@ -18,7 +18,7 @@ import {BaseIncentivesControllerV3} from './base/BaseIncentivesControllerV3.sol'
  * @notice Distributor contract for ERC20 rewards to the protocol participants that pulls ERC20 from external account
  * @author Starlay
  **/
-contract PullRewardsIncentivesControllerV4 is BaseIncentivesControllerV3 {
+contract PullRewardsIncentivesControllerV4 is BaseIncentivesControllerV4 {
   using SafeERC20 for IERC20;
 
   uint256 public lastAppliedTerm;
