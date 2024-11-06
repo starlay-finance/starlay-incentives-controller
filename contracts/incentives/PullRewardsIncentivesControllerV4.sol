@@ -11,7 +11,7 @@ import {IVoter} from '../interfaces/IVoter.sol';
 import {DataTypes} from '../utils/DataTypes.sol';
 import {DistributionTypes} from '../lib/DistributionTypes.sol';
 
-import {BaseIncentivesControllerV3} from './base/BaseIncentivesControllerV3.sol';
+import {BaseIncentivesControllerV4} from './base/BaseIncentivesControllerV4.sol';
 
 /**
  * @title PullRewardsIncentivesController
@@ -36,7 +36,7 @@ contract PullRewardsIncentivesControllerV4 is BaseIncentivesControllerV4 {
 
   event RewardsVaultUpdated(address indexed vault);
 
-  constructor(IERC20 rewardToken) BaseIncentivesControllerV3(rewardToken) {}
+  constructor(IERC20 rewardToken) BaseIncentivesControllerV4(rewardToken) {}
 
   /**
    * @dev Initialize BaseIncentivesController
@@ -72,7 +72,7 @@ contract PullRewardsIncentivesControllerV4 is BaseIncentivesControllerV4 {
     emit RewardsVaultUpdated(rewardsVault);
   }
 
-  /// @inheritdoc BaseIncentivesControllerV3
+  /// @inheritdoc BaseIncentivesControllerV4
   function _transferRewards(address to, uint256 amount) internal override {
     IERC20(REWARD_TOKEN).safeTransferFrom(_rewardsVault, to, amount);
   }
