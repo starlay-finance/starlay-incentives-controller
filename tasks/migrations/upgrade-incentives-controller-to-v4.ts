@@ -37,6 +37,8 @@ task(
 
   const emissionManager = new Wallet(EMISSION_MANAGER_PRIVATE_KEY, provider);
   const admin = new Wallet(INCENTIVES_CONTROLLER_ADMIN_PRIVATE_KEY, provider);
+  const adminAddress =await admin.getAddress();
+  console.log("admin address*", adminAddress)
   const network = localBRE.network.name as eNetwork;
   const { rewardsVault, lendingPool, voter, incentiveControllerProxy } =
     getIncentivesConfigPerNetwork(network);
