@@ -18,6 +18,7 @@ import {
   StakedTokenIncentivesController__factory,
   PullRewardsIncentivesControllerV2__factory,
   PullRewardsIncentivesControllerV3__factory,
+  PullRewardsIncentivesControllerV5__factory,
 } from '../types';
 import { DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { Signer } from 'ethers';
@@ -94,6 +95,20 @@ export const deployPullRewardsIncentivesControllerV4 = async (
   signer?: Signer | DefenderRelaySigner
 ) => {
   const instance = await new PullRewardsIncentivesControllerV4__factory(
+    signer || (await getFirstSigner())
+  ).deploy(rewardToken);
+  await instance.deployTransaction.wait();
+  if (verify) {
+    await verifyContract(instance.address, [rewardToken]);
+  }
+  return instance;
+};
+export const deployPullRewardsIncentivesControllerV5 = async (
+  rewardToken: tEthereumAddress,
+  verify?: boolean,
+  signer?: Signer | DefenderRelaySigner
+) => {
+  const instance = await new PullRewardsIncentivesControllerV5__factory(
     signer || (await getFirstSigner())
   ).deploy(rewardToken);
   await instance.deployTransaction.wait();
