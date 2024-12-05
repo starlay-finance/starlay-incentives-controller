@@ -352,6 +352,10 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
         poolConfigurator: ZERO_ADDRESS,
         starlayToken: ZERO_ADDRESS,
         voter: ZERO_ADDRESS,
+        weight: {
+          deposit: 3,
+          borrow: 7,
+        },
       },
       [eEthereumNetwork.rinkeby]: {
         addressProvider: ZERO_ADDRESS,
@@ -362,6 +366,10 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
         poolConfigurator: ZERO_ADDRESS,
         starlayToken: ZERO_ADDRESS,
         voter: ZERO_ADDRESS,
+        weight: {
+          deposit: 3,
+          borrow: 7,
+        },
       },
       [eAstarNetwork.astar]: {
         addressProvider: '0x4c37A76Bf49c01f91E275d5257a228dad1b74EF9',
@@ -372,6 +380,10 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
         poolConfigurator: '0xa1c2ED9e0d09f5e441aC9C44AFa308D38dAf463c',
         starlayToken: '0xc4335B1b76fA6d52877b3046ECA68F6E708a27dd',
         voter: '0xB45Ae34e16D97D87c021DAf03a15142935cFB177',
+        weight: {
+          deposit: 3,
+          borrow: 7,
+        },
       },
       [eAstarNetwork.shiden]: {
         addressProvider: '0xa70fFbaFE4B048798bBCBDdfB995fcCec2D1f2CA',
@@ -381,6 +393,10 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
         lendingPool: '0x8022327a333eAeFaD46A723CDcA1aeFdA12afA53',
         poolConfigurator: '0x1aE33143380567fe1246bE4Be5008B7bFa25790A',
         starlayToken: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
+        weight: {
+          deposit: 3,
+          borrow: 7,
+        },
         voter: ZERO_ADDRESS,
       },
       [eAstarNetwork.shibuya]: {
@@ -392,6 +408,10 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
         poolConfigurator: ZERO_ADDRESS,
         starlayToken: ZERO_ADDRESS,
         voter: ZERO_ADDRESS,
+        weight: {
+          deposit: 3,
+          borrow: 7,
+        },
       },
     },
     network

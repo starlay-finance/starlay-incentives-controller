@@ -81,6 +81,10 @@ export interface incentivesConfig {
   incentiveControllerProxy: tEthereumAddress;
   incentiveControllerImpl: tEthereumAddress;
   voter: tEthereumAddress;
+  weight: {
+    deposit: number;
+    borrow: number;
+  };
 }
 
 export type tEthereumAddress = string;
