@@ -24,7 +24,7 @@ task('update-emission', 'Update emissionIn30days').setAction(async ({}, localBRE
   if (!emissionIn30Days) {
     throw new Error('emissionIn30Days is not defined');
   }
-  console.log(`[PullRewardsIncentivesControllerV5] Update deposit borrow weights:`);
+  console.log(`[PullRewardsIncentivesControllerV5] Update emissionIn30Days:`);
   console.log(`  - Network name: ${networkName}`);
   const incentivesControllerProxy = PullRewardsIncentivesControllerV5__factory.connect(
     incentiveControllerProxy,
