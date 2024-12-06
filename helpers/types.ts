@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { ethers } from 'ethers';
 
 export interface SymbolMap<T> {
   [symbol: string]: T;
@@ -85,6 +86,7 @@ export interface incentivesConfig {
     deposit: number;
     borrow: number;
   };
+  emissionIn30Days: ethers.BigNumber | undefined;
 }
 
 export type tEthereumAddress = string;

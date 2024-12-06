@@ -10,6 +10,7 @@ import {
   iAssetBase,
   incentivesConfig,
 } from './types';
+import { parseEther } from 'ethers/lib/utils';
 
 // ----------------
 // MATH
@@ -356,6 +357,7 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
           deposit: 3,
           borrow: 7,
         },
+        emissionIn30Days: undefined,
       },
       [eEthereumNetwork.rinkeby]: {
         addressProvider: ZERO_ADDRESS,
@@ -370,6 +372,7 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
           deposit: 3,
           borrow: 7,
         },
+        emissionIn30Days: undefined,
       },
       [eAstarNetwork.astar]: {
         addressProvider: '0x4c37A76Bf49c01f91E275d5257a228dad1b74EF9',
@@ -384,6 +387,7 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
           deposit: 3,
           borrow: 7,
         },
+        emissionIn30Days: parseEther('2889354'),
       },
       [eAstarNetwork.shiden]: {
         addressProvider: '0xa70fFbaFE4B048798bBCBDdfB995fcCec2D1f2CA',
@@ -397,6 +401,7 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
           deposit: 3,
           borrow: 7,
         },
+        emissionIn30Days: undefined,
         voter: ZERO_ADDRESS,
       },
       [eAstarNetwork.shibuya]: {
@@ -412,6 +417,7 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
           deposit: 3,
           borrow: 7,
         },
+        emissionIn30Days: undefined,
       },
     },
     network
