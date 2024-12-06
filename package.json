@@ -41,6 +41,7 @@
     "update:incentives:astar": "npm run hardhat:astar -- update-incentives",
     "update:incentives:shiden": "npm run hardhat:shiden -- update-incentives",
     "update:weight:astar": "npm run hardhat:astar -- update-deposit-borrow-weight",
+    "update:emission:astar": "npm run hardhat:astar -- update-deposit-borrow-weight",
     "upgrade:pull-rewards-controller-impl-v4:astar": "npm run hardhat:astar -- upgrade-incentives-controller-to-v4",
     "upgrade:pull-rewards-controller-impl-v5:astar": "npm run hardhat:astar -- upgrade-incentives-controller-to-5",
     "upgrade:pull-rewards-controller-impl-v4_:astar": "ts-node tasks/migrations/upgrade-incentives-controller-to-v4_.ts",
