@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { ethers } from 'ethers';
 
 export interface SymbolMap<T> {
   [symbol: string]: T;
@@ -15,6 +16,8 @@ export enum eContractid {
   MockSelfDestruct = 'MockSelfDestruct',
   StakedLayV2 = 'StakedLayV2',
   PullRewardsIncentivesController = 'PullRewardsIncentivesController',
+  LendingPoolMock = 'LendingPoolMock',
+  VoterMock = 'VoterMock',
 }
 
 export enum eEthereumNetwork {
@@ -78,6 +81,12 @@ export interface incentivesConfig {
   rewardsVault: tEthereumAddress;
   incentiveControllerProxy: tEthereumAddress;
   incentiveControllerImpl: tEthereumAddress;
+  voter: tEthereumAddress;
+  weight: {
+    deposit: number;
+    borrow: number;
+  };
+  emissionIn30Days: ethers.BigNumber | undefined;
 }
 
 export type tEthereumAddress = string;

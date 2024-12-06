@@ -10,6 +10,7 @@ import {
   iAssetBase,
   incentivesConfig,
 } from './types';
+import { parseEther } from 'ethers/lib/utils';
 
 // ----------------
 // MATH
@@ -104,7 +105,7 @@ export const getRewardVaultPerNetwork = (network: eNetwork): tEthereumAddress =>
     {
       [eEthereumNetwork.kovan]: ZERO_ADDRESS,
       [eEthereumNetwork.rinkeby]: ZERO_ADDRESS,
-      [eAstarNetwork.astar]: '0x4C9d9C197880810724b8eCC3b47b279C9763EC2B',
+      [eAstarNetwork.astar]: '0x43822E69852Ca59211bBC1Bd429feAb6A62A9f44',
       [eAstarNetwork.shiden]: '0x6c08Fa7210c69Cc258729E8d864dE05bd1A2E7BD',
       [eAstarNetwork.shibuya]: ZERO_ADDRESS,
     },
@@ -351,6 +352,12 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
         lendingPool: ZERO_ADDRESS,
         poolConfigurator: ZERO_ADDRESS,
         starlayToken: ZERO_ADDRESS,
+        voter: ZERO_ADDRESS,
+        weight: {
+          deposit: 3,
+          borrow: 7,
+        },
+        emissionIn30Days: undefined,
       },
       [eEthereumNetwork.rinkeby]: {
         addressProvider: ZERO_ADDRESS,
@@ -360,6 +367,12 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
         lendingPool: ZERO_ADDRESS,
         poolConfigurator: ZERO_ADDRESS,
         starlayToken: ZERO_ADDRESS,
+        voter: ZERO_ADDRESS,
+        weight: {
+          deposit: 3,
+          borrow: 7,
+        },
+        emissionIn30Days: undefined,
       },
       [eAstarNetwork.astar]: {
         addressProvider: '0x4c37A76Bf49c01f91E275d5257a228dad1b74EF9',
@@ -369,6 +382,12 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
         lendingPool: '0x90384334333f3356eFDD5b20016350843b90f182',
         poolConfigurator: '0xa1c2ED9e0d09f5e441aC9C44AFa308D38dAf463c',
         starlayToken: '0xc4335B1b76fA6d52877b3046ECA68F6E708a27dd',
+        voter: '0xB45Ae34e16D97D87c021DAf03a15142935cFB177',
+        weight: {
+          deposit: 3,
+          borrow: 7,
+        },
+        emissionIn30Days: parseEther('2889354'),
       },
       [eAstarNetwork.shiden]: {
         addressProvider: '0xa70fFbaFE4B048798bBCBDdfB995fcCec2D1f2CA',
@@ -378,6 +397,12 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
         lendingPool: '0x8022327a333eAeFaD46A723CDcA1aeFdA12afA53',
         poolConfigurator: '0x1aE33143380567fe1246bE4Be5008B7bFa25790A',
         starlayToken: '0xb163716cb6c8b0a56e4f57c394A50F173E34181b',
+        weight: {
+          deposit: 3,
+          borrow: 7,
+        },
+        emissionIn30Days: undefined,
+        voter: ZERO_ADDRESS,
       },
       [eAstarNetwork.shibuya]: {
         addressProvider: ZERO_ADDRESS,
@@ -387,6 +412,12 @@ export const getIncentivesConfigPerNetwork = (network: eNetwork): incentivesConf
         lendingPool: ZERO_ADDRESS,
         poolConfigurator: ZERO_ADDRESS,
         starlayToken: ZERO_ADDRESS,
+        voter: ZERO_ADDRESS,
+        weight: {
+          deposit: 3,
+          borrow: 7,
+        },
+        emissionIn30Days: undefined,
       },
     },
     network
