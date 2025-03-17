@@ -28,12 +28,8 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     // TODO: rpc url by environments
     await localBRE.run('set-DRE');
     const EMISSION_MANAGER_PRIVATE_KEY = process.env.EMISSION_MANAGER_PRIVATE_KEY || '';
-    const VAULT_OWNER_PRIVATE_KEY = process.env.VAULT_OWNER_PRIVATE_KEY || '';
     if (!EMISSION_MANAGER_PRIVATE_KEY) {
       throw new Error('emission manager private key is empty');
-    }
-    if (!VAULT_OWNER_PRIVATE_KEY) {
-      throw new Error('vault private key is empty');
     }
     const provider = new JsonRpcProvider('https://evm.astar.network');
     const emissionManager = new Wallet(EMISSION_MANAGER_PRIVATE_KEY, provider);
@@ -43,28 +39,28 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     const { incentiveControllerProxy } = getIncentivesConfigPerNetwork(network);
 
     const emmissionsPerAssets = {
-      [lTokens.WASTR]: '211589262820512820',
-      [variableDebtTokens.WASTR]: '493708279914529914',
-      [lTokens.USDC]: '211589262820512820',
-      [variableDebtTokens.USDC]: '493708279914529914',
-      [lTokens.USDT]: '211589262820512820',
-      [variableDebtTokens.USDT]: '493708279914529914',
-      [lTokens.WETH]: '211589262820512820',
-      [variableDebtTokens.WETH]: '493708279914529914',
-      [lTokens.WBTC]: '105794631410256410',
-      [variableDebtTokens.WBTC]: '246854139957264957',
-      [lTokens.WSDN]: '105794631410256410',
-      [variableDebtTokens.WSDN]: '246854139957264957',
-      [lTokens.DAI]: '211589262820512820',
-      [variableDebtTokens.DAI]: '493708279914529914',
-      [lTokens.BUSD]: '211589262820512820',
-      [variableDebtTokens.BUSD]: '493708279914529914',
-      [lTokens.MATIC]: '105794631410256410',
-      [variableDebtTokens.MATIC]: '246854139957264957',
-      [lTokens.BNB]: '105794631410256410',
-      [variableDebtTokens.BNB]: '246854139957264957',
-      [lTokens.DOT]: '1057946314102564102',
-      [variableDebtTokens.DOT]: '2468541399572649572',
+      [lTokens.WASTR]: '165039621913580246',
+      [variableDebtTokens.WASTR]: '385092451131687242',
+      [lTokens.USDC]: '165039621913580246',
+      [variableDebtTokens.USDC]: '385092451131687242',
+      [lTokens.USDT]: '165039621913580246',
+      [variableDebtTokens.USDT]: '385092451131687242',
+      [lTokens.WETH]: '82519810956790123',
+      [variableDebtTokens.WETH]: '192546225565843621',
+      [lTokens.WBTC]: '82519810956790123',
+      [variableDebtTokens.WBTC]: '192546225565843621',
+      [lTokens.WSDN]: '82519810956790123',
+      [variableDebtTokens.WSDN]: '192546225565843621',
+      [lTokens.DAI]: '165039621913580246',
+      [variableDebtTokens.DAI]: '385092451131687242',
+      [lTokens.BUSD]: '165039621913580246',
+      [variableDebtTokens.BUSD]: '385092451131687242',
+      [lTokens.MATIC]: '82519810956790123',
+      [variableDebtTokens.MATIC]: '192546225565843621',
+      [lTokens.BNB]: '82519810956790123',
+      [variableDebtTokens.BNB]: '192546225565843621',
+      [lTokens.DOT]: '1237797164351851851',
+      [variableDebtTokens.DOT]: '2888193383487654320',
     };
 
     const incentivesControllerInstance = PullRewardsIncentivesController__factory.connect(
@@ -88,21 +84,18 @@ task('update-incentives', 'Configure incentives for next 30 days').setAction(
     console.log(tx);
 
     await waitForTx(tx);
-
     console.log('set distribution end');
     const distEndTx = await waitForTx(
       await incentivesControllerInstance.setDistributionEnd(
-        // 28/6/2022 8:00:00
-        1656403200,
+        // 13/7/2022 11:00:00
+        1657710000,
         { gasPrice: 1000 * 1000 * 1000 * 100 }
       )
     ); //current + seconds per month
     console.log(distEndTx);
     console.log(
       'new distribution end:',
-      await (
-        await incentivesControllerInstance.connect(emissionManager).DISTRIBUTION_END()
-      ).toNumber()
+      (await incentivesControllerInstance.connect(emissionManager).DISTRIBUTION_END()).toNumber()
     );
   }
 );

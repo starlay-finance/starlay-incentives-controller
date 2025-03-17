@@ -4,21 +4,21 @@ import { BigNumber } from 'ethers';
 require('dotenv').config();
 
 task('calc-incentives', 'Calculate incentives for next 30 days').setAction(async ({}, localBRE) => {
-  const totalEmission = parseEther('23765706');
+  const totalEmission = parseEther('21389135');
   const depositTotalEmission = totalEmission.mul(3).div(10);
   const borrowTotalEmission = totalEmission.sub(depositTotalEmission);
   const weightPerAsset = {
     ['ASTR']: 2,
     ['USDC']: 2,
     ['USDT']: 2,
-    ['WETH']: 2,
+    ['WETH']: 1,
     ['WBTC']: 1,
     ['WSDN']: 1,
     ['DAI']: 2,
     ['BUSD']: 2,
     ['MATIC']: 1,
     ['BNB']: 1,
-    ['DOT']: 10,
+    ['DOT']: 15,
   };
   const total = Object.values(weightPerAsset).reduce((p, c) => p + c, 0);
   console.log(total);
